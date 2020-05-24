@@ -1,0 +1,198 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">COVID19RELIEF</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="hello_there_nwelcome_back">Hello there, Welcome Back</string>
+    <string name="sign_in_to_continue">Sign in to continue</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forget_password_reset_password">Forget Password/Reset Password?</string>
+    <string name="go">GO</string>
+    <string name="new_user_sign_up">New User? SIGN UP</string>
+    <string name="welcome">Welcome</string>
+    <string name="sign_up_to_start_your_journey">Sign Up to start your journey</string>
+    <string name="mobile">Mobile</string>
+    <string name="full_name">Full Name</string>
+    <string name="select_your_role">Select your Role</string>
+    <string name="aldready_have_an_account_login">Aldready have an account? LogIn</string>
+    <string name="victims">Victim</string>
+    <string name="donor">Donor</string>
+    <string name="fundraiser">Fundraiser</string>
+    <string name="shgs_ngos">SHGs/NGOs</string>
+    <string name="monitors">Monitors</string>
+    <string name="volunteers">volunteers</string>
+    <string name="covid19_relief">Covid19 Relief</string>
+    <string name="stay_home_stay_safe" translatable="false" tools:ignore="ExtraTranslation">Haryana</string>
+    <string name="my_status">My Status</string>
+    <string name="dashboard">DASHBOARD</string>
+    <string name="Dashboard">Dashboard</string>
+    <string name="share">Share</string>
+    <string name="logout">Logout</string>
+    <string name="setting">Setting</string>
+
+    <string-array name="self_assessq">
+        <item>Please note that information from this chat will be used for monitoring and management of current healthcare crisis and research in the fight against COVID-19</item>
+        <item>Are you experiencing any of the following symptomps ?</item>
+        <item>Have you ever had any of the following :</item>
+        <item>Have you travelled internationally in the last 14 days ?</item>
+        <item>Which of the following applies to you?</item>
+    </string-array>
+
+    <string-array name="self_assessm0">
+
+    </string-array>
+
+
+    <string-array name="self_assessm1">
+        <item>Your Answer</item>
+        <item>Cough</item>
+        <item>Fever</item>
+        <item>Difficulty in breathin</item>
+        <item>None of the above</item>
+    </string-array>
+
+    <string-array name="self_assessm2">
+        <item>Your Answer</item>
+        <item>Diabetes</item>
+        <item>Hypertension</item>
+        <item>Lung Disease</item>
+        <item>Heart Disease</item>
+        <item>None of the above</item>
+    </string-array>
+    <string-array name="self_assessm3">
+        <item>Your Answer</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+    <string-array name="self_assessm4">
+        <item>Your Answer</item>
+        <item>I had recently interacted or lived with someone who tested positive for covid-19</item>
+        <item>I am a healthcare worker and that I examined a COVID - 19 confirmed case without protective gear</item>
+        <item>None of the above</item>
+    </string-array>
+
+    <string name="title_activity_cases_report">cases_report</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="state">State</string>
+    <string name="district">District</string>
+    <string name="myplace">My place</string>
+    <string name="total">Total</string>
+    <string name="title_activity_cases">Cases</string>
+    <string name="current_status">Current Status</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="reset_your_password">Reset your password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="enter_mobile_no">Enter Mobile Number</string>
+    <string name="reset">Reset</string>
+    <string name="updates">Covid Updates</string>
+    <string name="self_assess">Self-Assess</string>
+    <string name="cases_report">Cases Report</string>
+    <string name="profile">Profile</string>
+    <string name="mapping">Mapping</string>
+    <string name="labour">Labour</string>
+    <string name="healthworker">Health worker</string>
+    <string name="workers">Sector Workers</string>
+    <string name="donate">Donate</string>
+    <string name="helpline">Helpline</string>
+    <string name="helpline_numbers">Helpline Numbers</string>
+    <string name="notification">Notification</string>
+    <string name="view_in_map">View in map</string>
+    <string name="to_do">TO DO</string>
+    <string name="scan">Scan</string>
+    <string name="intro1">Each one of us has the power to help prevent the spread of the corona virus pandemic in India \nWould you like to be kept informed if you crossed paths with someone who has tested COVID-19 positive ?</string>
+    <string name="intro2">COVID-19 RELIEF tracks through a blutooth and location generated social graph, your interaction with someone who could have found victim of COVID-19.\n </string>
+    <string name="intro3">Scan option in the app can be used  to get alerts if someone you have come in close proximity of,even unknowingly,found victim of COVID-19</string>
+    <string name="intro4">COVID-19-RELIEF  is a mobile application developed to connect and coordinate essential health and various services with the people of India to fight against COVID-19. The App is aimed at building a community to help and coordinate  various services and sectors, particularly the Department of Health, in proactively reaching out to and informing the users of the app regarding risks, best practices and relevant updates of COVID-19. </string>
+    <string name="medical_shops">Medical shops</string>
+    <string name="epass">ePass and Government service</string>
+    <string name="stranded_migrant">Stranded migrant</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pay_using_upi">Pay using UPI</string>
+    <string name="hospital_appointment">Hospital Appointment</string>
+    <string name="lab_test">Lab Test</string>
+    <string name="order_medicine">Order Medicine</string>
+    <string name="title_activity_quora">quora</string>
+    <string name="quora">Quora</string>
+    <string name="post_a_question">Post a question</string>
+    <string name="forum">Forum</string>
+    <string name="answered_question">Answered question</string>
+    <string name="your_questions">Your Questions</string>
+    <string name="notify">Notification</string>
+    <string name="select_catagory">Select catagory</string>
+    <string name="time_assigned">Time Assigned</string>
+    <string name="monitor_name">Monitor Name</string>
+    <string name="monitor_place">Monitor Place</string>
+    <string name="monitor_phone">Monitor Phone</string>
+    <string name="monitor_email">Monitor Email</string>
+    <string name="mark_as_done">Mark as done</string>
+    <string name="reject_request">Reject Request</string>
+    <string name="name">Name</string>
+    <string name="role">Role</string>
+    <string name="place">Place</string>
+    <string name="phone">Phone</string>
+    <string name="write_down_the_works">Write down the works</string>
+    <string name="assign">Assign work</string>
+    <string name="please_turn_on_internet_to_stay_updated">Please turn on internet to stay updated</string>
+    <string name="go_back_and_pull_down_to_refresh">Go back and pull down to refresh</string>
+    <string name="close">Close</string>
+    <string name="turn_on">Turn ON</string>
+    <string name="alert">Alert !</string>
+    <string name="found_new_victim_in_your_surrounding">Found new victim in your surrounding</string>
+    <string name="stay_away_from_the_place">Stay away from the place !</string>
+    <string name="alarm_manager">Alarm Manager</string>
+    <string name="hospital_nlab_test_nmedicine">Hospital Lab Test Medicine</string>
+    <string name="continue_in_hindi">जारी रखें हिंदी में</string>
+    <string name="first_responder">First Responder</string>
+    <string name="be_ready_to_contribute">Get help instantly</string>
+    <string name="be_the_first_responder">Be the First Responder</string>
+    <string name="alert_nearby">Alert Nearby</string>
+    <string name="dial_108">Dial 108</string>
+    <string name="dial_100">Dial 100</string>
+    <string name="dial_101">Dial 101</string>
+    <string name="nearby_hospitals">Nearby Hospitals</string>
+    <string name="first_aid_guidance">First Aid Guidance</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="interstitial_ad_sample">Interstitial Ad Sample</string>
+    <string name="start_level">Level 1</string>
+    <string name="next_level">Next Level</string>
+    <!-- -
+        This is an ad unit ID for an interstitial test ad. Replace with your own interstitial ad unit id.
+        For more information, see https://support.google.com/admob/answer/3052638
+    <!- -->
+    <string name="interstitial_ad_unit_id">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="invitation_title">Invite members</string>
+    <string name="invitation_message">Build a community by inviting more people to COVID-19 RELIEF</string>
+    <string name="share_with">Share with</string>
+    <string name="title_activity_navhome">navhome</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+    <string name="title_activity_nav">nav</string>
+    <string name="translate">Translate</string>
+    <string name="assistant">Assistant</string>
+    <string name="support">Support Assistant</string>
+    <string name="chatbot">Voice Assistant</string>
+    <string name="chatbotintro">Support assistant  simulates human conversation through voice commands or text chats or both.It helps you by navigation and by answering your queries</string>
+    <string name="whatsapp_queries">Whatsapp Queries</string>
+    <string name="join_in_our_communtiy">Join in our Communtiy</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="or">OR</string>
+    <string name="uttar_pradesh">uttar pradesh</string>
+
+</resources>

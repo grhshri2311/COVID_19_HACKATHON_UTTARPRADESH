@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/victims" />
+    <item android:title="@string/volunteers" />
+    <item android:title="@string/workers" />
+    <item android:title="@string/donor" />
+    <item android:title="@string/labour" />
+    <item android:title="@string/healthworker" />
+    <item android:title="@string/stranded_migrant" />
+
+
+</menu>

@@ -1,0 +1,163 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">कोविद को राहत</string>
+    <string name="title_activity_maps">नक्शा</string>
+    <string name="hello_there_nwelcome_back">नमस्ते, वापसी पर स्वागत है</string>
+    <string name="sign_in_to_continue">जारी रखने के लिए साइन इन करें</string>
+    <string name="email">ईमेल</string>
+    <string name="password">पासवर्ड</string>
+    <string name="forget_password_reset_password">पासवर्ड भूल जाओ / पासवर्ड रीसेट करें?</string>
+    <string name="go">जाओ</string>
+    <string name="new_user_sign_up">नया उपयोगकर्ता? साइन अप करें</string>
+    <string name="welcome">स्वागत हे</string>
+    <string name="sign_up_to_start_your_journey">अपनी यात्रा शुरू करने के लिए साइन अप करें</string>
+    <string name="mobile">मोबाइल</string>
+    <string name="full_name">पूरा नाम</string>
+    <string name="select_your_role">अपनी भूमिका का चयन करें</string>
+    <string name="aldready_have_an_account_login">पहले से ही एक खाता है? लॉग इन करें</string>
+    <string name="victims">पीड़ित</string>
+    <string name="donor">दाता</string>
+    <string name="fundraiser">अनुदान संचय</string>
+    <string name="shgs_ngos">स्वयं सहायता समूहों / गैर सरकारी संगठनों</string>
+    <string name="monitors">पर नज़र रखता है</string>
+    <string name="volunteers">स्वयंसेवकों</string>
+    <string name="covid19_relief">Covid19 Relief</string>
+    <string name="my_status">मेरी स्थिति</string>
+    <string name="dashboard">डैशबोर्ड</string>
+    <string name="Dashboard">डैशबोर्ड</string>
+    <string name="share">शेयर</string>
+    <string name="logout">लॉग आउट</string>
+    <string name="setting">सेटिंग</string>
+
+    <string-array name="self_assessq">
+        <item>कृपया ध्यान दें कि इस चैट की जानकारी का उपयोग वर्तमान स्वास्थ्य संकट और शोध के प्रबंधन और निगरानी के लिए किया जाएगा, जो कि COVID-19 में लड़ाई में है।</item>
+        <item>क्या आप निम्नलिखित लक्षणों में से किसी का अनुभव कर रहे हैं?</item>
+        <item>क्या आपने कभी निम्नलिखित में से कोई भी किया है:</item>
+        <item>क्या आपने पिछले 14 दिनों में अंतरराष्ट्रीय स्तर पर यात्रा की है?</item>
+        <item>निम्नलिखित में से क्या आप पर लागू होता है?</item>
+    </string-array>
+
+    <string-array name="self_assessm0">
+
+    </string-array>
+
+
+    <string-array name="self_assessm1">
+        <item>आपका उत्तर</item>
+        <item>खांसी</item>
+        <item>बुखार</item>
+        <item>सांस लेने में कष्ट</item>
+        <item>इनमे से कोई भी नहीं</item>
+    </string-array>
+
+    <string-array name="self_assessm2">
+        <item>आपका उत्तर</item>
+        <item>मधुमेह</item>
+        <item>उच्च रक्तचाप</item>
+        <item>फेफड़ों की बीमारी</item>
+        <item>दिल की बीमारी</item>
+        <item>इनमे से कोई भी नहीं</item>
+    </string-array>
+    <string-array name="self_assessm3">
+        <item>आपका उत्तर</item>
+        <item>हाँ</item>
+        <item>नहीं</item>
+    </string-array>
+    <string-array name="self_assessm4">
+        <item>आपका उत्तर</item>
+        <item>मैंने हाल ही में कोविद -19 के लिए सकारात्मक परीक्षण करने वाले किसी व्यक्ति के साथ बातचीत की थी या रहते थे</item>
+        <item>मैं एक स्वास्थ्य कर्मचारी हूं और मैंने सुरक्षात्मक गियर के बिना एक सीओवीआईडी ​​- 19 की पुष्टि की मामले की जांच की</item>
+        <item>इनमे से कोई भी नहीं</item>
+    </string-array>
+
+    <string name="title_activity_cases_report">घटना की रिपोर्ट</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">डैशबोर्ड</string>
+    <string name="title_notifications">सूचनाएं</string>
+    <string name="state">राज्य</string>
+    <string name="district">जिला</string>
+    <string name="myplace">मेरी जगह</string>
+    <string name="total">संपूर्ण</string>
+    <string name="title_activity_cases">घटना</string>
+    <string name="current_status">वर्तमान स्थिति</string>
+    <string name="forgot_password">पासवर्ड भूल गए</string>
+    <string name="reset_your_password">अपना पासवर्ड रीसेट करें</string>
+    <string name="new_password">नया पासवर्ड</string>
+    <string name="confirm_password">पासवर्ड की पुष्टि कीजिये</string>
+    <string name="enter_mobile_no">मोबाइल नंबर दर्ज करें</string>
+    <string name="reset">रीसेट</string>
+    <string name="updates">अपडेट</string>
+    <string name="self_assess">स्व-मूल्यांकन</string>
+    <string name="cases_report">घटना की रिपोर्ट</string>
+    <string name="profile">प्रोफ़ाइल</string>
+    <string name="mapping">मानचित्रण</string>
+    <string name="labour">श्रम</string>
+    <string name="healthworker">स्वास्थ्यकर्मी</string>
+    <string name="workers">कर्मी</string>
+
+
+    <string name="donate">दान करना</string>
+    <string name="helpline">हेल्पलाइन</string>
+    <string name="helpline_numbers">हेल्पलाइन नंबर</string>
+    <string name="notification">अधिसूचना</string>
+    <string name="view_in_map">नक्शे में देखें</string>
+    <string name="to_do">करने के लिए</string>
+
+
+    <string name="scan">स्कैन</string>
+    <string name="intro1">
+हममें से प्रत्येक के पास भारत में कोरोना वायरस महामारी के प्रसार को रोकने में मदद करने की शक्ति है। क्या आपको सूचित किया जाना चाहिए कि क्या आपने किसी ऐसे व्यक्ति के साथ रास्ते को पार किया है जिसने COVID-19 का परीक्षण किया है?</string>
+    <string name="intro2">COVID-19 RELIEF एक ब्लुटूथ और लोकेशन जनरेट किए गए सोशल ग्राफ के माध्यम से ट्रैक करता है, किसी ऐसे व्यक्ति के साथ आपकी बातचीत जो COVID -19 का शिकार हो सकता है\n </string>
+    <string name="intro3">एप्लिकेशन में स्कैन विकल्प का उपयोग अलर्ट प्राप्त करने के लिए किया जा सकता है यदि कोई व्यक्ति जो आपके निकटता में आया है, यहां तक ​​कि अनजाने में, COVID-19 का शिकार पाया गया</string>
+    <string name="intro4">COVID-19-RELIEF COVID-19 के खिलाफ लड़ने के लिए भारत के लोगों के साथ आवश्यक स्वास्थ्य और विभिन्न सेवाओं को जोड़ने और समन्वय करने के लिए विकसित एक मोबाइल एप्लिकेशन है। ऐप का उद्देश्य विभिन्न सेवाओं और क्षेत्रों, विशेष रूप से स्वास्थ्य विभाग की सहायता और समन्वय के लिए एक समुदाय का निर्माण करना है, जो एप्लिकेशन के उपयोगकर्ताओं को जोखिमों, सर्वोत्तम प्रथाओं और COVID-19 के प्रासंगिक अद्यतनों के बारे में जानकारी देने के लिए सक्रिय रूप से संपर्क कर रहा है</string>
+    <string name="medical_shops">मेडिकल की दुकानें</string>
+    <string name="epass">ePass और सरकारी सेवा</string>
+    <string name="stranded_migrant">फंसे हुए प्रवासी</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">हैलो खाली टुकड़ा</string>
+    <string name="pay_using_upi">UPI का उपयोग करके भुगतान करें</string>
+    <string name="hospital_appointment">अस्पताल की नियुक्ति</string>
+    <string name="lab_test">लैब टेस्ट</string>
+    <string name="order_medicine">आदेश चिकित्सा</string>
+    <string name="title_activity_quora">कोरम</string>
+    <string name="quora">कोरम</string>
+    <string name="post_a_question">एक प्रश्न पोस्ट करें</string>
+    <string name="forum">मंच</string>
+    <string name="answered_question">प्रश्न का उत्तर दिया</string>
+    <string name="your_questions">आपके सवाल</string>
+    <string name="notify">अधिसूचना</string>
+    <string name="select_catagory">श्रेणी का चयन करें</string>
+    <string name="time_assigned">समय दिया गया</string>
+    <string name="monitor_name">मॉनिटर का नाम</string>
+    <string name="monitor_place">मॉनिटर प्लेस</string>
+    <string name="monitor_phone">मॉनिटर का फोन</string>
+    <string name="monitor_email">मॉनिटर का ईमेल</string>
+    <string name="mark_as_done">पूर्ण के रूप में चिह्नित करें</string>
+    <string name="reject_request">रिक्वेस्ट रिजेक्ट</string>
+    <string name="name">नाम</string>
+    <string name="role">नाम</string>
+    <string name="place">जगह</string>
+    <string name="phone">फ़ोन</string>
+    <string name="write_down_the_works">कार्यों को लिखिए</string>
+    <string name="assign">असाइन</string>
+    <string name="please_turn_on_internet_to_stay_updated">कृपया अपडेट रहने के लिए इंटरनेट चालू करें</string>
+    <string name="go_back_and_pull_down_to_refresh">वापस जाओ और ताज़ा करने के लिए नीचे खींचो</string>
+    <string name="close">बंद करे</string>
+    <string name="turn_on">चालू करो</string>
+    <string name="alert">चेतावनी !</string>
+    <string name="found_new_victim_in_your_surrounding">अपने आसपास के लोगों में नया शिकार पाया</string>
+    <string name="stay_away_from_the_place">जगह से दूर रहें !</string>
+    <string name="alarm_manager">अलार्म मैनेजर</string>
+    <string name="hospital_nlab_test_nmedicine">हॉस्पिटल लैब टेस्ट मेडिसिन</string>
+    <string name="continue_in_hindi">जारी रखें हिंदी में</string>
+    <string name="first_responder">पहला प्रतिसादकर्ता</string>
+    <string name="be_ready_to_contribute">तुरंत मदद लें</string>
+    <string name="be_the_first_responder">फर्स्ट रिस्पॉन्डर बनें</string>
+    <string name="alert_nearby">Alert Nearby</string>
+    <string name="dial_108">डायल 108</string>
+    <string name="dial_100">डायल 100</string>
+    <string name="dial_101">डायल 101</string>
+    <string name="nearby_hospitals">आसपास के अस्पताल</string>
+    <string name="first_aid_guidance">फर्स्ट एड गाइडेंस</string>
+
+</resources>
