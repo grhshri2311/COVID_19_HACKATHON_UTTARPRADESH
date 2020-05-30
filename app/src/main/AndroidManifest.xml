@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
-    package="com.gprs.uttarpradesh">
+    package="com.gprs.uttarpradesh"
+    android:hardwareAccelerated="false">
 
     <dist:module dist:instant="true" />
 
@@ -33,7 +34,24 @@
         android:roundIcon="@drawable/collective_intelligence_icon_use"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".firstaidgiudance"></activity>
+        <activity android:name=".publichealthcare"/>
+        <activity android:name=".course" />
+        <activity android:name=".cases_report" />
+        <activity android:name=".news" />
+        <activity android:name=".logouthome" />
+        <activity android:name=".MSME" />
+        <activity android:name=".Labsfortestingandresults" />
+        <activity android:name=".stepstofollow" />
+        <activity android:name=".alarmremember" />
+        <activity android:name=".epass" />
+        <activity android:name=".hospital" />
+        <activity android:name=".self_asses" />
+        <activity android:name=".Alarm" />
+        <activity android:name=".quora" />
+        <activity android:name=".donate" />
+        <activity android:name=".pdfViewer" />
+        <activity android:name=".helpline" />
+        <activity android:name=".firstaidgiudance" />
         <activity android:name=".Medicalshops" />
         <activity android:name=".help" />
         <activity android:name=".firstreply" />
@@ -51,7 +69,7 @@
             android:value="true" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAfy6YVB_UU8GrSG7r2yxn4BTCbDNc3kC0" />
+            android:value="YOUR KEY" />
 
         <activity android:name=".test" />
         <activity android:name=".Forgotpassword" />
@@ -102,10 +120,15 @@
                 <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".YourLocationBroadcastReciever" />
 
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
+        <service
+            android:name=".AlarmForegroundNotification"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":Alarm" />
+
+        <receiver android:name=".MyNotificationBroadcastReceiver" />
     </application>
 
 </manifest>

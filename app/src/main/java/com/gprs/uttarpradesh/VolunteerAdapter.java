@@ -31,9 +31,9 @@ class VolunteerAdapter extends ArrayAdapter {
 
             rowView = inflater.inflate(R.layout.volunteers, null, true);
             //this code gets references to objects in the listview_row.xml file
-            TextView nameTextField = (TextView) rowView.findViewById(R.id.name);
-            TextView infoTextField = (TextView) rowView.findViewById(R.id.role);
-            TextView textView = (TextView) rowView.findViewById(R.id.place);
+            TextView nameTextField = rowView.findViewById(R.id.name);
+            TextView infoTextField = rowView.findViewById(R.id.role);
+            TextView textView = rowView.findViewById(R.id.place);
 
 
             nameTextField.setText(name.get(position));
@@ -44,7 +44,7 @@ class VolunteerAdapter extends ArrayAdapter {
 
         return rowView;
 
-    };
+    }
 
 
 }

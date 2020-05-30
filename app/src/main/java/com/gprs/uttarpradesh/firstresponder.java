@@ -83,7 +83,7 @@ public class firstresponder extends AppCompatActivity {
         viewPager.setPadding(10, 0, 50, 0);
 
 
-        final SwipeRefreshLayout swipeRefreshLayout=(SwipeRefreshLayout)findViewById(R.id.swipe);
+        final SwipeRefreshLayout swipeRefreshLayout= findViewById(R.id.swipe);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
         {
             @Override
@@ -174,7 +174,7 @@ public class firstresponder extends AppCompatActivity {
 
 
     public void helpline(View view) {
-      //  startActivity(new Intent(this,helpline.class),ActivityOptions.makeSceneTransitionAnimation(firstresponder.this).toBundle());
+       startActivity(new Intent(this,helpline.class),ActivityOptions.makeSceneTransitionAnimation(firstresponder.this).toBundle());
     }
 
 
@@ -215,12 +215,17 @@ public class firstresponder extends AppCompatActivity {
 
                 }
                 if(num>=0) {
-                    float res[] = new float[1];
-                    Location.distanceBetween(mylocation.getLat(), mylocation.getLon(),
-                            arrayList.get(num - 1).getLat(), arrayList.get(num - 1).getLon(), res);
-                    scan.setText("Scanning within " + String.valueOf(res[0] / 1000) + " KM radius...");
-                    if (num < arrayList.size() && search)
-                        start();
+                    float[] res = new float[1];
+                    try {
+                        Location.distanceBetween(mylocation.getLat(), mylocation.getLon(),
+                                arrayList.get(num - 1).getLat(), arrayList.get(num - 1).getLon(), res);
+                        scan.setText("Scanning within " + res[0] / 1000 + " KM radius...");
+                        if (num < arrayList.size() && search)
+                            start();
+                    }
+                    catch (ArrayIndexOutOfBoundsException e){
+
+                    }
                 }
 
             }
@@ -301,8 +306,8 @@ public class firstresponder extends AppCompatActivity {
 
     class sortarray implements Comparator<UserLocationHelper> {
 
-        float res[]=new float[1];
-        float res1[]=new float[1];
+        float[] res = new float[1];
+        float[] res1 = new float[1];
         @Override
         public int compare(UserLocationHelper o1, UserLocationHelper o2) {
             Location.distanceBetween(mylocation.getLat(), mylocation.getLon(),

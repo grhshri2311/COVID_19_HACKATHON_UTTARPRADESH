@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">कोविद को राहत</string>
     <string name="title_activity_maps">नक्शा</string>
     <string name="hello_there_nwelcome_back">नमस्ते, वापसी पर स्वागत है</string>
@@ -159,5 +159,79 @@
     <string name="dial_101">डायल 101</string>
     <string name="nearby_hospitals">आसपास के अस्पताल</string>
     <string name="first_aid_guidance">फर्स्ट एड गाइडेंस</string>
+
+
+
+    <string name="invitation_title">सदस्यों को आमंत्रित करो</string>
+    <string name="invitation_message">COVID-19 RELIEF में और लोगों को आमंत्रित करके एक समुदाय का निर्माण करें</string>
+    <string name="share_with">के साथ शेयर करें</string>
+    <string name="title_activity_navhome"></string>
+    <string name="navigation_drawer_open">नेविगेशन दराज खोलें</string>
+    <string name="navigation_drawer_close">नेविगेशन ड्रॉअर बंद करें</string>
+    <string name="nav_header_title">Android स्टूडियो</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">नेविगेशन हेडर</string>
+
+    <string name="menu_home">डैशबोर्ड</string>
+     <string name="menu_share">शेयर</string>
+    <string name="menu_send">भेजें</string>
+    <string name="title_activity_nav">nav</string>
+    <string name="translate">अनुवाद करना</string>
+    <string name="assistant">सहायक</string>
+    <string name="support">समर्थन सहायक</string>
+    <string name="chatbot">आवाज सहायक</string>
+    <string name="chatbotintro">सहायक सहायक वॉयस कमांड या टेक्स्ट चैट या दोनों के माध्यम से मानव वार्तालाप का अनुकरण करता है। यह नेविगेशन द्वारा और आपके प्रश्नों का उत्तर देने में आपकी सहायता करता है</string>
+    <string name="whatsapp_queries">व्हाट्सएप क्वेरी</string>
+    <string name="join_in_our_communtiy">हमारी कम्युनिटी में शामिल हों</string>
+    <string name="register">रजिस्टर करें</string>
+    <string name="login">लॉग इन करें</string>
+    <string name="or">या</string>
+    <string name="uttar_pradesh">उत्तर प्रदेश</string>
+    <string name="tab_text_1">टैब 1</string>
+    <string name="tab_text_2">टैब 2</string>
+    <string name="SelectState">राज्य चुनें</string>
+    <string name="labs_for_test">परीक्षण के लिए लैब</string>
+    <string name="laboratory_with_covid_19_testing_facilty">COVID-19 परीक्षण सुविधा के साथ प्रयोगशाला</string>
+    <string name="action_on_covid_19_relief_for_msme_sector">MSME क्षेत्र के लिए COVID-19 राहत पर कार्रवाई</string>
+    <string name="looking_for_products_and_service_to_sell_on_gem_sign_up_now">GeM पर बेचने के लिए उत्पादों और सेवा की तलाश में, अभी साइन अप करें!</string>
+    <string name="msme_products">MSME उत्पादों</string>
+    <string name="hospital_near_me">मेरे पास अस्पताल</string>
+    <string name="name_of_the_laboratory">प्रयोगशाला का नाम</string>
+    <string name="buy_now"><![CDATA[Buy now >]]></string>
+    <string name="go_to_website">वेबसाइट पर जाएं</string>
+    <string name="scan_below_qr_to_share">साझा करने के लिए QR के नीचे स्कैन करें</string>
+    <string name="post_your_queries_here">अपनी क्वेरीज़ यहाँ पोस्ट करें</string>
+    <string name="upload_picture">तसवीर डालें</string>
+    <string name="upload_vedio">विडियो को अॅॅपलोड करें</string>
+    <string name="post">पद</string>
+    <string name="you_have_no_notification">आपका कोई Notification नहीं है</string>
+    <string name="stay_home_save_lives_help_stop_coronavirus_stay_home_keep_safe_distance_wash_hands_often_cover_your_cough_sick_call_the_helpline">घर में रहते हैं। रहते हैं। कोरोनावायरस को रोकने में मदद करें घर पर रखें KEEP सुरक्षित दूरी WASH हाथ अक्सर आपकी खाँसी बीमार है? हेल्पलाइन पर कॉल करें</string>
+    <string name="important_links">महत्वपूर्ण लिंक</string>
+    <string name="updateshome">अपडेट</string>
+    <string name="active">सक्रिय</string>
+    <string name="confirmed">की पुष्टि</string>
+    <string name="death">मौत</string>
+    <string name="recovered">बरामद</string>
+    <string name="visualise">कल्पना</string>
+    <string name="starting_scan">स्कैन शुरू ...</string>
+    <string name="stop">रुकें</string>
+    <string name="assigned_work">काम सौंपा</string>
+    <string name="you_will_be_alerted_when_you_getting_closer_to_covid_victim_even_when_the_app_is_minimised">एप के कम से कम होने पर भी आप COVID पीड़ित के करीब पहुंचने पर सतर्क हो जाएंगे</string>
+    <string name="stay_protected">संरक्षित रहें</string>
+    <string name="join_in_our_communtiy_nstay_safe_from_covid_19">हमारी कम्युनिटी में शामिल हों! COVID-19 से सुरक्षित रहें</string>
+    <string name="updatesnews">अद्यतन</string>
+    <string name="msme_covid_19_related_products">MSME COVID 19 संबंधित उत्पाद</string>
+    <string name="welcome_back_nstay_safe_from_covid_19">वेलकम बैक COVID-19 से सुरक्षित रहें</string>
+    <string name="need_help">मदद की ज़रूरत है !</string>
+    <string name="respond">जवाब</string>
+    <string name="got_help">मदद मिली !</string>
+    <string name="get_started">शुरू हो जाओ</string>
+    <string name="select_volunteer">स्वयंसेवक का चयन करें</string>
+    <string name="filter">फ़िल्टर</string>
+    <string name="alarm">अलार्म</string>
+    <string name="register_course">रजिस्टर कोर्स</string>
+    <string name="publiccare">सार्वजनिक स्वास्थ्य देखभाल स्थान</string>
+    <string name="online_course">ऑनलाइन पाठ्यक्रम</string>
+    <string name="email_optional">ईमेल (वैकल्पिक)</string>
 
 </resources>

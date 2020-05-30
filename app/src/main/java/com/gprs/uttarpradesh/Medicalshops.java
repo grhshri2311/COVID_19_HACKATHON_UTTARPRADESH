@@ -31,7 +31,7 @@ public class Medicalshops extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medicalshops);
-        wview=(WebView)findViewById(R.id.webv1);
+        wview= findViewById(R.id.webv1);
 
         Intent intent=getIntent();
         text=intent.getStringExtra("text");
@@ -123,7 +123,7 @@ public class Medicalshops extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 UserLocationHelper userLocationHelper=dataSnapshot.getValue(UserLocationHelper.class);
                 if(userLocationHelper!=null){
-                    String url="https://www.google.com/maps/search/"+text+"/@"+String.valueOf(userLocationHelper.getLat())+','+String.valueOf(userLocationHelper.getLon());
+                    String url="https://www.google.com/maps/search/"+text+"/@"+ userLocationHelper.getLat() +','+ userLocationHelper.getLon();
                     wview.loadUrl(url);
                 }
 

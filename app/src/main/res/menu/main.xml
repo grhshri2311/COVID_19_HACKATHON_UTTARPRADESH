@@ -5,14 +5,14 @@
         android:title="@string/assistant"
         android:id="@+id/chatbot"
         app:showAsAction="always"
-        android:icon="@drawable/chatbot"/>
+        android:icon="@drawable/chatboticon"/>
 
 
     <item
         android:title="@string/translate"
         android:id="@+id/translate"
         app:showAsAction="always"
-        android:icon="@drawable/hindismall"/>
+        android:icon="@drawable/round_translate_white_18dp"/>
 
     <item
         android:title="@string/share"

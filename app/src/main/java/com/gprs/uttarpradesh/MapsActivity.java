@@ -220,9 +220,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
        View view = inflater.inflate(R.layout.mapview, null, true);
 
 
-        TextView email = (TextView) view.findViewById(R.id.mapemail);
-        TextView phone = (TextView) view.findViewById(R.id.mapphone);
-        TextView role = (TextView) view.findViewById(R.id.maprole);
+        TextView email = view.findViewById(R.id.mapemail);
+        TextView phone = view.findViewById(R.id.mapphone);
+        TextView role = view.findViewById(R.id.maprole);
 
         email.setText(helperHashMap.get(id).email);
         phone.setText(helperHashMap.get(id).phone);

@@ -1,0 +1,1032 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".logouthome">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/hometoolbar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="#D677E9"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:title="@string/app_name" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/current_status"
+                android:textColor="#9C27B0"
+                android:textSize="20dp"
+                android:transitionName="currrentstatus"
+                app:fontFamily="@font/"
+                app:layout_constraintEnd_toStartOf="@+id/imageView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/hometoolbar" />
+
+            <TextView
+                android:id="@+id/confirm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:transitionName="active"
+                android:text="Covid-19 Relief"
+                android:textColor="#4F0D5E"
+                app:layout_constraintEnd_toStartOf="@+id/imageView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+            <TextView
+                android:id="@+id/death"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:transitionName="death"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:text="Covid-19 Relief"
+                android:textColor="#4F0D5E"
+                app:layout_constraintEnd_toStartOf="@+id/imageView"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/confirm" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="0dp"
+                android:transitionName="icon"
+
+                android:layout_height="120dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView"
+                app:layout_constraintTop_toBottomOf="@+id/hometoolbar"
+                app:srcCompat="@drawable/collective_intelligence_icon_use" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:transitionName="linear1"
+
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView">
+                <RelativeLayout
+                    android:id="@+id/login"
+                    android:onClick="login"
+                    android:background="@drawable/textviewbackground1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView30"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/bus"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:text="Sign IN / Sign UP"
+                        android:textSize="15dp"
+                        app:fontFamily="@font/roboto_medium" />
+
+                    <ImageView
+                        android:id="@+id/bus"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        app:srcCompat="@drawable/signypicon" />
+                </RelativeLayout>
+
+            </LinearLayout>
+            <TextView
+                android:id="@+id/scrollingtextview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:ellipsize="marquee"
+                android:layout_marginLeft="20dp"
+                android:fadingEdge="horizontal"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:text="STAY HOME.SAVE LIVES.      Help stop coronavirus        STAY home         KEEP safe distance         WASH hands often         COVER your cough         SICK? Call the helpline"
+                android:singleLine="true"
+                android:textSize="20dp"
+                android:textColor="#673AB7"
+                android:fontFamily="@font/roboto_medium"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <HorizontalScrollView
+                android:id="@+id/horizontalscrolling"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:scrollbars="none"
+                app:layout_constraintTop_toBottomOf="@id/scrollingtextview">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout"
+                        android:layout_width="165dp"
+                        android:layout_height="304dp"
+                        android:orientation="vertical"
+                        android:transitionName="linear2"
+                        app:layout_constraintEnd_toEndOf="parent"
+
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/scrollingtextview">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/mystatus_layout"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1">
+
+                            <RelativeLayout
+                                android:id="@+id/scan"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#FFED9B">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/train"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="10dp"
+                                    android:text="@string/scan"
+                                    android:textSize="15dp"
+                                    app:fontFamily="@font/roboto_medium" />
+
+                                <ImageView
+                                    android:id="@+id/train"
+                                    android:layout_width="100dp"
+                                    android:layout_height="90dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="15dp"
+                                    app:srcCompat="@drawable/virusscan" />
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:elevation="5dp">
+
+                            <RelativeLayout
+                                android:id="@+id/selfassess"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+
+                                <ImageView
+                                    android:id="@+id/imageView3"
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="15dp"
+                                    app:srcCompat="@drawable/selfassessiconhome" />
+                            </RelativeLayout>
+
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout2"
+                        android:layout_width="175dp"
+                        android:layout_height="319dp"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+
+                        android:transitionName="linear3"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_weight="1">
+
+                            <RelativeLayout
+                                android:id="@+id/dashmap"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/textView2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/bus1"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="10dp"
+                                    android:text="@string/mapping"
+                                    android:textSize="15dp"
+                                    app:fontFamily="@font/roboto_medium" />
+
+                                <ImageView
+                                    android:id="@+id/bus1"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="15dp"
+                                    app:srcCompat="@drawable/mapicon" />
+                            </RelativeLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1">
+
+                            <RelativeLayout
+                                android:id="@+id/helpline"
+                                android:layout_width="160dp"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/textView11"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/train11"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="10dp"
+                                    android:text="@string/helpline"
+                                    android:textSize="15dp"
+                                    app:fontFamily="@font/roboto_medium" />
+
+                                <ImageView
+                                    android:id="@+id/train11"
+                                    android:layout_width="100dp"
+                                    android:layout_height="85dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="15dp"
+                                    app:srcCompat="@drawable/helpline" />
+                            </RelativeLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="145dp"
+                            android:layout_height="150dp"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1">
+
+                            <RelativeLayout
+                                android:id="@+id/alarm"
+                                android:layout_width="match_parent"
+                                android:layout_height="127dp"
+                                android:onClick="alarm">
+
+                                <TextView
+                                    android:id="@+id/textView141"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/train141"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="10dp"
+                                    android:gravity="center"
+                                    android:text="@string/alarm_manager"
+                                    android:textSize="15dp"
+                                    app:fontFamily="@font/roboto_medium" />
+
+                                <ImageView
+                                    android:id="@+id/train141"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="15dp"
+                                    android:src="@drawable/alarmtransparent" />
+                            </RelativeLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_weight="1">
+
+                            <RelativeLayout
+                                android:id="@+id/case_report"
+                                android:layout_width="160dp"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/textView8"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/cycle"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="10dp"
+                                    android:text="@string/cases_report"
+                                    android:textSize="15dp"
+                                    app:fontFamily="@font/roboto_medium" />
+
+                                <ImageView
+                                    android:id="@+id/cycle"
+                                    android:layout_width="100dp"
+                                    android:layout_height="85dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="15dp"
+                                    app:srcCompat="@drawable/corona" />
+                            </RelativeLayout>
+
+
+
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout3231"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="150dp"
+                            android:layout_height="match_parent"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1">
+
+                            <RelativeLayout
+                                android:id="@+id/onlinecourse"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/textView19212119"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/train12192118"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="10dp"
+                                    android:gravity="center"
+                                    android:text="@string/online_course"
+                                    android:textSize="15dp"
+                                    app:fontFamily="@font/roboto_medium" />
+
+                                <ImageView
+                                    android:id="@+id/train12192118"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="15dp"
+                                    app:srcCompat="@drawable/onlinecourse" />
+                            </RelativeLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="150dp"
+                            android:layout_height="match_parent"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1">
+
+
+                            <RelativeLayout
+                                android:id="@+id/publiccare"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/textView1921211"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/train1219211"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="10dp"
+                                    android:gravity="center"
+                                    android:text="@string/publiccare"
+                                    android:textSize="12dp"
+                                    app:fontFamily="@font/roboto_medium" />
+
+                                <ImageView
+                                    android:id="@+id/train1219211"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="15dp"
+                                    app:srcCompat="@drawable/hospital" />
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout31"
+                        android:layout_width="180dp"
+                        android:layout_height="319dp"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1">
+
+                            <RelativeLayout
+                                android:id="@+id/labs"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:onClick="labs">
+
+                                <TextView
+                                    android:id="@+id/textView1211"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/train1221"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="10dp"
+                                    android:gravity="center"
+                                    android:text="@string/labs_for_test"
+                                    android:textSize="15dp"
+                                    app:fontFamily="@font/roboto_medium" />
+
+                                <ImageView
+                                    android:id="@+id/train1221"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="15dp"
+                                    app:srcCompat="@drawable/labsicon" />
+                            </RelativeLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1">
+
+
+                            <RelativeLayout
+                                android:id="@+id/msme"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:onClick="msme">
+
+                                <TextView
+                                    android:id="@+id/textView311"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/train111"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="10dp"
+                                    android:gravity="center"
+                                    android:text="MSME Products"
+                                    android:textSize="15dp"
+                                    app:fontFamily="@font/roboto_medium" />
+
+                                <ImageView
+                                    android:id="@+id/train111"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="15dp"
+                                    app:srcCompat="@drawable/msmeproducts" />
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout4"
+                        android:layout_width="180dp"
+                        android:layout_height="317dp"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout31">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1">
+
+                            <RelativeLayout
+                                android:id="@+id/hosnear"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:onClick="hosnear">
+
+                                <TextView
+                                    android:id="@+id/textView3111"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/train1111"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="10dp"
+                                    android:gravity="center"
+                                    android:text="@string/hospital_near_me"
+                                    android:textSize="15dp"
+                                    app:fontFamily="@font/roboto_medium" />
+
+                                <ImageView
+                                    android:id="@+id/train1111"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="15dp"
+                                    app:srcCompat="@drawable/hospital" />
+                            </RelativeLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1">
+
+
+                            <RelativeLayout
+                                android:id="@+id/medstore"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/textView3131"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/train1113"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="10dp"
+                                    android:gravity="center"
+                                    android:text="@string/medical_shops"
+                                    android:textSize="15dp"
+                                    app:fontFamily="@font/roboto_medium" />
+
+                                <ImageView
+                                    android:id="@+id/train1113"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="15dp"
+                                    app:srcCompat="@drawable/medical" />
+                            </RelativeLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout5"
+                        android:layout_width="185dp"
+                        android:layout_height="317dp"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1">
+
+                            <RelativeLayout
+                                android:id="@+id/admission"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/textView121"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/train121"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="10dp"
+                                    android:gravity="center"
+                                    android:text="@string/hospital_nlab_test_nmedicine"
+                                    android:textSize="15dp"
+                                    app:fontFamily="@font/roboto_medium" />
+
+                                <ImageView
+                                    android:id="@+id/train121"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="15dp"
+                                    app:srcCompat="@drawable/hos" />
+                            </RelativeLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1">
+
+                            <RelativeLayout
+                                android:id="@+id/epass"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/textView31"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/train1"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="10dp"
+                                    android:gravity="center"
+                                    android:text="@string/epass"
+                                    android:textSize="15dp"
+                                    app:fontFamily="@font/roboto_medium" />
+
+                                <ImageView
+                                    android:id="@+id/train1"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="15dp"
+                                    app:srcCompat="@drawable/epass" />
+                            </RelativeLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout6"
+                        android:layout_width="193dp"
+                        android:layout_height="314dp"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1">
+
+                            <RelativeLayout
+                                android:id="@+id/updates"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/textView3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/train0"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="10dp"
+                                    android:gravity="center"
+                                    android:text="@string/updates"
+                                    android:textSize="15dp"
+                                    app:fontFamily="@font/roboto_medium" />
+
+                                <ImageView
+                                    android:id="@+id/train0"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="15dp"
+                                    app:srcCompat="@drawable/covidupdates" />
+                            </RelativeLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1">
+
+                            <RelativeLayout
+                                android:id="@+id/donate"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/textView10"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/don"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="10dp"
+                                    android:text="@string/donate"
+                                    android:textSize="15dp"
+                                    app:fontFamily="@font/roboto_medium" />
+
+                                <ImageView
+                                    android:id="@+id/don"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="15dp"
+                                    app:srcCompat="@drawable/donatehome" />
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout7"
+                        android:layout_width="180dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+
+                        android:transitionName="linear1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1">
+
+                            <RelativeLayout
+                                android:id="@+id/shelterlayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <ImageView
+                                    android:id="@+id/shelter"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="5dp"
+                                    android:src="@drawable/shelter"
+                                    android:transitionName="icon" />
+                            </RelativeLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1">
+
+
+                            <RelativeLayout
+                                android:id="@+id/chatbot"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:onClick="chatbot">
+
+                                <TextView
+                                    android:id="@+id/textView211"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/train211"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="10dp"
+                                    android:text="@string/support"
+                                    android:textSize="15dp"
+                                    app:fontFamily="@font/roboto_medium" />
+
+                                <ImageView
+                                    android:id="@+id/train211"
+                                    android:layout_width="100dp"
+                                    android:layout_height="85dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="15dp"
+                                    app:srcCompat="@drawable/support" />
+                            </RelativeLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </HorizontalScrollView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/horizontalscrolling"
+                android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+                android:background="@drawable/textviewbackground"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:id="@+id/faq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="25dp"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="FAQ"
+                        android:textColor="#000"
+                        android:textSize="30dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ENGLISH"
+                        />
+                </LinearLayout>
+
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/faq" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/faq1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+                android:background="@drawable/textviewbackground1"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="25dp"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="FAQ"
+                        android:textColor="#000"
+                        android:textSize="30dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="HINDI"
+                        />
+                </LinearLayout>
+
+
+                <ImageView
+                    android:id="@+id/faqimg1"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/faq" />
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Important Links"
+                android:textColor="#C4BFB6"
+                android:textSize="20dp" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:scrollbars="none">
+                <LinearLayout
+
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/implink1"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/implink4"/>
+                    <ImageView
+                        android:id="@+id/implink2"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/implink5"/>
+                    <ImageView
+                        android:id="@+id/implink3"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/implink1"/>
+                    <ImageView
+                        android:id="@+id/implink4"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/implink2"/>
+                    <ImageView
+                        android:id="@+id/implink5"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/implink3"/>
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>

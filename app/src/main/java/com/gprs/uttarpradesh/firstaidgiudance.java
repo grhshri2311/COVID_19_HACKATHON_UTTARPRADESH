@@ -24,7 +24,7 @@ public class firstaidgiudance extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firstaidgiudance);
-        wview=(WebView)findViewById(R.id.webv);
+        wview= findViewById(R.id.webv);
 
         Intent intent=getIntent();
         text=intent.getStringExtra("text");

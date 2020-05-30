@@ -1,16 +1,16 @@
 package com.gprs.uttarpradesh.ui.home;
 
 import android.app.ActivityOptions;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -19,23 +19,33 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.gprs.uttarpradesh.APIextract;
-import com.gprs.uttarpradesh.Adapterviewer;
-import com.gprs.uttarpradesh.MapsActivity;
-import com.gprs.uttarpradesh.Modelviewer;
+import com.gprs.uttarpradesh.AdapterHome;
+import com.gprs.uttarpradesh.ApiClient;
+import com.gprs.uttarpradesh.Home;
+import com.gprs.uttarpradesh.Labsfortestingandresults;
+import com.gprs.uttarpradesh.MSME;
+import com.gprs.uttarpradesh.Model.Articles;
+import com.gprs.uttarpradesh.Model.Headlines;
 import com.gprs.uttarpradesh.R;
 import com.gprs.uttarpradesh.UserLocationHelper;
 import com.gprs.uttarpradesh.UserRegistrationHelper;
 import com.gprs.uttarpradesh.UserSelfAssessHelper;
 import com.gprs.uttarpradesh.advice;
-import com.gprs.uttarpradesh.assign_work;
-import com.gprs.uttarpradesh.firstresponder;
+import com.gprs.uttarpradesh.course;
+import com.gprs.uttarpradesh.donate;
+import com.gprs.uttarpradesh.pdfViewer;
+import com.gprs.uttarpradesh.publichealthcare;
 import com.gprs.uttarpradesh.victimalert;
 import com.gprs.uttarpradesh.your_work;
 
@@ -43,41 +53,106 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeFragment extends Fragment{
-    RelativeLayout viewmap,todo;
+    RelativeLayout todo,helpline;
     TextView confirm,death,mystatus,mystatus1,mystatus2,todotext;
     ImageView todoimage;
     int total=0,sick=0;
     SharedPreferences pref;
     SharedPreferences.Editor editor;
-    UserRegistrationHelper userRegistrationHelper;
+
     RelativeLayout scan,firstresponder;
     boolean flag=false;
     TextView  scrolltextview;
     View root;
+
+    RecyclerView recyclerView;
+    Button btnAboutUs;
+    Dialog dialog;
+    final String API_KEY = "81e919346ed94b8491dc88809d40d4eb";
+    AdapterHome adapter;
+    List<Articles>  articles = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        scrolltextview = (TextView) root.findViewById(R.id.scrollingtextview);
+        scrolltextview = root.findViewById(R.id.scrollingtextview);
         scrolltextview.setSelected(true);
 
         scan=root.findViewById(R.id.scan);
         todo=root.findViewById(R.id.todo);
-        viewmap=root.findViewById(R.id.viewmap);
         mystatus=root.findViewById(R.id.mystatus);
         mystatus1=root.findViewById(R.id.mystatus1);
+        helpline=root.findViewById(R.id.helpline);
         mystatus2=root.findViewById(R.id.mystatus2);
         pref =root.getContext().getSharedPreferences("user", 0); //
         editor=pref.edit();
 
         todoimage=root.findViewById(R.id.todoimage);
         todotext=root.findViewById(R.id.todotext);
+        ImageView shelter;
+        LinearLayout faq,faq1;
+        shelter=root.findViewById(R.id.shelter);
+        faq=root.findViewById(R.id.faq);
+        faq1=root.findViewById(R.id.faq1);
+        shelter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(root.getContext(), pdfViewer.class);
+                intent.putExtra("text","https://drive.google.com/file/d/1mWap_8QEc3HUAiIpPM65K2rZiPjudMO1/view");
+                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+            }
+        });
+        faq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(root.getContext(),pdfViewer.class);
+                intent.putExtra("text","https://drive.google.com/file/d/1GPoaMCIwbUdd3XDCzHnY_HiP7p2dVJ4x/view?usp=sharing");
+                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+            }
+        });
 
-        setview();
+        faq1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(root.getContext(),pdfViewer.class);
+                intent.putExtra("text","https://drive.google.com/file/d/1A0mY4oMMoSMY5IeuhtKTWVvTkkdOy7lf/view?usp=sharing");
+                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+            }
+        });
+        helpline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(root.getContext(), com.gprs.uttarpradesh.helpline.class);
+                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+
+            }
+        });
+        root.findViewById(R.id.getdirection).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(root.getContext(), Labsfortestingandresults.class);
+                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+            }
+        });
+
+
+        root.findViewById(R.id.action).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(root.getContext(),pdfViewer.class);
+                intent.putExtra("text","https://drive.google.com/file/d/1cEkR_bTmlz8se71Xtbtk1t4OlhLJYdPA/view?usp=sharing");
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+            }
+        });
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         final String currentDateTime = dateFormat.format(new Date()); // Find todays date
 
@@ -98,8 +173,35 @@ public class HomeFragment extends Fragment{
         check();
 
 
+        root.findViewById(R.id.donate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(root.getContext(), donate.class), ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+            }
+        });
 
 
+        recyclerView = root.findViewById(R.id.recyclerView);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        btnAboutUs = root.findViewById(R.id.aboutUs);
+        dialog = new Dialog(root.getContext());
+
+
+        final String country = getCountry();
+
+        retrieveJson("covid uttar pradesh adityanath india",country,API_KEY);
+
+        TextView seemoreupdates=root.findViewById(R.id.seemoreupdates);
+        final NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+        final  BottomNavigationView bottomNav = getActivity().findViewById(R.id.bottom_nav);
+        seemoreupdates.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(bottomNav.getMenu().getItem(1).getItemId());
+            }
+        });
 
 
 
@@ -109,27 +211,62 @@ public class HomeFragment extends Fragment{
         APIextract apIextract=new APIextract(root.getContext(),confirm,death);
 
 
-        viewmap.setOnClickListener(new View.OnClickListener() {
+
+        ImageView i1,i2,i3,i4,i5;
+        i1=root.findViewById(R.id.implink1);
+        i2=root.findViewById(R.id.implink2);
+        i3=root.findViewById(R.id.implink3);
+        i4=root.findViewById(R.id.implink4);
+        i5=root.findViewById(R.id.implink5);
+        i1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(root.getContext(), MapsActivity.class));
+                Intent intent=new Intent(root.getContext(),pdfViewer.class);
+                intent.putExtra("text","https://www.mohfw.gov.in/");
+                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
             }
         });
 
+        i2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(root.getContext(),pdfViewer.class);
+                intent.putExtra("text","https://www.nhp.gov.in/disease/communicable-disease/novel-coronavirus-2019-ncov");
+                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+            }
+        });
 
+        i3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(root.getContext(),pdfViewer.class);
+                intent.putExtra("text","https://www.mohfw.gov.in/");
+                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+            }
+        });
+        i4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(root.getContext(),pdfViewer.class);
+                intent.putExtra("text","https://www.icmr.gov.in/");
+                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+            }
+        });
+        i5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(root.getContext(),pdfViewer.class);
+                intent.putExtra("text","https://nhm.gov.in/");
+                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+            }
+        });
 
 
         todo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(flag){
-                    if(userRegistrationHelper.getRole().equals("Monitors")){
-                        startActivity(new Intent(root.getContext(), assign_work.class));
-                    }
-                    else {
                         startActivity(new Intent(root.getContext(), your_work.class));
-                    }
-                }
+
             }
         });
 
@@ -222,31 +359,35 @@ public class HomeFragment extends Fragment{
 
     }
 
-    void setview(){
-        FirebaseDatabase.getInstance().getReference().child("Users").child(pref.getString("user","")).addValueEventListener(new ValueEventListener() {
+
+
+    public void retrieveJson(String query ,String country, String apiKey){
+        Call<Headlines> call= ApiClient.getInstance().getApi().getSpecificData(query,apiKey);
+
+        call.enqueue(new Callback<Headlines>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot!=null){
-                    userRegistrationHelper=dataSnapshot.getValue(UserRegistrationHelper.class);
-                    flag=true;
-                    if(userRegistrationHelper.getRole().equals("Monitors")){
-                        todoimage.setImageDrawable(root.getContext().getDrawable(R.drawable.assign));
-                        todotext.setText("Assign Work");
-                    }
-                    else {
-                        todoimage.setImageDrawable(root.getContext().getDrawable(R.drawable.todo));
-                        todotext.setText("Todo List");
-                    }
+            public void onResponse(Call<Headlines> call, Response<Headlines> response) {
+                if (response.isSuccessful() && response.body().getArticles() != null){
+                    articles.clear();
+                    articles = response.body().getArticles();
+                    articles= articles.subList(0,5);
+                    adapter = new AdapterHome(root.getContext(),articles);
+                    recyclerView.setAdapter(adapter);
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+            public void onFailure(Call<Headlines> call, Throwable t) {
+                Toast.makeText(root.getContext(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    public String getCountry(){
+        Locale locale = Locale.getDefault();
+        String country = locale.getCountry();
+        return country.toLowerCase();
+    }
 
 
 }

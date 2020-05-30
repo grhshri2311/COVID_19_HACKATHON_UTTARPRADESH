@@ -23,7 +23,7 @@ public class visualize extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualize);
-        wview=(WebView)findViewById(R.id.webv1);
+        wview= findViewById(R.id.webv1);
 
         progressDialog=new ProgressDialog(this);
 

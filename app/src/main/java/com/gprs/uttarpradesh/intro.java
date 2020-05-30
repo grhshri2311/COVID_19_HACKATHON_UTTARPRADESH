@@ -234,8 +234,8 @@ public class intro extends AppCompatActivity {
         View view = inflater.inflate(R.layout.language, null, true);
 
 
-        TextView hindi = (TextView) view.findViewById(R.id.hindi);
-        TextView english = (TextView) view.findViewById(R.id.english);
+        TextView hindi = view.findViewById(R.id.hindi);
+        TextView english = view.findViewById(R.id.english);
 
 
         hindi.setOnClickListener(new View.OnClickListener() {

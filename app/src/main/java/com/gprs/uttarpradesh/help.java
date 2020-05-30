@@ -44,7 +44,7 @@ public class help extends AppCompatActivity {
     private SharedPreferences pref;
     SharedPreferences.Editor editor;
     UserLocationHelper u;
-    float res[]=new float[1];
+    float[] res = new float[1];
     TextView name1,phone1,email1,role1,distancce1;
     UserLocationHelper mylocation;
     TextView t;
@@ -60,7 +60,7 @@ public class help extends AppCompatActivity {
         role1=findViewById(R.id.role);
         distancce1=findViewById(R.id.distance);
         t=findViewById(R.id.textView32);
-        wview=(WebView)findViewById(R.id.webv);
+        wview= findViewById(R.id.webv);
 
 
         FirebaseDatabase.getInstance().getReference().child("Respond").child("Help").child(pref.getString("user","")).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -171,7 +171,7 @@ public class help extends AppCompatActivity {
                                 mylocation=dataSnapshot.getValue(UserLocationHelper.class);
                                 Location.distanceBetween(mylocation.getLat(), mylocation.getLon(),
                                         lat,lon, res);
-                                distancce1.setText(String.valueOf(res[0]/1000)+" KM");
+                                distancce1.setText(res[0] / 1000 +" KM");
                                 String url="https://maps.google.com/?q="+lat+","+lon;
                                 wview.loadUrl(url);
 

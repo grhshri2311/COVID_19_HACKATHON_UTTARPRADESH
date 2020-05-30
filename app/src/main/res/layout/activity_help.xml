@@ -21,9 +21,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:fontFamily="@font/alfa_slab_one"
+                android:fontFamily="@font/roboto_bold"
                 android:gravity="center"
-                android:text="Need Help !"
+                android:text="@string/need_help"
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/RED"
                 android:textSize="30dp" />
@@ -37,8 +37,8 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_gravity="right"
-                android:fontFamily="@font/alfa_slab_one"
-                android:text="Respond" />
+                android:fontFamily="@font/roboto"
+                android:text="@string/respond" />
         </LinearLayout>
 
 

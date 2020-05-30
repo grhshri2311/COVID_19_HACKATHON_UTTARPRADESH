@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".Alarm">
+
+    <TextView
+        android:id="@+id/textView34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/roboto_bold"
+        android:gravity="center"
+        android:text="@string/alarm"
+        android:textColor="#2196F3"
+        android:textSize="30dp"
+        android:layout_centerHorizontal="true"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="#2196F3"
+        android:clickable="true"
+        android:background="#2196F3"
+        android:src="@drawable/ic_add_black_24dp" />
+
+    <ListView
+        android:id="@+id/alarmlist"
+        android:layout_width="match_parent"
+        android:scrollbars="none"
+        android:layout_height="match_parent"
+        android:layout_below="@id/textView34"
+        android:divider="@null"
+        android:dividerHeight="0dp" />
+</RelativeLayout>

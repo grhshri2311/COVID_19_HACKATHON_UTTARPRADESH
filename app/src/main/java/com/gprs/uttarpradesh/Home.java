@@ -1,12 +1,15 @@
 package com.gprs.uttarpradesh;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityOptions;
 import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,16 +20,21 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
+import android.media.Image;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.internal.NavigationMenu;
 import com.google.android.material.snackbar.Snackbar;
@@ -42,6 +50,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
@@ -69,6 +78,7 @@ import android.view.Menu;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,6 +91,7 @@ import java.util.Locale;
 
 public class Home extends AppCompatActivity{
 
+    private static final int LAUNCH_SECOND_ACTIVITY = 2;
     private AppBarConfiguration mAppBarConfiguration;
     BottomNavigationView bottomNav;
     SharedPreferences pref;
@@ -89,7 +100,8 @@ public class Home extends AppCompatActivity{
     BroadcastReceiver br;
     TextView headename,headerphone,headerrole;
     ImageView headerimage;
-
+    TextView notificationnumber;
+    NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +116,13 @@ public class Home extends AppCompatActivity{
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         this.registerReceiver(br, filter);
+
+
+        if(pref.getString("user","").equals("")){
+            startActivity(new Intent(Home.this,logouthome.class), ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+            finish();
+        }
+
 
         getdetails();
 
@@ -120,26 +139,138 @@ public class Home extends AppCompatActivity{
 
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_share,R.id.nav_notification,R.id.nav_profile,R.id.nav_covidcases,R.id.nav_updates)
+                R.id.nav_home, R.id.nav_share,R.id.nav_notification,R.id.nav_profile,R.id.nav_covidcases,R.id.nav_updates)
                 .setDrawerLayout(drawer)
                 .build();
 
-        final NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         bottomNav = findViewById(R.id.bottom_nav);
         NavigationUI.setupWithNavController(bottomNav, navController);
 
         View hView =  navigationView.getHeaderView(0);
-        headename = (TextView)hView.findViewById(R.id.navheadername);
-        headerphone=(TextView)hView.findViewById(R.id.navheaderphone);
-        headerrole=(TextView)hView.findViewById(R.id.navheaderrole);
+        headename = hView.findViewById(R.id.navheadername);
+        headerphone= hView.findViewById(R.id.navheaderphone);
+        headerrole= hView.findViewById(R.id.navheaderrole);
         headerimage=hView.findViewById(R.id.navheaderimage);
-        setheader();
 
+        new notificationHelper(this).createOngoingNotification("COVID19RELIEF","Stay Safe from COVID-19");
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getTitle().toString()){
+                    case "Home": navController.navigate(menuItem.getItemId());break;
+                    case "Covid Updates": navController.navigate(menuItem.getItemId());break;
+
+                    case "Cases Report": navController.navigate(menuItem.getItemId());break;
+
+                    case "Notification": navController.navigate(menuItem.getItemId());break;
+
+                    case "Profile": navController.navigate(menuItem.getItemId());break;
+
+                    case "Donate":startActivity(new Intent(Home.this,donate.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
+
+                    case "First Responder":startActivity(new Intent(Home.this,firstresponder.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
+
+                    case "Geo fencing":startActivity(new Intent(Home.this,victimalert.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
+
+                    case "Mapping":startActivity(new Intent(Home.this,MapsActivity.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
+
+                    case "Self-Assess":startActivity(new Intent(Home.this,self_asses.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
+
+                    case "Alarm Manager":startActivity(new Intent(Home.this,Alarm.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
+
+                    case "Assign work":startActivity(new Intent(Home.this,assign_work.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
+
+                    case "Appointments/Admissions":startActivity(new Intent(Home.this,hospital.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
+
+                    case "MSME products":startActivity(new Intent(Home.this,MSME.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
+
+                    case "Medical shops":
+                        Intent intent=new Intent(Home.this,Medicalshops.class);
+                        intent.putExtra("text","Pharmacies");
+                        startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        break;
+                    case "Hospital near me":
+                        intent=new Intent(Home.this,Medicalshops.class);
+                        intent.putExtra("text","Hospitals");
+                        startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        break;
+                    case "Public health care location":startActivity(new Intent(Home.this,publichealthcare.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
+                    case "Online Course":startActivity(new Intent(Home.this,course.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
+                    case "Labs for test":
+                        startActivity(new Intent(Home.this,Labsfortestingandresults.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        break;
+
+                    case "ePass and Government service":
+                        try {
+                            Intent i = new Intent(Intent.ACTION_VIEW);
+                            i.setData(Uri.parse("http://164.100.68.164/upepass2/"));
+                            startActivity(i);
+                        }
+                        catch (ActivityNotFoundException e){
+                            Toast.makeText(Home.this,"You don't have browser installed",Toast.LENGTH_LONG).show();
+                        }
+                        break;
+
+                    case "Quora":startActivity(new Intent(Home.this,quora.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
+
+                    case "Helpline":startActivity(new Intent(Home.this,helpline.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
+
+
+                    case "Share":final String appPackageName = BuildConfig.APPLICATION_ID;
+                        final String appName = getString(R.string.app_name);
+                        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                        shareIntent.setType("text/plain");
+                        String shareBodyText = "https://play.google.com/store/apps/details?id=" +
+                                appPackageName;
+                        shareIntent.putExtra(Intent.EXTRA_SUBJECT, appName);
+                        shareIntent.putExtra(Intent.EXTRA_TEXT, shareBodyText);
+                        startActivity(Intent.createChooser(shareIntent, getString(R.string
+                                .share_with)));
+                        navController.navigate(menuItem.getItemId());
+                        break;
+                    case "Whatsapp Queries":
+                        try {
+                            whatsapp(Home.this, "919013151515");
+                        }
+                        catch (IllegalStateException e){
+                            Toast.makeText(Home.this,"You have no whatsapp",Toast.LENGTH_LONG).show();
+                        }
+                        break;
+                }
+
+                drawer.closeDrawer(GravityCompat.START);
+                if(menuItem.getTitle().equals("Notification"))
+                    notificationnumber.setVisibility(View.INVISIBLE);
+                headename.setText(String.valueOf(menuItem.getItemId()));
+                return false;
+            }
+        });
+        drawer.setBackgroundColor(Color.WHITE);
+
+        setheader();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         final String currentDateTime = dateFormat.format(new Date()); // Find todays date
+
+        if(!pref.getString("today","").equals(currentDateTime)) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    editor.putString("today",currentDateTime);
+                    editor.commit();
+                    Intent i = new Intent(Home.this, stepstofollow.class);
+                    startActivity(i);
+                }
+            }, 20000);
+
+        }
+
+
+
 
         if(!pref.getString("todaychatintro","").equals(currentDateTime)) {
             chatbotintro();
@@ -185,16 +316,28 @@ public class Home extends AppCompatActivity{
             }
         });
 
-     /*   if(!isMyServiceRunning(AlarmForegroundNotification.class)) {
+       if(!isMyServiceRunning(AlarmForegroundNotification.class)) {
             startService(AlarmForegroundNotification.class);
         }
 
 
-      */
+
 
         sendBroadcast(new Intent(this, Restarter.class).setAction("Help"));
 
-
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                navController.navigate(menuItem.getItemId());
+                if(menuItem.getTitle().equals("Notification"))
+                    notificationnumber.setVisibility(View.INVISIBLE);
+                if(menuItem.getTitle().equals("Donate")){
+                    startActivity(new Intent(Home.this,donate.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                }
+                return true;
+            }
+        });
+        notificationnumber=findViewById(R.id.notificationnumber);
 
 
         FirebaseDatabase.getInstance().getReference().child("Notification").child(pref.getString("user","")).addValueEventListener(new ValueEventListener() {
@@ -203,8 +346,12 @@ public class Home extends AppCompatActivity{
                 if(dataSnapshot!=null){
                     Long count1=dataSnapshot.getChildrenCount();
                     if(count1>=1) {
-                        bottomNav.getMenu().getItem(3).setIcon(R.drawable.ic_notifications_active_black_24dp1);
+
+                        notificationnumber.setText(String.valueOf(count1));
+
                     }
+                    else
+                        notificationnumber.setVisibility(View.INVISIBLE);
                 }
 
             }
@@ -288,9 +435,13 @@ public class Home extends AppCompatActivity{
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        }
+        else if(!bottomNav.getMenu().getItem(0).isChecked()){
+            navController.navigate(bottomNav.getMenu().getItem(0).getItemId());
+        }
+        else {
             if (doubleBackToExitPressedOnce) {
-                super.onBackPressed();
+                finish();
                 return;
             }
 
@@ -325,7 +476,7 @@ public class Home extends AppCompatActivity{
         }
 
         if(id==R.id.chatbot){
-            startActivity(new Intent(Home.this,Chatbot.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+            startActivityForResult(new Intent(Home.this,Chatbot.class), LAUNCH_SECOND_ACTIVITY);
 
         }
         if(id==R.id.translate){
@@ -382,7 +533,7 @@ public class Home extends AppCompatActivity{
                 editor.apply();
                 if(isMyServiceRunning(VictimAlertForegroundNotification.class))
                     stopService(VictimAlertForegroundNotification.class);
-                startActivity(new Intent(Home.this,Login.class));
+                startActivity(new Intent(Home.this,logouthome.class));
                 finish();
 
             }
@@ -506,7 +657,7 @@ public class Home extends AppCompatActivity{
         View view = inflater.inflate(R.layout.activity_chatbotintro, null, true);
 
 
-        Button button = (Button) view.findViewById(R.id.btn_get_started);
+        Button button = view.findViewById(R.id.btn_get_started);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -540,7 +691,7 @@ public class Home extends AppCompatActivity{
         calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
 
-   /*     myIntent = new Intent(home.this, YourLocationBroadcastReciever.class);
+       myIntent = new Intent(Home.this, YourLocationBroadcastReciever.class);
         pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),0,myIntent,0);
 
 
@@ -556,7 +707,7 @@ public class Home extends AppCompatActivity{
             manager.cancel(pendingIntent);
         }
 
-        myIntent = new Intent(home.this, MyNotificationBroadcastReceiver.class);
+        myIntent = new Intent(Home.this, MyNotificationBroadcastReceiver.class);
         PendingIntent pendingIntent1 = PendingIntent.getBroadcast(getApplicationContext(),0,myIntent,0);
 
 
@@ -573,7 +724,7 @@ public class Home extends AppCompatActivity{
             }
         }
 
-    */
+
         myIntent = new Intent(Home.this, HelpneededBroadcastReceiver.class);
         PendingIntent pendingIntent2 = PendingIntent.getBroadcast(getApplicationContext(),0,myIntent,0);
 
@@ -592,6 +743,47 @@ public class Home extends AppCompatActivity{
 
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == LAUNCH_SECOND_ACTIVITY) {
+            if(resultCode == Activity.RESULT_OK){
+                String result=data.getStringExtra("result");
+                switch (result){
+                    case "casesreport":navController.navigate(bottomNav.getMenu().getItem(2).getItemId());break;
+                    case "updates":navController.navigate(bottomNav.getMenu().getItem(1).getItemId());break;
+                    case "home":navController.navigate(bottomNav.getMenu().getItem(0).getItemId());break;
+                    case "notification":navController.navigate(bottomNav.getMenu().getItem(3).getItemId());break;
+                    case "profile":navController.navigate(bottomNav.getMenu().getItem(4).getItemId());break;
+
+
+                }
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
+    }
+
+    public static void whatsapp(Activity activity, String phone) {
+        String formattedNumber = (phone);
+        try{
+            Intent sendIntent =new Intent("android.intent.action.MAIN");
+            sendIntent.setComponent(new ComponentName("com.whatsapp", "com.whatsapp.Conversation"));
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.setType("text/plain");
+            sendIntent.putExtra(Intent.EXTRA_TEXT,"Press 1 for latest updates");
+            sendIntent.putExtra("jid", formattedNumber +"@s.whatsapp.net");
+            sendIntent.setPackage("com.whatsapp");
+            activity.startActivity(sendIntent);
+        }
+        catch(Exception e)
+        {
+            Toast.makeText(activity,"You don't have Whatsapp"+ e.toString(),Toast.LENGTH_SHORT).show();
+        }
     }
 }
 

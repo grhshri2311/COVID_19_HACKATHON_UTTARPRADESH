@@ -34,7 +34,7 @@ public class test extends AppCompatActivity {
         if (checkPermissions()) {
             textView.setText("All permissions are Granted.");
             textView.setTextColor(getResources().getColor(R.color.GREEN));
-            startActivity(new Intent(test.this,Login.class));
+            startActivity(new Intent(test.this,logouthome.class));
             finish();
         } else {
             // show dialog informing them that we lack certain permissions
@@ -67,7 +67,7 @@ public class test extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case MULTIPLE_PERMISSIONS: {
                 boolean flag=true;
@@ -79,7 +79,7 @@ public class test extends AppCompatActivity {
                 if (flag) {
                     textView.setText("All permissions are Granted.");
                     textView.setTextColor(getResources().getColor(R.color.GREEN));
-                    startActivity(new Intent(test.this,Login.class), ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                    startActivity(new Intent(test.this,logouthome.class), ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                     finish();
                 } else {
                     textView.setText("All permissions are required for the app to work normally.");

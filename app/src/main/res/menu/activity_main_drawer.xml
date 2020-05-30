@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:showIn="navigation_view">
 
+
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
@@ -26,11 +27,91 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_person_black_24dp"
             android:title="@string/profile" />
+
     </group>
 
+    <item android:title="Modules">
+    <menu android:checkableBehavior="single">
+
+            <item
+                android:id="@+id/firstresponder"
+                android:icon="@drawable/firstrespondericon"
+                android:title="@string/first_responder" />
+            <item
+                android:id="@+id/scan"
+                android:icon="@drawable/scanicon"
+                android:title="@string/scan" />
+            <item
+                android:id="@+id/mapping"
+                android:icon="@drawable/mapmenuicon"
+                android:title="@string/mapping" />
+            <item
+                android:id="@+id/selfassess"
+                android:icon="@drawable/selfassessicon"
+                android:title="@string/self_assess" />
+            <item
+                android:id="@+id/alarm"
+                android:icon="@drawable/alarmtransparent"
+                android:title="@string/alarm_manager" />
+            <item
+                android:id="@+id/assign"
+                android:icon="@drawable/selfassessicon"
+                android:title="@string/assign" />
+
+        <item
+            android:id="@+id/onlinecourse"
+            android:icon="@drawable/onlinecourse"
+            android:title="@string/online_course" />
+        <item
+            android:id="@+id/publiccare"
+            android:icon="@drawable/hospitalicon"
+            android:title="@string/publiccare" />
+        <item
+            android:id="@+id/labs"
+            android:icon="@drawable/labsicon"
+            android:title="@string/labs_for_test" />
+            <item
+            android:id="@+id/hospitalnear"
+            android:icon="@drawable/hospitalmenuicon"
+            android:title="@string/hospital_near_me" />
+            <item
+                android:id="@+id/medicalshop"
+                android:icon="@drawable/medicalshopicon"
+                android:title="@string/medical_shops" />
+        <item
+            android:id="@+id/msme"
+            android:icon="@drawable/msmeproducts"
+            android:title="@string/msme_products" />
+            <item
+                android:id="@+id/epass"
+                android:icon="@drawable/epassicon"
+                android:title="@string/epass" />
+        <item
+            android:id="@+id/hospital"
+            android:icon="@drawable/hospitalicon"
+            android:title="@string/hospital_nlab_test_nmedicine" />
+            <item
+                android:id="@+id/quora"
+                android:icon="@drawable/ic_forum_black_24dp"
+                android:title="@string/quora" />
+            <item
+                android:id="@+id/helpline"
+                android:icon="@drawable/helplineicon"
+                android:title="@string/helpline" />
+            <item
+                android:id="@+id/donate"
+                android:icon="@drawable/donate"
+                android:title="@string/donate" />
+
+        </menu>
+    </item>
 
     <item android:title="Communicate">
         <menu>
+            <item
+                android:id="@+id/whatsapp"
+                android:icon="@drawable/whatsappicon"
+                android:title="@string/whatsapp_queries" />
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"

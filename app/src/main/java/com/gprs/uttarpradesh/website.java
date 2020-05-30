@@ -21,7 +21,7 @@ public class website extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_website);
-        wview=(WebView)findViewById(R.id.webv);
+        wview= findViewById(R.id.webv);
 
         progressDialog=new ProgressDialog(this);
 

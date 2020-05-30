@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#fff"
+    android:layout_height="match_parent"
+    tools:context=".helpline">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="40dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_bold"
+                android:gravity="center"
+                android:padding="20dp"
+                android:text="@string/helpline_numbers"
+                android:textColor="#4CAF50"
+                android:textSize="20dp" />
+            <TextView
+                android:id="@+id/help"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:padding="20dp"
+                android:gravity="center"
+                android:text="Corona/Covid-19 Helpline" />
+            <TextView
+                android:id="@+id/help1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:padding="20dp"
+                android:gravity="center"
+                android:text="Central Helpline" />
+
+            <TextView
+                android:id="@+id/help3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:padding="20dp"
+                android:gravity="center"
+                android:text="Ambulance Help Line" />
+            <TextView
+                android:id="@+id/help4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:padding="20dp"
+                android:gravity="center"
+                android:text="Police Control Room" />
+            <TextView
+                android:id="@+id/help5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:padding="20dp"
+                android:gravity="center"
+                android:text="Women Helpline " />
+            <TextView
+                android:id="@+id/help6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:padding="20dp"
+                android:gravity="center"
+                android:text="Child Helpline" />
+            <TextView
+                android:id="@+id/help7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:padding="20dp"
+                android:gravity="center"
+                android:text="Fire and Rescue" />
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

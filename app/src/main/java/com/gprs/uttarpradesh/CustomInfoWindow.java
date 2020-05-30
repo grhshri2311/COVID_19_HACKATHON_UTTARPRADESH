@@ -24,8 +24,8 @@ public class CustomInfoWindow implements GoogleMap.InfoWindowAdapter {
     public View getInfoContents(final Marker marker) {
         final View view = context.getLayoutInflater().inflate(R.layout.custominfowindow, null);
 
-        TextView tvTitle = (TextView) view.findViewById(R.id.tv_title);
-        TextView tvSubTitle = (TextView) view.findViewById(R.id.tv_subtitle);
+        TextView tvTitle = view.findViewById(R.id.tv_title);
+        TextView tvSubTitle = view.findViewById(R.id.tv_subtitle);
 
         tvTitle.setText(marker.getTitle());
         tvSubTitle.setText(marker.getSnippet());

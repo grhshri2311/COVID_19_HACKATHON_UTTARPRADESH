@@ -25,7 +25,7 @@
         android:id="@+id/textView15"
         android:layout_width="341dp"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/baloo"
+        android:fontFamily="@font/roboto_bold"
         android:gravity="center"
         android:text="@string/please_turn_on_internet_to_stay_updated"
         android:textColor="#673AB7"

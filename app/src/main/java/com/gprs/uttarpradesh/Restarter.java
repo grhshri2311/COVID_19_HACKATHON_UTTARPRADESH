@@ -20,8 +20,8 @@ Context context;
 
         this.context=context;
        startHelpNeed(true,3);
-     //   startNotification();
-     //   startYourLoction();
+        startNotification();
+       startYourLoction();
         String action=intent.getAction();
 
         switch (action){
@@ -30,13 +30,13 @@ Context context;
                                  break;
             }
         }
-            /*    if(!isMyServiceRunning(AlarmForegroundNotification.class)) {
+              if(!isMyServiceRunning(AlarmForegroundNotification.class)) {
                     startService(AlarmForegroundNotification.class);
                     }
 
 
 
-             */
+
 
 
     }
@@ -84,7 +84,7 @@ Context context;
 
     }
 
-/*
+
     void startNotification(){
         AlarmManager manager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent myIntent;
@@ -104,6 +104,7 @@ Context context;
     }
 
     void  startYourLoction(){
+
         AlarmManager manager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent myIntent;
 
@@ -132,5 +133,4 @@ Context context;
 
     }
 
- */
 }

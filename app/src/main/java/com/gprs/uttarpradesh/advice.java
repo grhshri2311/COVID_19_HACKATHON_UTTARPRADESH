@@ -15,8 +15,7 @@ public class advice extends YouTubeBaseActivity implements YouTubePlayer.OnIniti
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advice);
-        YouTubePlayerView youTubeView = (YouTubePlayerView)
-                findViewById(R.id.you);
+        YouTubePlayerView youTubeView = findViewById(R.id.you);
         Button  button=findViewById(R.id.btnOrder);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -24,7 +23,7 @@ public class advice extends YouTubeBaseActivity implements YouTubePlayer.OnIniti
                 finish();
             }
         });
-        youTubeView.initialize("AIzaSyAfy6YVB_UU8GrSG7r2yxn4BTCbDNc3kC0", this);
+        youTubeView.initialize("YOUR KEY", this);
     }
 
     @Override

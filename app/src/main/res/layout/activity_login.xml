@@ -48,7 +48,7 @@
             android:layout_marginTop="48dp"
             android:fontFamily="sans-serif-black"
 
-            android:text="Welcome back\nStay safe from COVID-19"
+            android:text="@string/welcome_back_nstay_safe_from_covid_19"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold"

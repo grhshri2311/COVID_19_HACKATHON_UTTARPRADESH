@@ -47,7 +47,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="48dp"
             android:fontFamily="sans-serif-black"
-            android:text="Join in our Communtiy !\nStay safe from COVID-19"
+            android:text="@string/join_in_our_communtiy_nstay_safe_from_covid_19"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -87,7 +87,7 @@
             android:transitionName="phone"
             android:layout_marginEnd="32dp"
             android:ems="10"
-            android:hint="email"
+            android:hint="@string/email_optional"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/FullName"
@@ -159,7 +159,7 @@
                 android:id="@+id/role"
                 android:textSize="20dp"
                 android:textColor="@color/colorPrimary"
-                android:text="Select your Role"/>
+                android:text="@string/select_your_role"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button

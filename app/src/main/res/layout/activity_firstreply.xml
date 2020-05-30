@@ -22,9 +22,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginBottom="20dp"
-                android:fontFamily="@font/alfa_slab_one"
+                android:fontFamily="@font/roboto_bold"
                 android:gravity="center"
-                android:text="Got Help !"
+                android:text="@string/got_help"
                 android:textColor="@color/GREEN"
                 android:textSize="30dp" />
 
