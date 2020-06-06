@@ -6,11 +6,16 @@
 
     <dist:module dist:instant="true" />
 
+    <uses-feature
+        android:name="android.hardware.fingerprint"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -34,7 +39,11 @@
         android:roundIcon="@drawable/collective_intelligence_icon_use"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".publichealthcare"/>
+        <activity android:name=".unorganizedsectors"></activity>
+        <activity android:name=".QRcode" />
+        <activity android:name=".Scanner" />
+        <activity android:name=".bio" />
+        <activity android:name=".publichealthcare" />
         <activity android:name=".course" />
         <activity android:name=".cases_report" />
         <activity android:name=".news" />
@@ -44,7 +53,6 @@
         <activity android:name=".stepstofollow" />
         <activity android:name=".alarmremember" />
         <activity android:name=".epass" />
-        <activity android:name=".hospital" />
         <activity android:name=".self_asses" />
         <activity android:name=".Alarm" />
         <activity android:name=".quora" />
@@ -69,7 +77,7 @@
             android:value="true" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR KEY" />
+            android:value="AIzaSyAfy6YVB_UU8GrSG7r2yxn4BTCbDNc3kC0" />
 
         <activity android:name=".test" />
         <activity android:name=".Forgotpassword" />

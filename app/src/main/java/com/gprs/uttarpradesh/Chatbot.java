@@ -101,8 +101,8 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
         translationService = initLanguageTranslatorService();
 
         if(checkInternetConnection()) {
-            watsonAssistant = new Assistant("2019-02-28", new IamAuthenticator("YOUR KEY"));
-            watsonAssistant.setServiceUrl("YOUR KEY");
+            watsonAssistant = new Assistant("2019-02-28", new IamAuthenticator("S6C-4uOqeJyJzNaRBGP2PEp7PSJuNZ9C_OciE5JO3KoS"));
+            watsonAssistant.setServiceUrl("https://api.eu-gb.assistant.watson.cloud.ibm.com/instances/fff0d44c-bc02-4bdc-965e-b83674194106");
         }
     }
     @Override
@@ -789,7 +789,7 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
                 public void run() {
                     try {
                         if (watsonAssistantSession == null) {
-                            ServiceCall<SessionResponse> call = watsonAssistant.createSession(new CreateSessionOptions.Builder().assistantId("YOUR KEY").build());
+                            ServiceCall<SessionResponse> call = watsonAssistant.createSession(new CreateSessionOptions.Builder().assistantId("863d4b44-f132-49e1-9632-36f7bed0f0c8").build());
                             watsonAssistantSession = call.execute();
                         }
 
@@ -797,7 +797,7 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
                                 .text(inputmessage)
                                 .build();
                         MessageOptions options = new MessageOptions.Builder()
-                                .assistantId("YOUR KEY")
+                                .assistantId("863d4b44-f132-49e1-9632-36f7bed0f0c8")
                                 .input(input)
                                 .sessionId(watsonAssistantSession.getResult().getSessionId())
                                 .build();
@@ -942,9 +942,9 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
 
     private LanguageTranslator initLanguageTranslatorService() {
         Authenticator authenticator
-                = new IamAuthenticator("YOUR KEY");
+                = new IamAuthenticator("ZWEkxiHJfOS2wxSH9JU6pKIgeaNdNUGE5Fan8j-pyr9C");
         LanguageTranslator service = new LanguageTranslator("2018-05-01", authenticator);
-        service.setServiceUrl("YOUR KEY");
+        service.setServiceUrl("https://api.eu-gb.language-translator.watson.cloud.ibm.com/instances/7956e320-5069-4d6a-ba80-e62305894905");
         return service;
     }
 
@@ -1317,3 +1317,6 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
 
 
 }
+
+
+

@@ -32,13 +32,24 @@
                 android:id="@+id/respond"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#FFEDA7"
-                android:textColor="#9C27B0"
+                android:background="#EFFFEF"
+                android:textColor="#4CAF50"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_gravity="right"
                 android:fontFamily="@font/roboto"
                 android:text="@string/respond" />
+            <Button
+                android:id="@+id/reject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#FFF0EF"
+                android:textColor="#F44336"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="right"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/reject" />
         </LinearLayout>
 
 

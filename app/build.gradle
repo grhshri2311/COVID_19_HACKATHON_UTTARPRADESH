@@ -91,5 +91,11 @@ dependencies {
         exclude group: 'com.google.code.findbugs', module: 'annotations'
         implementation 'com.android.support:design:28.0.0'
     }
+    implementation 'androidx.preference:preference:1.1.0'
+
+    implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
+    implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'
+    implementation 'com.budiyev.android:code-scanner:2.1.0'
+    implementation 'com.karumi:dexter:6.0.0'
 
 }

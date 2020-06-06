@@ -15,6 +15,17 @@
         android:icon="@drawable/round_translate_white_18dp"/>
 
     <item
+        android:id="@+id/nav_qr"
+        android:icon="@drawable/qrmenuicon"
+        android:title="@string/generate_scan_qr"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/nav_settings"
+        android:icon="@drawable/ic_baseline_settings_24"
+        app:showAsAction="ifRoom"
+        android:title="@string/setting" />
+    <item
         android:title="@string/share"
         android:id="@+id/share"
         app:showAsAction="ifRoom"

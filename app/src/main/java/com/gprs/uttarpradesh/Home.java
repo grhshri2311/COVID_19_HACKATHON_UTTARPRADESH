@@ -42,6 +42,7 @@ import com.google.android.material.snackbar.Snackbar;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -139,7 +140,7 @@ public class Home extends AppCompatActivity{
 
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_share,R.id.nav_notification,R.id.nav_profile,R.id.nav_covidcases,R.id.nav_updates)
+                R.id.nav_home, R.id.nav_share,R.id.nav_notification,R.id.nav_profile,R.id.nav_covidcases,R.id.nav_updates,R.id.nav_settings,R.id.nav_share)
                 .setDrawerLayout(drawer)
                 .build();
 
@@ -169,7 +170,9 @@ public class Home extends AppCompatActivity{
                     case "Notification": navController.navigate(menuItem.getItemId());break;
 
                     case "Profile": navController.navigate(menuItem.getItemId());break;
+                    case "Setting":navController.navigate(R.id.nav_settings);break;
 
+                    case "Generate/scan QR":startActivity(new Intent(Home.this,QRcode.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
                     case "Donate":startActivity(new Intent(Home.this,donate.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
 
                     case "First Responder":startActivity(new Intent(Home.this,firstresponder.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
@@ -184,10 +187,10 @@ public class Home extends AppCompatActivity{
 
                     case "Assign work":startActivity(new Intent(Home.this,assign_work.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
 
-                    case "Appointments/Admissions":startActivity(new Intent(Home.this,hospital.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
+                    case "Appointments/Admissions":new Bottomsheetadmissionfragment().show(getSupportFragmentManager(),"Dialog");break;
 
                     case "MSME products":startActivity(new Intent(Home.this,MSME.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
-
+                    case "Unorganized Sector workers":startActivity(new Intent(Home.this,unorganizedsectors.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
                     case "Medical shops":
                         Intent intent=new Intent(Home.this,Medicalshops.class);
                         intent.putExtra("text","Pharmacies");
@@ -255,28 +258,18 @@ public class Home extends AppCompatActivity{
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         final String currentDateTime = dateFormat.format(new Date()); // Find todays date
 
-        if(!pref.getString("today","").equals(currentDateTime)) {
+        if(!PreferenceManager.getDefaultSharedPreferences(this).getString("today","").equals(currentDateTime)) {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-
-                    editor.putString("today",currentDateTime);
-                    editor.commit();
-                    Intent i = new Intent(Home.this, stepstofollow.class);
-                    startActivity(i);
+                    PreferenceManager.getDefaultSharedPreferences(Home.this).edit().putString("today",currentDateTime).commit();
+                    startActivity(new Intent(Home.this,stepstofollow.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
                 }
-            }, 20000);
-
+            }, 30000);
         }
 
 
 
-
-        if(!pref.getString("todaychatintro","").equals(currentDateTime)) {
-            chatbotintro();
-            editor.putString("todaychatintro",currentDateTime);
-            editor.commit();
-        }
 
         FirebaseDatabase.getInstance().getReference().child("Location").child(pref.getString("user","")).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -346,7 +339,7 @@ public class Home extends AppCompatActivity{
                 if(dataSnapshot!=null){
                     Long count1=dataSnapshot.getChildrenCount();
                     if(count1>=1) {
-
+                        notificationnumber.setVisibility(View.VISIBLE);
                         notificationnumber.setText(String.valueOf(count1));
 
                     }
@@ -469,16 +462,16 @@ public class Home extends AppCompatActivity{
         if(id==R.id.logoutmenu){
            startAlarm(false);
 
-            NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            mNotificationManager.cancel(101);
-            mNotificationManager.cancel(33);
-            Exit();
+            new Bottomsheetlogoutfragment().show(getSupportFragmentManager(),"Dialog");
+
         }
 
         if(id==R.id.chatbot){
             startActivityForResult(new Intent(Home.this,Chatbot.class), LAUNCH_SECOND_ACTIVITY);
 
         }
+        if(id==R.id.nav_qr){
+            startActivity(new Intent(Home.this,QRcode.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());        }
         if(id==R.id.translate){
             SharedPreferences pref;
             SharedPreferences.Editor editor;
@@ -499,7 +492,11 @@ public class Home extends AppCompatActivity{
             overridePendingTransition(0, 0);
         }
 
+        if(id==R.id.nav_settings) {
+            navController.navigate(R.id.nav_settings);
+        }
         if(id==R.id.share){
+            navController.navigate(R.id.nav_share);
             final String appPackageName = BuildConfig.APPLICATION_ID;
             final String appName = getString(R.string.app_name);
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
@@ -514,40 +511,6 @@ public class Home extends AppCompatActivity{
         return true;
     }
 
-    public void Exit() {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(false);
-        builder.setMessage("Do you want to Logout?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                SharedPreferences pref;
-                SharedPreferences.Editor editor;
-
-
-                pref = getApplicationContext().getSharedPreferences("user", 0); // 0 - for private mode
-                editor = pref.edit();
-
-                editor.clear();
-                editor.apply();
-                if(isMyServiceRunning(VictimAlertForegroundNotification.class))
-                    stopService(VictimAlertForegroundNotification.class);
-                startActivity(new Intent(Home.this,logouthome.class));
-                finish();
-
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //if user select "No", just cancel this dialog and continue with app
-                dialog.cancel();
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
-    }
 
     public void startService(Class<?> serviceClass) {
         Intent serviceIntent = new Intent(this, serviceClass);

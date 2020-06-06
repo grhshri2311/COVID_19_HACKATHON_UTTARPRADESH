@@ -32,7 +32,7 @@ public class UpdatesFragment extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
     Button btnAboutUs;
     Dialog dialog;
-    final String API_KEY = "YOUR KEY";
+    final String API_KEY = "81e919346ed94b8491dc88809d40d4eb";
     Adapter adapter;
     List<Articles>  articles = new ArrayList<>();
     View root;

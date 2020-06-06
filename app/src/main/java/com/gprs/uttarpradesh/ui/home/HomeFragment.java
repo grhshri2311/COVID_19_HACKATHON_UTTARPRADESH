@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -156,21 +157,31 @@ public class HomeFragment extends Fragment{
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         final String currentDateTime = dateFormat.format(new Date()); // Find todays date
 
-        if(!pref.getString("today1","").equals(currentDateTime)) {
+        if(!PreferenceManager.getDefaultSharedPreferences(getContext()).getString("today1","").equals(currentDateTime)) {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-
-                    editor.putString("today1",currentDateTime);
-                    editor.commit();
-                    Intent i = new Intent(root.getContext(), advice.class);
+                    PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putString("today1",currentDateTime).commit();
+                    Intent i = new Intent(getActivity(), advice.class);
                     startActivity(i);
                 }
             }, 10000);
-
         }
 
         check();
+
+        if(!androidx.preference.PreferenceManager.getDefaultSharedPreferences(root.getContext()).getBoolean("chatintro",false)) {
+            root.findViewById(R.id.rellayout).setVisibility(View.VISIBLE);
+            androidx.preference.PreferenceManager.getDefaultSharedPreferences(root.getContext()).edit().putBoolean("chatintro",true).commit();
+        }
+
+
+        root.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                root.findViewById(R.id.rellayout).setVisibility(View.INVISIBLE);
+            }
+        });
 
 
         root.findViewById(R.id.donate).setOnClickListener(new View.OnClickListener() {

@@ -233,5 +233,21 @@
     <string name="publiccare">सार्वजनिक स्वास्थ्य देखभाल स्थान</string>
     <string name="online_course">ऑनलाइन पाठ्यक्रम</string>
     <string name="email_optional">ईमेल (वैकल्पिक)</string>
+    <string name="sectorworkers">असंगठित क्षेत्र के मजदूर</string>
+    <string name="verifyfail">ज़ोर से सत्यापित करें, पुनः प्रयास करें</string>
+    <string name="verifysuccess">सत्यापित</string>
+    <string name="biometric">बॉयोमीट्रिक</string>
+    <string name="use_password">Use Password</string>
+    <string name="touch_sensor">पासवर्ड का उपयोग करें</string>
+    <string name="verify_your_identity">अपनी पहचान सत्यापित करें</string>
+    <string name="confirm_your_fingerprint_so_covid_19_relief_can_verify_it_s_you">अपने फिंगरप्रिंट की पुष्टि करें ताकि COVID-19 RELIEF आपको यह सत्यापित कर सके।</string>
+    <string name="it_has_not_been_generated_by_covid_19_relief">यह COVID-19 RELIEF द्वारा उत्पन्न नहीं किया गया है</string>
+    <string name="invalid_qr_code">अमान्य QR कोड</string>
+    <string name="generate_qr_code">QR कोड जनरेट करें</string>
+    <string name="scan_qr_code">क्यू आर कोड स्कैन करें</string>
+    <string name="generate_scan_qr">QR उत्पन्न / स्कैन करें</string>
+    <string name="a_lot_of_features_like_voice_assistant_qr_scanner_reader_settings_can_be_found_here">वॉयस असिस्टेंट, क्यूआर स्कैनर / रीडर, सेटिंग्स जैसे बहुत सारे फीचर्स यहां देखे जा सकते हैं</string>
+    <string name="sign_in_sign_up">प्रवेश या साइन अप</string>
+    <string name="reject">अस्वीकार</string>
 
 </resources>

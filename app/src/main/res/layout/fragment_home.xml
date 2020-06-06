@@ -403,7 +403,7 @@
                                 android:layout_marginTop="20dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Donate"
+                                android:text="@string/donate"
                                 android:background="@drawable/buttonselector"
                                 android:elevation="10dp"
                                 />
@@ -508,13 +508,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
+                    android:id="@+id/faq"
+
                     android:orientation="horizontal"
                     android:background="@drawable/textviewbackground1"
                     android:layout_gravity="center"
                     android:gravity="center">
 
                     <LinearLayout
-                        android:id="@+id/faq"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="20dp"
@@ -652,6 +653,50 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/collective_intelligence_icon_use" />
 
+            <RelativeLayout
+                android:id="@+id/rellayout"
+                android:layout_width="302dp"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <RelativeLayout
+                    android:id="@+id/rlv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlv2"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/rectanglehome"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/close"
+                        android:padding="10dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="@string/a_lot_of_features_like_voice_assistant_qr_scanner_reader_settings_can_be_found_here"
+                        android:textColor="#FFFFFF" />
+                    <ImageView
+                        android:id="@+id/close"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_baseline_close_24"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlv2"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignRight="@id/rlv1"
+                    android:background="@drawable/trianglehome"
+                    android:rotation="360" />
+            </RelativeLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

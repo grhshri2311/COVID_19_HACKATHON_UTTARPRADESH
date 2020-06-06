@@ -8,11 +8,19 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="50dp"
     android:gravity="center"
     android:orientation="vertical">
 
+    <Button
+        android:id="@+id/button4"
+        android:textSize="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#3F51B5"
+        android:elevation="10dp"
 
+        android:text="@string/assign"
+        android:textColor="#ffffff" />
 
     <ListView
         android:id="@+id/volunteers"
@@ -28,7 +36,6 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:orientation="horizontal"
-
         android:padding="10dp">
 
         <TextView
@@ -37,7 +44,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/write_down_the_works"
-
             android:textColor="#000000"
             android:textSize="20sp" />
 
@@ -48,18 +54,9 @@
         android:layout_width="362dp"
         android:layout_height="wrap_content"
         android:ems="10"
-
         android:layout_gravity="center"
         android:gravity="start|top"
         android:inputType="textMultiLine" />
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#00000000"
-        android:text="@string/assign"
-        android:textColor="#673AB7" />
 </LinearLayout>
 </ScrollView>

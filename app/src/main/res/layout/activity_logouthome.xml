@@ -105,7 +105,7 @@
                         android:layout_below="@id/bus"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:text="Sign IN / Sign UP"
+                        android:text="@string/sign_in_sign_up"
                         android:textSize="15dp"
                         app:fontFamily="@font/roboto_medium" />
 
@@ -130,7 +130,7 @@
                 android:marqueeRepeatLimit="marquee_forever"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
-                android:text="STAY HOME.SAVE LIVES.      Help stop coronavirus        STAY home         KEEP safe distance         WASH hands often         COVER your cough         SICK? Call the helpline"
+                android:text="@string/stay_home_save_lives_help_stop_coronavirus_stay_home_keep_safe_distance_wash_hands_often_cover_your_cough_sick_call_the_helpline"
                 android:singleLine="true"
                 android:textSize="20dp"
                 android:textColor="#673AB7"
@@ -156,7 +156,7 @@
                     <LinearLayout
                         android:id="@+id/linearLayout"
                         android:layout_width="165dp"
-                        android:layout_height="304dp"
+                        android:layout_height="319dp"
                         android:orientation="vertical"
                         android:transitionName="linear2"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -245,8 +245,8 @@
 
                             <RelativeLayout
                                 android:id="@+id/dashmap"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                                android:layout_width="150dp"
+                                android:layout_height="150dp">
 
                                 <TextView
                                     android:id="@+id/textView2"
@@ -278,8 +278,8 @@
 
                             <RelativeLayout
                                 android:id="@+id/helpline"
-                                android:layout_width="160dp"
-                                android:layout_height="match_parent">
+                                android:layout_width="150dp"
+                                android:layout_height="150dp">
 
                                 <TextView
                                     android:id="@+id/textView11"
@@ -308,7 +308,7 @@
                     <LinearLayout
                         android:id="@+id/linearLayout3"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="319dp"
                         android:orientation="vertical"
                         android:padding="10dp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -392,7 +392,7 @@
                     <LinearLayout
                         android:id="@+id/linearLayout3231"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="319dp"
                         android:orientation="vertical"
                         android:padding="10dp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -439,6 +439,57 @@
                             android:layout_margin="10dp"
                             android:layout_weight="1">
 
+                            <RelativeLayout
+                                android:id="@+id/sector"
+                                android:onClick="sectorworkers"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/textView3121"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/train12191"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="10dp"
+                                    android:gravity="center"
+                                    android:text="@string/sectorworkers"
+                                    android:textSize="15dp"
+                                    app:fontFamily="@font/roboto_medium"
+                                    tools:ignore="DuplicateIds" />
+
+                                <ImageView
+                                    android:id="@+id/train12191"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="15dp"
+                                    app:srcCompat="@drawable/workers" />
+                            </RelativeLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout31"
+                        android:layout_width="180dp"
+                        android:layout_height="319dp"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1">
 
                             <RelativeLayout
                                 android:id="@+id/publiccare"
@@ -465,23 +516,8 @@
                                     android:layout_marginTop="15dp"
                                     app:srcCompat="@drawable/hospital" />
                             </RelativeLayout>
+
                         </androidx.cardview.widget.CardView>
-
-
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:id="@+id/linearLayout31"
-                        android:layout_width="180dp"
-                        android:layout_height="319dp"
-                        android:orientation="vertical"
-                        android:padding="10dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="150dp"
@@ -516,15 +552,29 @@
                                     app:srcCompat="@drawable/labsicon" />
                             </RelativeLayout>
 
+
                         </androidx.cardview.widget.CardView>
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout4"
+                        android:layout_width="180dp"
+                        android:layout_height="319dp"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout31">
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="150dp"
                             android:layout_height="150dp"
                             android:layout_margin="5dp"
                             android:layout_weight="1">
-
-
                             <RelativeLayout
                                 android:id="@+id/msme"
                                 android:layout_width="match_parent"
@@ -551,22 +601,8 @@
                                     android:layout_marginTop="15dp"
                                     app:srcCompat="@drawable/msmeproducts" />
                             </RelativeLayout>
+
                         </androidx.cardview.widget.CardView>
-
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:id="@+id/linearLayout4"
-                        android:layout_width="180dp"
-                        android:layout_height="317dp"
-                        android:orientation="vertical"
-                        android:padding="10dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/linearLayout31">
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="150dp"
@@ -601,14 +637,30 @@
                                     app:srcCompat="@drawable/hospital" />
                             </RelativeLayout>
 
+
+
+
                         </androidx.cardview.widget.CardView>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout5"
+                        android:layout_width="185dp"
+                        android:layout_height="319dp"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="150dp"
                             android:layout_height="150dp"
                             android:layout_margin="5dp"
                             android:layout_weight="1">
-
 
                             <RelativeLayout
                                 android:id="@+id/medstore"
@@ -638,20 +690,6 @@
 
 
                         </androidx.cardview.widget.CardView>
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/linearLayout5"
-                        android:layout_width="185dp"
-                        android:layout_height="317dp"
-                        android:orientation="vertical"
-                        android:padding="10dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="150dp"
@@ -687,6 +725,20 @@
 
                         </androidx.cardview.widget.CardView>
 
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout6"
+                        android:layout_width="193dp"
+                        android:layout_height="319dp"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+
                         <androidx.cardview.widget.CardView
                             android:layout_width="150dp"
                             android:layout_height="150dp"
@@ -719,21 +771,10 @@
                                     app:srcCompat="@drawable/epass" />
                             </RelativeLayout>
 
+
+
                         </androidx.cardview.widget.CardView>
 
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/linearLayout6"
-                        android:layout_width="193dp"
-                        android:layout_height="314dp"
-                        android:orientation="vertical"
-                        android:padding="10dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="150dp"
@@ -770,6 +811,20 @@
 
                         </androidx.cardview.widget.CardView>
 
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout7"
+                        android:layout_width="180dp"
+                        android:layout_height="319dp"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+
+                        android:transitionName="linear1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="150dp"
@@ -801,42 +856,8 @@
                                     android:layout_marginTop="15dp"
                                     app:srcCompat="@drawable/donatehome" />
                             </RelativeLayout>
-                        </androidx.cardview.widget.CardView>
 
-                    </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/linearLayout7"
-                        android:layout_width="180dp"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:padding="10dp"
-
-                        android:transitionName="linear1"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="150dp"
-                            android:layout_height="150dp"
-                            android:layout_margin="5dp"
-                            android:layout_weight="1">
-
-                            <RelativeLayout
-                                android:id="@+id/shelterlayout"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
-
-                                <ImageView
-                                    android:id="@+id/shelter"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_margin="5dp"
-                                    android:src="@drawable/shelter"
-                                    android:transitionName="icon" />
-                            </RelativeLayout>
 
                         </androidx.cardview.widget.CardView>
 
@@ -846,40 +867,104 @@
                             android:layout_margin="5dp"
                             android:layout_weight="1">
 
-
                             <RelativeLayout
-                                android:id="@+id/chatbot"
+                                android:id="@+id/whatsapp"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:onClick="chatbot">
+                                android:onClick="whatsapp">
 
                                 <TextView
-                                    android:id="@+id/textView211"
+                                    android:id="@+id/textView51"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@id/train211"
+                                    android:layout_below="@id/train51"
                                     android:layout_centerHorizontal="true"
+                                    android:gravity="center"
                                     android:layout_marginTop="10dp"
-                                    android:text="@string/support"
+                                    android:text="@string/whatsapp_queries"
                                     android:textSize="15dp"
                                     app:fontFamily="@font/roboto_medium" />
 
                                 <ImageView
-                                    android:id="@+id/train211"
-                                    android:layout_width="100dp"
-                                    android:layout_height="85dp"
+                                    android:id="@+id/train51"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="15dp"
-                                    app:srcCompat="@drawable/support" />
+                                    app:srcCompat="@drawable/whatsapp" />
                             </RelativeLayout>
 
 
                         </androidx.cardview.widget.CardView>
 
-
                     </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/linearLayout8"
+                    android:layout_width="180dp"
+                    android:layout_height="319dp"
+                    android:orientation="vertical"
+                    android:padding="10dp"
 
+                    android:transitionName="linear1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
 
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1">
+                        <RelativeLayout
+                            android:id="@+id/chatbot"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:onClick="chatbot">
+
+                            <TextView
+                                android:id="@+id/textView211"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/train211"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="10dp"
+                                android:text="@string/support"
+                                android:textSize="15dp"
+                                app:fontFamily="@font/roboto_medium" />
+
+                            <ImageView
+                                android:id="@+id/train211"
+                                android:layout_width="100dp"
+                                android:layout_height="85dp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="15dp"
+                                app:srcCompat="@drawable/support" />
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1">
+
+                        <RelativeLayout
+                            android:id="@+id/shelterlayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/shelter"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="5dp"
+                                android:src="@drawable/shelter"
+                                android:transitionName="icon" />
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
                 </LinearLayout>
             </HorizontalScrollView>
             <LinearLayout
@@ -893,46 +978,46 @@
                 android:orientation="vertical">
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:orientation="horizontal"
-                android:background="@drawable/textviewbackground"
-                android:layout_gravity="center"
-                android:gravity="center">
-
                 <LinearLayout
-                    android:id="@+id/faq"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="25dp"
-                        android:fontFamily="@font/roboto_bold"
-                        android:text="FAQ"
-                        android:textColor="#000"
-                        android:textSize="30dp" />
+                    android:layout_gravity="center"
+                    android:id="@+id/faq"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/textviewbackground"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="ENGLISH"
-                        />
+                        android:layout_marginRight="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="25dp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:text="FAQ"
+                            android:textColor="#000"
+                            android:textSize="30dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ENGLISH" />
+                    </LinearLayout>
+
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/faq" />
                 </LinearLayout>
 
-
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:src="@drawable/faq" />
-            </LinearLayout>
-
-            <LinearLayout
+                <LinearLayout
                 android:id="@+id/faq1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -978,7 +1063,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/roboto_bold"
-                android:text="Important Links"
+                android:text="@string/important_links"
                 android:textColor="#C4BFB6"
                 android:textSize="20dp" />
 

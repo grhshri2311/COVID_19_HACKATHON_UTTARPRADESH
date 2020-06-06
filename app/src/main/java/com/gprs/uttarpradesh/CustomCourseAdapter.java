@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -26,6 +28,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -174,54 +177,19 @@ class CustomCourseAdapter extends ArrayAdapter {
     }
 
     private void viewcourse(String title, final String url, String s, String image_480x270, String ins1) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(context,android.R.style.Theme_Material_Light_NoActionBar_Fullscreen);
-        builder.setCancelable(true);
-        builder.setTitle("Course Details");
 
-
+        Bundle bundle=new Bundle();
+        bundle.putString("image_480x270",image_480x270);
+        bundle.putString("title",title);
+        bundle.putString("ins1",ins1);
+        bundle.putString("s",s);
+        bundle.putString("url",url);
 
         progressDialog.hide();
-        LayoutInflater inflater=context.getLayoutInflater();
-        View view = inflater.inflate(R.layout.coursedetails, null, true);
-
-        TextView namet=view.findViewById(R.id.name);
-        TextView inst=view.findViewById(R.id.ins);
-        TextView pricet=view.findViewById(R.id.price);
-        ImageView image=view.findViewById(R.id.image);
-
-        new DownloadImageTask(image)
-                .execute(image_480x270);
-        namet.setText(title);
-        inst.setText(ins1);
-        pricet.setText(s);
-
-
-
-        Button register=view.findViewById(R.id.register);
-
-
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(context,pdfViewer.class);
-                intent.putExtra("text",url);
-                context.startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(context).toBundle());
-            }
-        });
-
-
-        builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog alert = builder.create();
-        alert.getWindow().setBackgroundDrawableResource(android.R.color.background_light);
-
-        alert.setView(view);
-        alert.show();
+        BottomSheetDialogFragment f=new Bottomsheetcoursefragment();
+        f.setArguments(bundle);
+        FragmentActivity fr=(FragmentActivity) context;
+        f.show(fr.getSupportFragmentManager(),"Dialog");
 
 
     }

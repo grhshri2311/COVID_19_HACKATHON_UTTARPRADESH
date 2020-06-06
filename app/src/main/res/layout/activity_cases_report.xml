@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipe"
     android:layout_width="match_parent"
+    android:background="#fff"
     android:layout_height="match_parent"
     tools:context=".cases_report">
 
@@ -100,7 +101,7 @@
 
                 <TextView
                     android:id="@+id/textView3"
-                    android:layout_width="43dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="22dp"
                     android:layout_marginStart="76dp"
                     android:layout_marginTop="44dp"

@@ -165,6 +165,7 @@ public class cases_report extends AppCompatActivity {
         textView.setText(active1.get(i));
         textView1.setText(confirm1.get(i));
         textView2.setText(death1.get(i));
+        textView3.setText(recover1.get(i));
 
         textView4.setText("");
         textView5.setText("");

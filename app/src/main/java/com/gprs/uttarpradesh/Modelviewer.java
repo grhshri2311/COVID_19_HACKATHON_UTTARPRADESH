@@ -2,21 +2,21 @@ package com.gprs.uttarpradesh;
 
 public class Modelviewer {
 
-    private int image;
+    private String image;
     private String title;
     private String desc;
 
-    public Modelviewer(int image, String title, String desc) {
+    public Modelviewer(String image, String title, String desc) {
         this.image = image;
         this.title = title;
         this.desc = desc;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

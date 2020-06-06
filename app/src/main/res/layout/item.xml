@@ -27,7 +27,6 @@
 
             <ImageView
                 android:id="@+id/image"
-                android:src="@drawable/advice1"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
                 android:layout_below="@+id/text1"
