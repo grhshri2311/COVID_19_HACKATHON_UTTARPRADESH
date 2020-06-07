@@ -32,7 +32,7 @@
                 android:layout_marginTop="24dp"
                 android:text="@string/current_status"
                 android:textColor="#9C27B0"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:transitionName="currrentstatus"
                 app:fontFamily="@font/"
                 app:layout_constraintEnd_toStartOf="@+id/imageView"
@@ -77,7 +77,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView"
                 app:layout_constraintTop_toBottomOf="@+id/hometoolbar"
-                app:srcCompat="@drawable/collective_intelligence_icon_use" />
+                app:srcCompat="@drawable/collective_intelligence_icon_use"
+                android:contentDescription="TODO" />
 
             <LinearLayout
                 android:id="@+id/linearLayout0"
@@ -92,21 +93,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView">
                 <RelativeLayout
-                    android:id="@+id/login"
                     android:onClick="login"
                     android:background="@drawable/textviewbackground1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/textView30"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/bus"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
                         android:text="@string/sign_in_sign_up"
-                        android:textSize="15dp"
+                        android:textSize="15sp"
                         app:fontFamily="@font/roboto_medium" />
 
                     <ImageView
@@ -115,7 +114,8 @@
                         android:layout_height="75dp"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="15dp"
-                        app:srcCompat="@drawable/signypicon" />
+                        app:srcCompat="@drawable/signypicon"
+                        android:contentDescription="TODO" />
                 </RelativeLayout>
 
             </LinearLayout>
@@ -132,7 +132,7 @@
                 android:layout_marginBottom="20dp"
                 android:text="@string/stay_home_save_lives_help_stop_coronavirus_stay_home_keep_safe_distance_wash_hands_often_cover_your_cough_sick_call_the_helpline"
                 android:singleLine="true"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textColor="#673AB7"
                 android:fontFamily="@font/roboto_medium"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout0"
@@ -166,7 +166,6 @@
                         app:layout_constraintTop_toBottomOf="@+id/scrollingtextview">
 
                         <androidx.cardview.widget.CardView
-                            android:id="@+id/mystatus_layout"
                             android:layout_width="150dp"
                             android:layout_height="150dp"
                             android:layout_margin="5dp"
@@ -185,7 +184,7 @@
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="10dp"
                                     android:text="@string/scan"
-                                    android:textSize="15dp"
+                                    android:textSize="15sp"
                                     app:fontFamily="@font/roboto_medium" />
 
                                 <ImageView
@@ -194,7 +193,8 @@
                                     android:layout_height="90dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="15dp"
-                                    app:srcCompat="@drawable/virusscan" />
+                                    app:srcCompat="@drawable/virusscan"
+                                    android:contentDescription="TODO" />
                             </RelativeLayout>
                         </androidx.cardview.widget.CardView>
 
@@ -217,7 +217,8 @@
                                     android:layout_height="100dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="15dp"
-                                    app:srcCompat="@drawable/selfassessiconhome" />
+                                    app:srcCompat="@drawable/selfassessiconhome"
+                                    android:contentDescription="TODO" />
                             </RelativeLayout>
 
                         </androidx.cardview.widget.CardView>
@@ -256,7 +257,7 @@
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="10dp"
                                     android:text="@string/mapping"
-                                    android:textSize="15dp"
+                                    android:textSize="15sp"
                                     app:fontFamily="@font/roboto_medium" />
 
                                 <ImageView
@@ -265,7 +266,8 @@
                                     android:layout_height="75dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="15dp"
-                                    app:srcCompat="@drawable/mapicon" />
+                                    app:srcCompat="@drawable/mapicon"
+                                    android:contentDescription="TODO" />
                             </RelativeLayout>
 
                         </androidx.cardview.widget.CardView>
@@ -282,14 +284,13 @@
                                 android:layout_height="150dp">
 
                                 <TextView
-                                    android:id="@+id/textView11"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/train11"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="10dp"
                                     android:text="@string/helpline"
-                                    android:textSize="15dp"
+                                    android:textSize="15sp"
                                     app:fontFamily="@font/roboto_medium" />
 
                                 <ImageView
@@ -298,7 +299,8 @@
                                     android:layout_height="85dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="15dp"
-                                    app:srcCompat="@drawable/helpline" />
+                                    app:srcCompat="@drawable/helpline"
+                                    android:contentDescription="TODO" />
                             </RelativeLayout>
 
 
@@ -323,13 +325,11 @@
                             android:layout_weight="1">
 
                             <RelativeLayout
-                                android:id="@+id/alarm"
                                 android:layout_width="match_parent"
                                 android:layout_height="127dp"
                                 android:onClick="alarm">
 
                                 <TextView
-                                    android:id="@+id/textView141"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/train141"
@@ -337,7 +337,7 @@
                                     android:layout_marginTop="10dp"
                                     android:gravity="center"
                                     android:text="@string/alarm_manager"
-                                    android:textSize="15dp"
+                                    android:textSize="15sp"
                                     app:fontFamily="@font/roboto_medium" />
 
                                 <ImageView
@@ -346,7 +346,8 @@
                                     android:layout_height="75dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="15dp"
-                                    android:src="@drawable/alarmtransparent" />
+                                    android:src="@drawable/alarmtransparent"
+                                    android:contentDescription="TODO" />
                             </RelativeLayout>
 
 
@@ -364,14 +365,13 @@
                                 android:layout_height="match_parent">
 
                                 <TextView
-                                    android:id="@+id/textView8"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/cycle"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="10dp"
                                     android:text="@string/cases_report"
-                                    android:textSize="15dp"
+                                    android:textSize="15sp"
                                     app:fontFamily="@font/roboto_medium" />
 
                                 <ImageView
@@ -380,7 +380,8 @@
                                     android:layout_height="85dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="15dp"
-                                    app:srcCompat="@drawable/corona" />
+                                    app:srcCompat="@drawable/corona"
+                                    android:contentDescription="TODO" />
                             </RelativeLayout>
 
 
@@ -390,7 +391,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/linearLayout3231"
                         android:layout_width="wrap_content"
                         android:layout_height="319dp"
                         android:orientation="vertical"
@@ -411,7 +411,6 @@
                                 android:layout_height="match_parent">
 
                                 <TextView
-                                    android:id="@+id/textView19212119"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/train12192118"
@@ -419,7 +418,7 @@
                                     android:layout_marginTop="10dp"
                                     android:gravity="center"
                                     android:text="@string/online_course"
-                                    android:textSize="15dp"
+                                    android:textSize="15sp"
                                     app:fontFamily="@font/roboto_medium" />
 
                                 <ImageView
@@ -428,7 +427,8 @@
                                     android:layout_height="75dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="15dp"
-                                    app:srcCompat="@drawable/onlinecourse" />
+                                    app:srcCompat="@drawable/onlinecourse"
+                                    android:contentDescription="TODO" />
                             </RelativeLayout>
 
                         </androidx.cardview.widget.CardView>
@@ -440,13 +440,11 @@
                             android:layout_weight="1">
 
                             <RelativeLayout
-                                android:id="@+id/sector"
                                 android:onClick="sectorworkers"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
 
                                 <TextView
-                                    android:id="@+id/textView3121"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/train12191"
@@ -454,7 +452,7 @@
                                     android:layout_marginTop="10dp"
                                     android:gravity="center"
                                     android:text="@string/sectorworkers"
-                                    android:textSize="15dp"
+                                    android:textSize="15sp"
                                     app:fontFamily="@font/roboto_medium"
                                     tools:ignore="DuplicateIds" />
 
@@ -464,7 +462,8 @@
                                     android:layout_height="75dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="15dp"
-                                    app:srcCompat="@drawable/workers" />
+                                    app:srcCompat="@drawable/workers"
+                                    android:contentDescription="TODO" />
                             </RelativeLayout>
 
                         </androidx.cardview.widget.CardView>
@@ -497,7 +496,6 @@
                                 android:layout_height="match_parent">
 
                                 <TextView
-                                    android:id="@+id/textView1921211"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/train1219211"
@@ -505,7 +503,7 @@
                                     android:layout_marginTop="10dp"
                                     android:gravity="center"
                                     android:text="@string/publiccare"
-                                    android:textSize="12dp"
+                                    android:textSize="12sp"
                                     app:fontFamily="@font/roboto_medium" />
 
                                 <ImageView
@@ -514,7 +512,8 @@
                                     android:layout_height="75dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="15dp"
-                                    app:srcCompat="@drawable/hospital" />
+                                    app:srcCompat="@drawable/hospital"
+                                    android:contentDescription="TODO" />
                             </RelativeLayout>
 
                         </androidx.cardview.widget.CardView>
@@ -532,7 +531,6 @@
                                 android:onClick="labs">
 
                                 <TextView
-                                    android:id="@+id/textView1211"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/train1221"
@@ -540,7 +538,7 @@
                                     android:layout_marginTop="10dp"
                                     android:gravity="center"
                                     android:text="@string/labs_for_test"
-                                    android:textSize="15dp"
+                                    android:textSize="15sp"
                                     app:fontFamily="@font/roboto_medium" />
 
                                 <ImageView
@@ -549,7 +547,8 @@
                                     android:layout_height="75dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="15dp"
-                                    app:srcCompat="@drawable/labsicon" />
+                                    app:srcCompat="@drawable/labsicon"
+                                    android:contentDescription="TODO" />
                             </RelativeLayout>
 
 
@@ -576,13 +575,11 @@
                             android:layout_margin="5dp"
                             android:layout_weight="1">
                             <RelativeLayout
-                                android:id="@+id/msme"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:onClick="msme">
 
                                 <TextView
-                                    android:id="@+id/textView311"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/train111"
@@ -590,7 +587,7 @@
                                     android:layout_marginTop="10dp"
                                     android:gravity="center"
                                     android:text="MSME Products"
-                                    android:textSize="15dp"
+                                    android:textSize="15sp"
                                     app:fontFamily="@font/roboto_medium" />
 
                                 <ImageView
@@ -599,7 +596,8 @@
                                     android:layout_height="75dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="15dp"
-                                    app:srcCompat="@drawable/msmeproducts" />
+                                    app:srcCompat="@drawable/msmeproducts"
+                                    android:contentDescription="TODO" />
                             </RelativeLayout>
 
                         </androidx.cardview.widget.CardView>
@@ -611,13 +609,11 @@
                             android:layout_weight="1">
 
                             <RelativeLayout
-                                android:id="@+id/hosnear"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:onClick="hosnear">
 
                                 <TextView
-                                    android:id="@+id/textView3111"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/train1111"
@@ -625,7 +621,7 @@
                                     android:layout_marginTop="10dp"
                                     android:gravity="center"
                                     android:text="@string/hospital_near_me"
-                                    android:textSize="15dp"
+                                    android:textSize="15sp"
                                     app:fontFamily="@font/roboto_medium" />
 
                                 <ImageView
@@ -634,7 +630,8 @@
                                     android:layout_height="75dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="15dp"
-                                    app:srcCompat="@drawable/hospital" />
+                                    app:srcCompat="@drawable/hospital"
+                                    android:contentDescription="TODO" />
                             </RelativeLayout>
 
 
@@ -668,7 +665,6 @@
                                 android:layout_height="match_parent">
 
                                 <TextView
-                                    android:id="@+id/textView3131"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/train1113"
@@ -676,7 +672,7 @@
                                     android:layout_marginTop="10dp"
                                     android:gravity="center"
                                     android:text="@string/medical_shops"
-                                    android:textSize="15dp"
+                                    android:textSize="15sp"
                                     app:fontFamily="@font/roboto_medium" />
 
                                 <ImageView
@@ -685,7 +681,8 @@
                                     android:layout_height="75dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="15dp"
-                                    app:srcCompat="@drawable/medical" />
+                                    app:srcCompat="@drawable/medical"
+                                    android:contentDescription="TODO" />
                             </RelativeLayout>
 
 
@@ -703,7 +700,6 @@
                                 android:layout_height="match_parent">
 
                                 <TextView
-                                    android:id="@+id/textView121"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/train121"
@@ -711,7 +707,7 @@
                                     android:layout_marginTop="10dp"
                                     android:gravity="center"
                                     android:text="@string/hospital_nlab_test_nmedicine"
-                                    android:textSize="15dp"
+                                    android:textSize="15sp"
                                     app:fontFamily="@font/roboto_medium" />
 
                                 <ImageView
@@ -720,7 +716,8 @@
                                     android:layout_height="75dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="15dp"
-                                    app:srcCompat="@drawable/hos" />
+                                    app:srcCompat="@drawable/hos"
+                                    android:contentDescription="TODO" />
                             </RelativeLayout>
 
                         </androidx.cardview.widget.CardView>
@@ -751,7 +748,6 @@
                                 android:layout_height="match_parent">
 
                                 <TextView
-                                    android:id="@+id/textView31"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/train1"
@@ -759,7 +755,7 @@
                                     android:layout_marginTop="10dp"
                                     android:gravity="center"
                                     android:text="@string/epass"
-                                    android:textSize="15dp"
+                                    android:textSize="15sp"
                                     app:fontFamily="@font/roboto_medium" />
 
                                 <ImageView
@@ -768,7 +764,8 @@
                                     android:layout_height="75dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="15dp"
-                                    app:srcCompat="@drawable/epass" />
+                                    app:srcCompat="@drawable/epass"
+                                    android:contentDescription="TODO" />
                             </RelativeLayout>
 
 
@@ -796,7 +793,7 @@
                                     android:layout_marginTop="10dp"
                                     android:gravity="center"
                                     android:text="@string/updates"
-                                    android:textSize="15dp"
+                                    android:textSize="15sp"
                                     app:fontFamily="@font/roboto_medium" />
 
                                 <ImageView
@@ -805,7 +802,8 @@
                                     android:layout_height="75dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="15dp"
-                                    app:srcCompat="@drawable/covidupdates" />
+                                    app:srcCompat="@drawable/covidupdates"
+                                    android:contentDescription="TODO" />
                             </RelativeLayout>
 
 
@@ -838,14 +836,13 @@
                                 android:layout_height="match_parent">
 
                                 <TextView
-                                    android:id="@+id/textView10"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/don"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="10dp"
                                     android:text="@string/donate"
-                                    android:textSize="15dp"
+                                    android:textSize="15sp"
                                     app:fontFamily="@font/roboto_medium" />
 
                                 <ImageView
@@ -854,7 +851,8 @@
                                     android:layout_height="75dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="15dp"
-                                    app:srcCompat="@drawable/donatehome" />
+                                    app:srcCompat="@drawable/donatehome"
+                                    android:contentDescription="TODO" />
                             </RelativeLayout>
 
 
@@ -868,13 +866,11 @@
                             android:layout_weight="1">
 
                             <RelativeLayout
-                                android:id="@+id/whatsapp"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:onClick="whatsapp">
 
                                 <TextView
-                                    android:id="@+id/textView51"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/train51"
@@ -882,7 +878,7 @@
                                     android:gravity="center"
                                     android:layout_marginTop="10dp"
                                     android:text="@string/whatsapp_queries"
-                                    android:textSize="15dp"
+                                    android:textSize="15sp"
                                     app:fontFamily="@font/roboto_medium" />
 
                                 <ImageView
@@ -891,7 +887,8 @@
                                     android:layout_height="75dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="15dp"
-                                    app:srcCompat="@drawable/whatsapp" />
+                                    app:srcCompat="@drawable/whatsapp"
+                                    android:contentDescription="TODO" />
                             </RelativeLayout>
 
 
@@ -899,7 +896,6 @@
 
                     </LinearLayout>
                 <LinearLayout
-                    android:id="@+id/linearLayout8"
                     android:layout_width="180dp"
                     android:layout_height="319dp"
                     android:orientation="vertical"
@@ -923,14 +919,13 @@
                             android:onClick="chatbot">
 
                             <TextView
-                                android:id="@+id/textView211"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/train211"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="10dp"
                                 android:text="@string/support"
-                                android:textSize="15dp"
+                                android:textSize="15sp"
                                 app:fontFamily="@font/roboto_medium" />
 
                             <ImageView
@@ -939,7 +934,8 @@
                                 android:layout_height="85dp"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="15dp"
-                                app:srcCompat="@drawable/support" />
+                                app:srcCompat="@drawable/support"
+                                android:contentDescription="TODO" />
                         </RelativeLayout>
 
                     </androidx.cardview.widget.CardView>
@@ -950,7 +946,6 @@
                         android:layout_weight="1">
 
                         <RelativeLayout
-                            android:id="@+id/shelterlayout"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
@@ -960,7 +955,8 @@
                                 android:layout_height="match_parent"
                                 android:layout_margin="5dp"
                                 android:src="@drawable/shelter"
-                                android:transitionName="icon" />
+                                android:transitionName="icon"
+                                android:contentDescription="TODO" />
                         </RelativeLayout>
 
                     </androidx.cardview.widget.CardView>
@@ -997,12 +993,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
                             android:layout_marginTop="25dp"
                             android:fontFamily="@font/roboto_bold"
                             android:text="FAQ"
                             android:textColor="#000"
-                            android:textSize="30dp" />
+                            android:textSize="30sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -1014,7 +1009,8 @@
                     <ImageView
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:src="@drawable/faq" />
+                        android:src="@drawable/faq"
+                        android:contentDescription="TODO" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -1035,12 +1031,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
                         android:layout_marginTop="25dp"
                         android:fontFamily="@font/roboto_bold"
                         android:text="FAQ"
                         android:textColor="#000"
-                        android:textSize="30dp" />
+                        android:textSize="30sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1051,10 +1046,10 @@
 
 
                 <ImageView
-                    android:id="@+id/faqimg1"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/faq" />
+                    android:src="@drawable/faq"
+                    android:contentDescription="TODO" />
             </LinearLayout>
             <TextView
                 android:layout_width="wrap_content"
@@ -1065,7 +1060,7 @@
                 android:fontFamily="@font/roboto_bold"
                 android:text="@string/important_links"
                 android:textColor="#C4BFB6"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -1083,31 +1078,36 @@
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="20dp"
-                        android:src="@drawable/implink4"/>
+                        android:src="@drawable/implink4"
+                        android:contentDescription="TODO" />
                     <ImageView
                         android:id="@+id/implink2"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="20dp"
-                        android:src="@drawable/implink5"/>
+                        android:src="@drawable/implink5"
+                        android:contentDescription="TODO" />
                     <ImageView
                         android:id="@+id/implink3"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="20dp"
-                        android:src="@drawable/implink1"/>
+                        android:src="@drawable/implink1"
+                        android:contentDescription="TODO" />
                     <ImageView
                         android:id="@+id/implink4"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="20dp"
-                        android:src="@drawable/implink2"/>
+                        android:src="@drawable/implink2"
+                        android:contentDescription="TODO" />
                     <ImageView
                         android:id="@+id/implink5"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="20dp"
-                        android:src="@drawable/implink3"/>
+                        android:src="@drawable/implink3"
+                        android:contentDescription="TODO" />
 
                 </LinearLayout>
 

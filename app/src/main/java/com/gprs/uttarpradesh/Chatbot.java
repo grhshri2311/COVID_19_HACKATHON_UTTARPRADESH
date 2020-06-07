@@ -185,7 +185,7 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
                     editor.putString("lan","G");
                 }
 
-                editor.commit();
+                editor.apply();
                 finish();
                 overridePendingTransition(0, 0);
                 startActivity(getIntent());

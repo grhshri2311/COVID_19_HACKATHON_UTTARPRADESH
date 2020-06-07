@@ -35,21 +35,22 @@
                         <ProgressBar
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:layout_gravity="center"
-                            android:id="@+id/loader"/>
+                            android:layout_gravity="center" />
 
                         <ImageView
                             android:id="@+id/imageView"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scaleType="centerCrop" />
+                            android:scaleType="centerCrop"
+                            android:contentDescription="TODO" />
 
 
 
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/gradient"/>
+                            android:background="@drawable/gradient"
+                            android:contentDescription="TODO" />
 
 
 
@@ -64,7 +65,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Source"
-                                android:textSize="15dp"
+                                android:textSize="15sp"
                                 android:fontFamily="@font/roboto_light"
                                 android:textColor="@color/white"
                                 android:id="@+id/tvSource"/>
@@ -74,7 +75,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="5 hour ago"
                                 android:gravity="right"
-                                android:textSize="15dp"
+                                android:textSize="15sp"
                                 android:fontFamily="@font/roboto_light"
                                 android:textColor="@color/white"
                                 android:id="@+id/tvDate"/>
@@ -86,7 +87,7 @@
                         android:layout_height="wrap_content"
                         android:text="TITLE"
                         android:padding="10dp"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:fontFamily="@font/roboto_bold"
                         android:textColor="@color/black"
                         android:id="@+id/tvTitle"/>
@@ -95,7 +96,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Description"
-                        android:textSize="15dp"
+                        android:textSize="15sp"
                         android:padding="10dp"
                         android:fontFamily="@font/roboto_light"
                         android:textColor="@color/black"

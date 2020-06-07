@@ -14,7 +14,8 @@
         android:layout_height="100dp"
         android:layout_margin="20dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/alarmtransparent" />
+        android:src="@drawable/alarmtransparent"
+        android:contentDescription="TODO" />
 
     <LinearLayout
         android:id="@+id/l1"
@@ -25,25 +26,19 @@
         android:layout_below="@id/image">
         <TextView
             android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@+id/avatar"
-            android:layout_alignTop="@+id/avatar"
             android:layout_width="wrap_content"
             android:textColor="#000"
-            android:layout_centerHorizontal="true"
             android:layout_marginRight="10dp"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:paddingBottom="4dp"
             android:text="Name "/>
         <TextView
             android:id="@+id/name"
             android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@+id/avatar"
-            android:layout_alignTop="@+id/avatar"
             android:layout_width="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:paddingBottom="4dp"
             android:text="Rose"/>
     </LinearLayout>
@@ -58,25 +53,19 @@
         android:layout_height="wrap_content">
         <TextView
             android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@+id/avatar"
-            android:layout_alignTop="@+id/avatar"
             android:layout_width="wrap_content"
             android:layout_marginRight="10dp"
             android:textColor="#000"
-            android:layout_centerHorizontal="true"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:paddingBottom="4dp"
             android:text="Descrription"/>
         <TextView
             android:id="@+id/desc"
             android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@+id/avatar"
-            android:layout_alignTop="@+id/avatar"
             android:layout_width="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:paddingBottom="4dp"
             android:text="Rose"/>
     </LinearLayout>
@@ -88,25 +77,19 @@
         android:layout_height="wrap_content">
         <TextView
             android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@+id/avatar"
-            android:layout_alignTop="@+id/avatar"
             android:layout_width="wrap_content"
             android:layout_marginRight="10dp"
-            android:layout_centerHorizontal="true"
             android:layout_height="wrap_content"
             android:textColor="#000"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:paddingBottom="4dp"
             android:text="Time"/>
         <TextView
             android:id="@+id/time"
             android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@+id/avatar"
-            android:layout_alignTop="@+id/avatar"
             android:layout_width="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:paddingBottom="4dp"
             android:text="Rose"/>
     </LinearLayout>
@@ -120,26 +103,30 @@
         android:layout_height="wrap_content">
         <TextView
             android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@+id/avatar"
             android:layout_marginRight="10dp"
-            android:layout_alignTop="@+id/avatar"
             android:layout_width="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_height="wrap_content"
             android:textColor="#000"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:paddingBottom="4dp"
             android:text="Status"/>
         <TextView
             android:id="@+id/status"
             android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@+id/avatar"
-            android:layout_alignTop="@+id/avatar"
             android:layout_width="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:paddingBottom="4dp"
             android:text="Rose"/>
+
     </LinearLayout>
+    <Button
+        android:id="@+id/close"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="#000"
+        android:text="CLOSE"
+        android:layout_below="@id/l4"
+        android:textColor="#fff" />
 </RelativeLayout>

@@ -17,7 +17,8 @@
             android:scaleType="centerInside"
             android:layout_marginBottom="5dp"
             android:background="@drawable/customimageborder"
-            android:src="@drawable/msmeproducts"/>
+            android:src="@drawable/msmeproducts"
+            android:contentDescription="TODO" />
 
         <TextView
             android:id="@+id/name"
@@ -33,7 +34,6 @@
     <View
         android:id="@+id/lineabove"
         android:layout_width="match_parent"
-        android:layout_above="@id/getdirection"
         android:layout_height="1dp"
         android:background="#CCCCCC"/>
     <TextView

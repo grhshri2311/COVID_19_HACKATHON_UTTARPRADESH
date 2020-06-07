@@ -1,29 +1,15 @@
 <resources>
     <string name="app_name">कोविद को राहत</string>
-    <string name="title_activity_maps">नक्शा</string>
-    <string name="hello_there_nwelcome_back">नमस्ते, वापसी पर स्वागत है</string>
-    <string name="sign_in_to_continue">जारी रखने के लिए साइन इन करें</string>
-    <string name="email">ईमेल</string>
     <string name="password">पासवर्ड</string>
-    <string name="forget_password_reset_password">पासवर्ड भूल जाओ / पासवर्ड रीसेट करें?</string>
-    <string name="go">जाओ</string>
     <string name="new_user_sign_up">नया उपयोगकर्ता? साइन अप करें</string>
-    <string name="welcome">स्वागत हे</string>
-    <string name="sign_up_to_start_your_journey">अपनी यात्रा शुरू करने के लिए साइन अप करें</string>
-    <string name="mobile">मोबाइल</string>
     <string name="full_name">पूरा नाम</string>
     <string name="select_your_role">अपनी भूमिका का चयन करें</string>
     <string name="aldready_have_an_account_login">पहले से ही एक खाता है? लॉग इन करें</string>
     <string name="victims">पीड़ित</string>
     <string name="donor">दाता</string>
-    <string name="fundraiser">अनुदान संचय</string>
-    <string name="shgs_ngos">स्वयं सहायता समूहों / गैर सरकारी संगठनों</string>
     <string name="monitors">पर नज़र रखता है</string>
     <string name="volunteers">स्वयंसेवकों</string>
     <string name="covid19_relief">Covid19 Relief</string>
-    <string name="my_status">मेरी स्थिति</string>
-    <string name="dashboard">डैशबोर्ड</string>
-    <string name="Dashboard">डैशबोर्ड</string>
     <string name="share">शेयर</string>
     <string name="logout">लॉग आउट</string>
     <string name="setting">सेटिंग</string>
@@ -69,15 +55,6 @@
         <item>इनमे से कोई भी नहीं</item>
     </string-array>
 
-    <string name="title_activity_cases_report">घटना की रिपोर्ट</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">डैशबोर्ड</string>
-    <string name="title_notifications">सूचनाएं</string>
-    <string name="state">राज्य</string>
-    <string name="district">जिला</string>
-    <string name="myplace">मेरी जगह</string>
-    <string name="total">संपूर्ण</string>
-    <string name="title_activity_cases">घटना</string>
     <string name="current_status">वर्तमान स्थिति</string>
     <string name="forgot_password">पासवर्ड भूल गए</string>
     <string name="reset_your_password">अपना पासवर्ड रीसेट करें</string>
@@ -99,7 +76,6 @@
     <string name="helpline">हेल्पलाइन</string>
     <string name="helpline_numbers">हेल्पलाइन नंबर</string>
     <string name="notification">अधिसूचना</string>
-    <string name="view_in_map">नक्शे में देखें</string>
     <string name="to_do">करने के लिए</string>
 
 
@@ -119,13 +95,10 @@
     <string name="hospital_appointment">अस्पताल की नियुक्ति</string>
     <string name="lab_test">लैब टेस्ट</string>
     <string name="order_medicine">आदेश चिकित्सा</string>
-    <string name="title_activity_quora">कोरम</string>
     <string name="quora">कोरम</string>
     <string name="post_a_question">एक प्रश्न पोस्ट करें</string>
     <string name="forum">मंच</string>
-    <string name="answered_question">प्रश्न का उत्तर दिया</string>
     <string name="your_questions">आपके सवाल</string>
-    <string name="notify">अधिसूचना</string>
     <string name="select_catagory">श्रेणी का चयन करें</string>
     <string name="time_assigned">समय दिया गया</string>
     <string name="monitor_name">मॉनिटर का नाम</string>
@@ -134,16 +107,12 @@
     <string name="monitor_email">मॉनिटर का ईमेल</string>
     <string name="mark_as_done">पूर्ण के रूप में चिह्नित करें</string>
     <string name="reject_request">रिक्वेस्ट रिजेक्ट</string>
-    <string name="name">नाम</string>
-    <string name="role">नाम</string>
-    <string name="place">जगह</string>
     <string name="phone">फ़ोन</string>
     <string name="write_down_the_works">कार्यों को लिखिए</string>
     <string name="assign">असाइन</string>
     <string name="please_turn_on_internet_to_stay_updated">कृपया अपडेट रहने के लिए इंटरनेट चालू करें</string>
     <string name="go_back_and_pull_down_to_refresh">वापस जाओ और ताज़ा करने के लिए नीचे खींचो</string>
     <string name="close">बंद करे</string>
-    <string name="turn_on">चालू करो</string>
     <string name="alert">चेतावनी !</string>
     <string name="found_new_victim_in_your_surrounding">अपने आसपास के लोगों में नया शिकार पाया</string>
     <string name="stay_away_from_the_place">जगह से दूर रहें !</string>
@@ -161,35 +130,20 @@
     <string name="first_aid_guidance">फर्स्ट एड गाइडेंस</string>
 
 
-
-    <string name="invitation_title">सदस्यों को आमंत्रित करो</string>
-    <string name="invitation_message">COVID-19 RELIEF में और लोगों को आमंत्रित करके एक समुदाय का निर्माण करें</string>
     <string name="share_with">के साथ शेयर करें</string>
-    <string name="title_activity_navhome"></string>
-    <string name="navigation_drawer_open">नेविगेशन दराज खोलें</string>
-    <string name="navigation_drawer_close">नेविगेशन ड्रॉअर बंद करें</string>
-    <string name="nav_header_title">Android स्टूडियो</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">नेविगेशन हेडर</string>
 
     <string name="menu_home">डैशबोर्ड</string>
      <string name="menu_share">शेयर</string>
-    <string name="menu_send">भेजें</string>
-    <string name="title_activity_nav">nav</string>
     <string name="translate">अनुवाद करना</string>
     <string name="assistant">सहायक</string>
     <string name="support">समर्थन सहायक</string>
-    <string name="chatbot">आवाज सहायक</string>
     <string name="chatbotintro">सहायक सहायक वॉयस कमांड या टेक्स्ट चैट या दोनों के माध्यम से मानव वार्तालाप का अनुकरण करता है। यह नेविगेशन द्वारा और आपके प्रश्नों का उत्तर देने में आपकी सहायता करता है</string>
     <string name="whatsapp_queries">व्हाट्सएप क्वेरी</string>
-    <string name="join_in_our_communtiy">हमारी कम्युनिटी में शामिल हों</string>
     <string name="register">रजिस्टर करें</string>
     <string name="login">लॉग इन करें</string>
     <string name="or">या</string>
     <string name="uttar_pradesh">उत्तर प्रदेश</string>
-    <string name="tab_text_1">टैब 1</string>
-    <string name="tab_text_2">टैब 2</string>
-    <string name="SelectState">राज्य चुनें</string>
     <string name="labs_for_test">परीक्षण के लिए लैब</string>
     <string name="laboratory_with_covid_19_testing_facilty">COVID-19 परीक्षण सुविधा के साथ प्रयोगशाला</string>
     <string name="action_on_covid_19_relief_for_msme_sector">MSME क्षेत्र के लिए COVID-19 राहत पर कार्रवाई</string>

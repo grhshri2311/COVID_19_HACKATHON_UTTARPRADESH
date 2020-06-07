@@ -479,7 +479,7 @@ public class Register extends AppCompatActivity {
                 editor = pref.edit();
 
                 editor.putString("user",phone1);
-                editor.commit();
+                editor.apply();
 
                 startActivity(new Intent(Register.this,test.class),ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 finish();

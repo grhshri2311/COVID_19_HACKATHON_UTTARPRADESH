@@ -39,7 +39,7 @@
         android:roundIcon="@drawable/collective_intelligence_icon_use"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".unorganizedsectors"></activity>
+        <activity android:name=".unorganizedsectors" />
         <activity android:name=".QRcode" />
         <activity android:name=".Scanner" />
         <activity android:name=".bio" />
@@ -95,7 +95,7 @@
         <activity android:name=".Login" />
         <activity android:name=".assign_work" />
         <activity android:name=".your_work" />
-        <activity android:name=".work" />
+        <activity android:name=".work"/>
         <activity android:name=".workAssign" />
         <activity
             android:name=".Home"

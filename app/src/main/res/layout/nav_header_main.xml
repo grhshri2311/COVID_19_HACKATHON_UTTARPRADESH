@@ -16,9 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="12dp"
-        android:id="@+id/view2"
         app:cardCornerRadius="50dp"
-        android:layout_centerHorizontal="true"
         android:innerRadius="0dp"
         app:cardBackgroundColor="#fff"
         android:shape="ring"
@@ -27,6 +25,7 @@
             android:id="@+id/navheaderimage"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:scaleType="centerCrop"
             android:contentDescription="@string/nav_header_desc"
             app:srcCompat="@drawable/ic_person_black_24dp" />
     </com.google.android.material.circularreveal.cardview.CircularRevealCardView>

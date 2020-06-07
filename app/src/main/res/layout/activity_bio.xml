@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -24,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/touch_sensor"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:layout_below="@id/finger"
         android:layout_margin="10dp"
         android:textColor="#000"
@@ -37,7 +36,7 @@
         android:text="@string/verify_your_identity"
         android:textColor="#000"
         android:layout_margin="10dp"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:gravity="center"
         android:fontFamily="@font/roboto_bold"
         android:layout_above="@id/textView21"
@@ -52,7 +51,7 @@
         android:gravity="center"
         android:layout_margin="20dp"
         android:text="@string/confirm_your_fingerprint_so_covid_19_relief_can_verify_it_s_you"
-        android:textSize="20dp" />
+        android:textSize="20sp" />
 
 
 

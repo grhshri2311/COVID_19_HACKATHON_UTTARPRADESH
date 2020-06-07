@@ -16,7 +16,6 @@
             android:layout_height="wrap_content"
             android:text="@string/updatesnews"
             android:id="@+id/up"
-            android:layout_weight="10"
             android:fontFamily="@font/roboto_bold"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"

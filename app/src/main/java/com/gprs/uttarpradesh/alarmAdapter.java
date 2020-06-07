@@ -3,6 +3,7 @@ package com.gprs.uttarpradesh;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentActivity;
+
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -264,36 +268,17 @@ class alarmAdapter extends ArrayAdapter {
     }
 
     void view(int pos) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setCancelable(true);
+        Bundle bundle=new Bundle();
+        bundle.putString("name",name.get(pos));
+        bundle.putString("time",time.get(pos));
+        bundle.putBoolean("onoff",onoff.get(pos));
+        bundle.putString("desc",desc.get(pos));
 
-        LayoutInflater inflater=context.getLayoutInflater();
-        View view = inflater.inflate(R.layout.alarmitem, null, true);
 
-
-        TextView name1 = view.findViewById(R.id.name);
-        TextView desc1 = view.findViewById(R.id.desc);
-        TextView time1 = view.findViewById(R.id.time);
-        TextView status = view.findViewById(R.id.status);
-
-        name1.setText(name.get(pos));
-        desc1.setText(desc.get(pos));
-        time1.setText(time.get(pos));
-        if(onoff.get(pos))
-            status.setText("ON");
-        else
-            status.setText("Off");
-
-        builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.setView(view);
-        alert.show();
-
+        BottomSheetDialogFragment f=new BottomsheetAlarmfragment();
+        f.setArguments(bundle);
+        FragmentActivity fr=(FragmentActivity) context;
+        f.show(fr.getSupportFragmentManager(),"Dialog");
     }
 
     void delete(final int pos, final alarmAdapter alarmAdapter){

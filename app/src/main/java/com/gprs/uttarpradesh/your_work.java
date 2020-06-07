@@ -3,12 +3,15 @@ package com.gprs.uttarpradesh;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
@@ -23,6 +26,9 @@ public class your_work extends AppCompatActivity {
     TextView title;
     ListView listView;
     ArrayList<String> time1,from,work;
+    VolunteerAdapter1 adapter1;
+    ArrayList<String> n,r,p,w,s,c;
+    ListView listview1;
     ArrayAdapter adapter;
     ArrayList<workhelper> worklist;
 
@@ -40,7 +46,7 @@ public class your_work extends AppCompatActivity {
         title=findViewById(R.id.worktitle);
         listView=findViewById(R.id.yourwork);
         title.setText("Loading work");
-
+        listview1=findViewById(R.id.volunteers1);
         time1=new ArrayList<>();
         from=new ArrayList<>();
         worklist=new ArrayList<>();
@@ -49,6 +55,33 @@ public class your_work extends AppCompatActivity {
         adapter=new VolunteerAdapter(this,time1,from,work);
 
         listView.setAdapter(adapter);
+
+        n=new ArrayList<>();
+        r=new ArrayList<>();
+        p=new ArrayList<>();
+        w=new ArrayList<>();
+        s=new ArrayList<>();
+        c=new ArrayList<>();
+
+
+        adapter1=new VolunteerAdapter1(this,n,r,p,w,c,s);
+        listview1.setAdapter(adapter1);
+
+        final ScrollView sv=findViewById(R.id.sv);
+
+        listview1.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                sv.requestDisallowInterceptTouchEvent(true);
+                int action = event.getActionMasked();
+                switch (action) {
+                    case MotionEvent.ACTION_UP:
+                        sv.requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+                return false;
+            }
+        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -66,6 +99,8 @@ public class your_work extends AppCompatActivity {
                 finish();
             }
         });
+
+
         FirebaseDatabase.getInstance().getReference().child("Works").child(pref.getString("user",""))
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -94,5 +129,28 @@ public class your_work extends AppCompatActivity {
                 });
 
 
+        FirebaseDatabase.getInstance().getReference().child("Workdone").child(pref.getString("user","")).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    WorkAssignHelper workhelper=snapshot.getValue(WorkAssignHelper.class);
+                    n.add(workhelper.getFname());
+                    r.add(workhelper.getRole());
+                    p.add(workhelper.getPlace());
+                    w.add(workhelper.getWork());
+                    s.add(workhelper.getStatus());
+                    c.add(workhelper.getComment());
+
+
+
+                }
+                adapter1.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

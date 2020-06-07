@@ -1,30 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
+    android:scrollbars="none"
+    android:background="#fff"
+    android:id="@+id/sv"
     android:layout_height="match_parent"
     tools:context=".your_work">
 
-    <TextView
-        android:id="@+id/worktitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:text="Select Volunteer"
-        android:textSize="20dp"
-        />
-
-
-    <ListView
-        android:id="@+id/yourwork"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_margin="10dp"
-        android:layout_weight="2"
-        android:divider="#fff"
-        />
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/worktitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:textSize="20sp"
+            />
 
 
-</LinearLayout>
+        <ListView
+            android:id="@+id/yourwork"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:scrollbars="none"
+            android:layout_margin="10dp"
+            android:layout_weight="2"
+            android:divider="#fff"
+            />
+
+        <View
+            android:id="@+id/lineabove"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#CCCCCC"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submitted  works"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:textAllCaps="true"
+            android:layout_marginLeft="20dp"
+            android:textColor="#9C27B0"/>
+
+        <ListView
+            android:id="@+id/volunteers1"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_margin="10dp"
+            android:layout_weight="2"
+            android:divider="#fff"
+            />
+
+    </LinearLayout>
+
+
+</ScrollView>

@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,8 @@ public class work extends AppCompatActivity {
     private String time1;
     SharedPreferences pref;
     SharedPreferences.Editor editor;
+    String comment="";
+    EditText commented;
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     String currentDateTime = dateFormat.format(new Date()); // Find todays date
     @Override
@@ -47,6 +50,11 @@ public class work extends AppCompatActivity {
         email1=intent.getStringExtra("email");
         phone1=intent.getStringExtra("phone");
         work=intent.getStringExtra("work");
+        commented=findViewById(R.id.comment);
+
+
+
+
 
         TextView time=findViewById(R.id.time123);
         time.setText(time1);
@@ -139,9 +147,20 @@ public class work extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            workhelper workhelper = snapshot.getValue(workhelper.class);
-                            if(workhelper.getPhone().equals(pref.getString("user","")) && workhelper.getWork().equals(work)) {
-                                FirebaseDatabase.getInstance().getReference().child("Workassign").child(phone1).child(snapshot.getKey()).removeValue();
+                            WorkAssignHelper workAssignHelper = snapshot.getValue(WorkAssignHelper.class);
+                            if(workAssignHelper.getPhone().equals(pref.getString("user","")) && workAssignHelper.getWork().equals(work)) {
+                                workAssignHelper.setStatus("done");
+                                if(!commented.getText().toString().equals("")){
+                                    comment=commented.getText().toString();
+                                }
+                                workAssignHelper.setEmail(email1);
+                                workAssignHelper.setFname(name1);
+                                workAssignHelper.setPhone(phone1);
+                                workAssignHelper.setRole(role1);
+                                workAssignHelper.setPlace(place1);
+                                workAssignHelper.setComment(comment);
+                                FirebaseDatabase.getInstance().getReference().child("Workassign").child(phone1).child(snapshot.getKey()).setValue(workAssignHelper);
+                                FirebaseDatabase.getInstance().getReference().child("Workdone").child(pref.getString("user","")).child(snapshot.getKey()).setValue(workAssignHelper);
                                 break;
                             }
                         }
@@ -180,9 +199,20 @@ public class work extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            workhelper workhelper = snapshot.getValue(workhelper.class);
-                            if(workhelper.getPhone().equals(pref.getString("user","")) && workhelper.getWork().equals(work)) {
-                                FirebaseDatabase.getInstance().getReference().child("Workassign").child(phone1).child(snapshot.getKey()).removeValue();
+                            WorkAssignHelper workAssignHelper = snapshot.getValue(WorkAssignHelper.class);
+                            if(workAssignHelper.getPhone().equals(pref.getString("user","")) && workAssignHelper.getWork().equals(work)) {
+                                workAssignHelper.setStatus("rejected");
+                                if(!commented.getText().toString().equals("")){
+                                    comment=commented.getText().toString();
+                                }
+                                workAssignHelper.setEmail(email1);
+                                workAssignHelper.setFname(name1);
+                                workAssignHelper.setPhone(phone1);
+                                workAssignHelper.setRole(role1);
+                                workAssignHelper.setPlace(place1);
+                                workAssignHelper.setComment(comment);
+                                FirebaseDatabase.getInstance().getReference().child("Workassign").child(phone1).child(snapshot.getKey()).setValue(workAssignHelper);
+                                FirebaseDatabase.getInstance().getReference().child("Workdone").child(pref.getString("user","")).child(snapshot.getKey()).setValue(workAssignHelper);
                                 break;
                             }
                         }

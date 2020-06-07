@@ -17,7 +17,8 @@
         android:layout_marginBottom="5dp"
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
-        android:src="@drawable/collective_intelligence_icon_use"/>
+        android:src="@drawable/collective_intelligence_icon_use"
+        android:contentDescription="TODO" />
 
     <TextView
         android:id="@+id/name"
@@ -48,7 +49,6 @@
     <View
         android:id="@+id/lineabove"
         android:layout_width="match_parent"
-        android:layout_above="@id/getdirection"
         android:layout_height="2dp"
         android:background="#EEEBEB"/>
     <TextView

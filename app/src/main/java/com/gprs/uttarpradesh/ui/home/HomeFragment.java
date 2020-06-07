@@ -161,7 +161,7 @@ public class HomeFragment extends Fragment{
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putString("today1",currentDateTime).commit();
+                    PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putString("today1",currentDateTime).apply();
                     Intent i = new Intent(getActivity(), advice.class);
                     startActivity(i);
                 }
@@ -172,7 +172,7 @@ public class HomeFragment extends Fragment{
 
         if(!androidx.preference.PreferenceManager.getDefaultSharedPreferences(root.getContext()).getBoolean("chatintro",false)) {
             root.findViewById(R.id.rellayout).setVisibility(View.VISIBLE);
-            androidx.preference.PreferenceManager.getDefaultSharedPreferences(root.getContext()).edit().putBoolean("chatintro",true).commit();
+            androidx.preference.PreferenceManager.getDefaultSharedPreferences(root.getContext()).edit().putBoolean("chatintro",true).apply();
         }
 
 

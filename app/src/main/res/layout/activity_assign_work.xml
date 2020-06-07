@@ -5,39 +5,70 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:orientation="vertical"
+    android:id="@+id/sv"
     tools:context=".assign_work">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-    <TextView
-        android:id="@+id/textView18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:text="@string/select_volunteer"
-        android:textSize="20dp"
-       />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#00000000"
-        android:id="@+id/role"
-        android:textSize="20dp"
-        android:textColor="#C800FF"
-        android:text="@string/select_catagory"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:text="@string/select_volunteer"
+            android:textSize="20sp"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:id="@+id/role"
+            android:textSize="20sp"
+            android:textColor="#C800FF"
+            android:text="@string/select_catagory"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:id="@+id/place"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@id/filter"
+                android:layout_marginLeft="20dp"
+                android:hint="Enter place"
+                android:inputType="textPersonName"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:importantForAutofill="no" />
+
+            <Button
+                android:id="@+id/filter"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true"
+                android:background="#FBFBFB"
+                android:text="@string/filter" />
 
 
-    <ListView
-        android:id="@+id/volunteers"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_margin="10dp"
-        android:layout_weight="2"
-        android:divider="#fff"
-       />
+        </RelativeLayout>
+
+
+        <ListView
+            android:id="@+id/volunteers"
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:layout_margin="10dp"
+            android:layout_weight="2"
+            android:scrollbars="none"
+            android:divider="#fff"
+            />
 
         <TextView
             android:id="@+id/go"
@@ -45,41 +76,17 @@
             android:layout_height="wrap_content"
             android:text="Choose selected"
             android:gravity="center"
-            android:textSize="20dp"
+            android:background="#E2FFE3"
+            android:padding="10dp"
             android:visibility="invisible"
-            android:textColor="#9C27B0"/>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/place"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Enter place"
-            android:inputType="textPersonName" />
-
-        <Button
-            android:id="@+id/filter"
-            android:layout_marginLeft="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/filter" />
+            android:textSize="20sp"
+            android:textColor="#4CAF50"/>
 
 
-    </LinearLayout>
         <View
             android:id="@+id/lineabove"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_above="@id/getdirection"
             android:layout_height="1dp"
             android:background="#CCCCCC"/>
         <TextView
@@ -87,7 +94,8 @@
             android:layout_height="wrap_content"
             android:text="@string/assigned_work"
             android:layout_marginTop="10dp"
-            android:textSize="20dp"
+            android:textSize="20sp"
+            android:textAllCaps="true"
             android:layout_marginLeft="20dp"
             android:textColor="#9C27B0"/>
 

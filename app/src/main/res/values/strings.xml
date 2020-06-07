@@ -1,30 +1,15 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">COVID19RELIEF</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="hello_there_nwelcome_back">Hello there, Welcome Back</string>
-    <string name="sign_in_to_continue">Sign in to continue</string>
-    <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="forget_password_reset_password">Forget Password/Reset Password?</string>
-    <string name="go">GO</string>
     <string name="new_user_sign_up">New User? SIGN UP</string>
-    <string name="welcome">Welcome</string>
-    <string name="sign_up_to_start_your_journey">Sign Up to start your journey</string>
-    <string name="mobile">Mobile</string>
     <string name="full_name">Full Name</string>
     <string name="select_your_role">Select your Role</string>
     <string name="aldready_have_an_account_login">Aldready have an account? LogIn</string>
     <string name="victims">Victim</string>
     <string name="donor">Donor</string>
-    <string name="fundraiser">Fundraiser</string>
-    <string name="shgs_ngos">SHGs/NGOs</string>
     <string name="monitors">Monitors</string>
     <string name="volunteers">volunteers</string>
     <string name="covid19_relief">Covid19 Relief</string>
-    <string name="stay_home_stay_safe" translatable="false" tools:ignore="ExtraTranslation">Haryana</string>
-    <string name="my_status">My Status</string>
-    <string name="dashboard">DASHBOARD</string>
-    <string name="Dashboard">Dashboard</string>
     <string name="share">Share</string>
     <string name="logout">Logout</string>
     <string name="setting">Settings</string>
@@ -70,15 +55,6 @@
         <item>None of the above</item>
     </string-array>
 
-    <string name="title_activity_cases_report">cases_report</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="state">State</string>
-    <string name="district">District</string>
-    <string name="myplace">My place</string>
-    <string name="total">Total</string>
-    <string name="title_activity_cases">Cases</string>
     <string name="current_status">Current Status</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="reset_your_password">Reset your password</string>
@@ -98,7 +74,6 @@
     <string name="helpline">Helpline</string>
     <string name="helpline_numbers">Helpline Numbers</string>
     <string name="notification">Notification</string>
-    <string name="view_in_map">View in map</string>
     <string name="to_do">TO DO</string>
     <string name="scan">Geo fencing</string>
     <string name="intro1">Each one of us has the power to help prevent the spread of the corona virus pandemic in India \nWould you like to be kept informed if you crossed paths with someone who has tested COVID-19 positive ?</string>
@@ -115,13 +90,10 @@
     <string name="hospital_appointment">Hospital Appointment</string>
     <string name="lab_test">Lab Test</string>
     <string name="order_medicine">Order Medicine</string>
-    <string name="title_activity_quora">quora</string>
     <string name="quora">Quora</string>
     <string name="post_a_question">Post a question</string>
     <string name="forum">Forum</string>
-    <string name="answered_question">Answered question</string>
     <string name="your_questions">Your Questions</string>
-    <string name="notify">Notification</string>
     <string name="select_catagory">Select category</string>
     <string name="time_assigned">Time Assigned</string>
     <string name="monitor_name">Monitor Name</string>
@@ -130,16 +102,12 @@
     <string name="monitor_email">Monitor Email</string>
     <string name="mark_as_done">Mark as done</string>
     <string name="reject_request">Reject Request</string>
-    <string name="name">Name</string>
-    <string name="role">Role</string>
-    <string name="place">Place</string>
     <string name="phone">Phone</string>
     <string name="write_down_the_works">Write down the works</string>
     <string name="assign">Assign work</string>
     <string name="please_turn_on_internet_to_stay_updated">Please turn on internet to stay updated</string>
     <string name="go_back_and_pull_down_to_refresh">Go back and pull down to refresh</string>
     <string name="close">Close</string>
-    <string name="turn_on">Turn ON</string>
     <string name="alert">Alert !</string>
     <string name="found_new_victim_in_your_surrounding">Found new victim in your surrounding</string>
     <string name="stay_away_from_the_place">Stay away from the place !</string>
@@ -158,34 +126,20 @@
     <string name="nearby_hospitals">Nearby Hospitals</string>
     <string name="first_aid_guidance">First Aid Guidance</string>
 
-    <string name="invitation_title">Invite members</string>
-    <string name="invitation_message">Build a community by inviting more people to COVID-19 RELIEF</string>
     <string name="share_with">Share with</string>
-    <string name="title_activity_navhome">navhome</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_share">Share</string>
-    <string name="menu_send">Send</string>
-    <string name="title_activity_nav">nav</string>
     <string name="translate">Translate</string>
     <string name="assistant">Assistant</string>
     <string name="support">Support Assistant</string>
-    <string name="chatbot">Voice Assistant</string>
     <string name="chatbotintro">Support assistant  simulates human conversation through voice commands or text chats or both.It helps you by navigation and by answering your queries</string>
     <string name="whatsapp_queries">Whatsapp Queries</string>
-    <string name="join_in_our_communtiy">Join in our Communtiy</string>
     <string name="register">Register</string>
     <string name="login">Login</string>
     <string name="or">OR</string>
     <string name="uttar_pradesh">uttar pradesh</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="SelectState">Select State</string>
     <string name="labs_for_test">Labs for test</string>
     <string name="laboratory_with_covid_19_testing_facilty">Laboratory with COVID-19 testing facilty</string>
     <string name="action_on_covid_19_relief_for_msme_sector">Action on COVID-19 Relief for MSME Sector</string>

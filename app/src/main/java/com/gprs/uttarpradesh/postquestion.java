@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -83,6 +84,8 @@ public class postquestion extends Fragment {
                     Toast.makeText(root.getContext(),"Please fill all the fields",Toast.LENGTH_LONG).show();
                 }
                 else{
+                    post.setEnabled(false);
+                    post.setBackgroundColor(Color.parseColor("#D3D0D0"));
                     if(imageUri==null && vedioUri==null)
                     {
                         nil=true;
@@ -95,15 +98,19 @@ public class postquestion extends Fragment {
                                     String currentDateTime = dateFormat.format(new Date()); // Find todays date
                                     QuoraHelper quoraHelper=new QuoraHelper(title.getText().toString(),desc.getText().toString(),message.getText().toString(),status.getRole(),status.getPhone(),status.getFname(),currentDateTime,nil,img,vid,null,null,null);
                                     FirebaseDatabase.getInstance().getReference().child("Quora").child(currentDateTime).setValue(quoraHelper);
+                                    post.setEnabled(true);
+                                    post.setBackgroundColor(Color.parseColor("#000000"));
+                                    Toast.makeText(root.getContext(), "Posted Successfully ! ", Toast.LENGTH_LONG).show();
                                 }
                             }
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                                post.setEnabled(true);
+                                post.setBackgroundColor(Color.parseColor("#000000"));
                             }
                         });
-                        Toast.makeText(root.getContext(), "Posted Successfully ! ", Toast.LENGTH_LONG).show();
+
                     }
                     if(imageUri!=null){
                         nil=true;
@@ -250,15 +257,20 @@ public class postquestion extends Fragment {
 
                                                 QuoraHelper quoraHelper=new QuoraHelper(title.getText().toString(),desc.getText().toString(),message.getText().toString(),status.getRole(),status.getPhone(),status.getFname(),currentDateTime,nil,img,vid,null,url,null);
                                                 FirebaseDatabase.getInstance().getReference().child("Quora").child(currentDateTime).setValue(quoraHelper);
+                                                Toast.makeText(root.getContext(), "Posted Successfully ! ", Toast.LENGTH_LONG).show();
+                                                post.setEnabled(true);
+                                                post.setBackgroundColor(Color.parseColor("#000000"));
                                             }
                                         }
 
                                         @Override
                                         public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                                            post.setEnabled(true);
+                                            post.setBackgroundColor(Color.parseColor("#000000"));
                                         }
                                     });
-                                    Toast.makeText(root.getContext(), "Posted Successfully ! ", Toast.LENGTH_LONG).show();
+
+
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -267,7 +279,8 @@ public class postquestion extends Fragment {
                                     //if the upload is not successfull
                                     //hiding the progress dialog
                                     progressDialog.dismiss();
-
+                                    post.setEnabled(true);
+                                    post.setBackgroundColor(Color.parseColor("#000000"));
                                     //and displaying error message
                                     Toast.makeText(root.getContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
                                 }
@@ -279,7 +292,7 @@ public class postquestion extends Fragment {
                                     double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
 
                                     //displaying percentage in progress dialog
-                                    progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
+                                    progressDialog.setMessage("Uploading " + ((int) progress) + "%...");
                                 }
                             });
                 }

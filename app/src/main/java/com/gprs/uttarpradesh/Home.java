@@ -170,7 +170,7 @@ public class Home extends AppCompatActivity{
                     case "Notification": navController.navigate(menuItem.getItemId());break;
 
                     case "Profile": navController.navigate(menuItem.getItemId());break;
-                    case "Setting":navController.navigate(R.id.nav_settings);break;
+                    case "Settings":navController.navigate(menuItem.getItemId());break;
 
                     case "Generate/scan QR":startActivity(new Intent(Home.this,QRcode.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
                     case "Donate":startActivity(new Intent(Home.this,donate.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
@@ -262,7 +262,7 @@ public class Home extends AppCompatActivity{
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    PreferenceManager.getDefaultSharedPreferences(Home.this).edit().putString("today",currentDateTime).commit();
+                    PreferenceManager.getDefaultSharedPreferences(Home.this).edit().putString("today",currentDateTime).apply();
                     startActivity(new Intent(Home.this,stepstofollow.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
                 }
             }, 30000);
@@ -291,7 +291,7 @@ public class Home extends AppCompatActivity{
 
                         editor.putString("city",city);
                         editor.putString("state",state);
-                        editor.commit();
+                        editor.apply();
 
 
 
@@ -479,7 +479,7 @@ public class Home extends AppCompatActivity{
             editor = pref.edit();
             if (pref.getString("lang", "").equals("")) {
                 editor.putString("lang", "hi");
-                editor.commit();
+                editor.apply();
                 setAppLocale("hi");
             } else {
                 editor.putString("lang", "");
@@ -559,7 +559,7 @@ public class Home extends AppCompatActivity{
                 Integer status=dataSnapshot.getValue(Integer.class);
                 if(status!=null && status==1) {
                     editor.putString("status", "victim");
-                    editor.commit();
+                    editor.apply();
                     if(!isMyServiceRunning(VictimAlertForegroundNotification.class)) {
                         startService(VictimAlertForegroundNotification.class);
                     }

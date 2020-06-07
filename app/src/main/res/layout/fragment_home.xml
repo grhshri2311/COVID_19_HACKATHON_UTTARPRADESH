@@ -27,7 +27,7 @@
                 android:layout_marginTop="36dp"
                 android:text="@string/current_status"
                 android:textColor="#B475CE"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:transitionName="currrentstatus"
                 app:fontFamily="@font/roboto_bold"
                 app:layout_constraintEnd_toStartOf="@+id/imageView"
@@ -92,7 +92,7 @@
                                 android:layout_alignParentBottom="true"
                                 android:layout_centerHorizontal="true"
                                 android:gravity="center"
-                                android:textSize="30dp"
+                                android:textSize="30sp"
                                 app:fontFamily="@font/roboto_medium" />
 
                             <TextView
@@ -104,7 +104,7 @@
                                 android:layout_marginTop="5dp"
                                 android:gravity="center"
                                 android:textColor="#000000"
-                                android:textSize="15dp"
+                                android:textSize="15sp"
                                 app:fontFamily="@font/roboto_bold" />
 
                             <TextView
@@ -116,7 +116,7 @@
                                 android:layout_marginTop="5dp"
                                 android:gravity="center"
                                 android:textColor="#000000"
-                                android:textSize="15dp"
+                                android:textSize="15sp"
                                 app:fontFamily="@font/roboto_bold" />
 
                         </RelativeLayout>
@@ -139,7 +139,7 @@
                 android:layout_marginBottom="20dp"
                 android:text="@string/stay_home_save_lives_help_stop_coronavirus_stay_home_keep_safe_distance_wash_hands_often_cover_your_cough_sick_call_the_helpline"
                 android:singleLine="true"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textColor="#FFC107"
                 android:fontFamily="@font/roboto_bold"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout"
@@ -157,7 +157,6 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/hscrollfirst"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -170,7 +169,6 @@
                     android:orientation="vertical">
                     <androidx.cardview.widget.CardView
                         android:layout_width="150dp"
-                        android:id="@+id/mystatus_layout"
                         android:layout_height="match_parent"
                         android:layout_margin="5dp">
                         <RelativeLayout
@@ -187,7 +185,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginLeft="5dp"
                                 android:text="@string/first_responder"
-                                android:textSize="15dp"
+                                android:textSize="15sp"
                                 app:fontFamily="@font/roboto_medium" />
 
                             <ImageView
@@ -196,7 +194,8 @@
                                 android:layout_height="75dp"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="15dp"
-                                app:srcCompat="@drawable/first" />
+                                app:srcCompat="@drawable/first"
+                                android:contentDescription="TODO" />
                         </RelativeLayout>
 
                     </androidx.cardview.widget.CardView>
@@ -219,7 +218,7 @@
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="10dp"
                                 android:text="@string/scan"
-                                android:textSize="15dp"
+                                android:textSize="15sp"
                                 app:fontFamily="@font/roboto_medium" />
 
                             <ImageView
@@ -228,7 +227,8 @@
                                 android:layout_height="90dp"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="15dp"
-                                app:srcCompat="@drawable/virusscan" />
+                                app:srcCompat="@drawable/virusscan"
+                                android:contentDescription="TODO" />
                         </RelativeLayout>
 
                     </androidx.cardview.widget.CardView>
@@ -261,7 +261,7 @@
                                 android:scrollHorizontally="true"
                                 android:text="@string/to_do"
                                 android:layout_margin="10dp"
-                                android:textSize="15dp"
+                                android:textSize="15sp"
                                 app:fontFamily="@font/roboto_medium" />
 
                             <ImageView
@@ -270,7 +270,8 @@
                                 android:layout_height="75dp"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="15dp"
-                                app:srcCompat="@drawable/todo" />
+                                app:srcCompat="@drawable/todo"
+                                android:contentDescription="TODO" />
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -285,14 +286,13 @@
                             android:layout_height="match_parent">
 
                             <TextView
-                                android:id="@+id/textView11"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/train11"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="10dp"
                                 android:text="@string/helpline"
-                                android:textSize="15dp"
+                                android:textSize="15sp"
                                 app:fontFamily="@font/roboto_medium" />
 
                             <ImageView
@@ -301,7 +301,8 @@
                                 android:layout_height="85dp"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="15dp"
-                                app:srcCompat="@drawable/helpline" />
+                                app:srcCompat="@drawable/helpline"
+                                android:contentDescription="TODO" />
                         </RelativeLayout>
 
 
@@ -324,7 +325,7 @@
                     android:fontFamily="@font/roboto"
                     android:text="@string/updateshome"
                     android:textColor="#C4BFB6"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -364,7 +365,8 @@
                   <ImageView
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:src="@drawable/awareness"/>
+                      android:src="@drawable/awareness"
+                      android:contentDescription="TODO" />
                 </HorizontalScrollView>
 
                 <ImageView
@@ -373,13 +375,13 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:transitionName="icon"
-                    android:src="@drawable/shelter"/>
+                    android:src="@drawable/shelter"
+                    android:contentDescription="TODO" />
 
 
 
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp">
@@ -431,7 +433,8 @@
                             android:layout_alignParentRight="true"
                             android:layout_marginBottom="5dp"
                             android:background="@drawable/customimageborder"
-                            android:src="@drawable/labsicon"/>
+                            android:src="@drawable/labsicon"
+                            android:contentDescription="TODO" />
 
                         <TextView
                             android:id="@+id/name1"
@@ -439,7 +442,7 @@
                             android:layout_height="wrap_content"
                             android:layout_toLeftOf="@id/logo"
                             android:textColor="#000"
-                            android:textSize="20dp"
+                            android:textSize="20sp"
                             android:fontFamily="sans-serif"
                             android:layout_marginTop="15dp"
                             android:layout_marginLeft="7dp"
@@ -478,7 +481,8 @@
                             android:layout_alignParentRight="true"
                             android:layout_marginBottom="5dp"
                             android:background="@drawable/customimageborder"
-                            android:src="@drawable/msmeicon"/>
+                            android:src="@drawable/msmeicon"
+                            android:contentDescription="TODO" />
 
                         <TextView
                             android:id="@+id/name"
@@ -486,7 +490,7 @@
                             android:layout_height="wrap_content"
                             android:layout_toLeftOf="@id/logo1"
                             android:textColor="#000"
-                            android:textSize="20dp"
+                            android:textSize="20sp"
                             android:fontFamily="sans-serif"
                             android:layout_marginTop="15dp"
                             android:layout_marginLeft="7dp"
@@ -495,7 +499,6 @@
                     </RelativeLayout>
 
                     <TextView
-                        android:id="@+id/getdirection"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
@@ -523,12 +526,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
                             android:layout_marginTop="25dp"
                             android:fontFamily="@font/roboto_bold"
                             android:text="FAQ"
                             android:textColor="#000"
-                            android:textSize="30dp" />
+                            android:textSize="30sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -541,7 +543,8 @@
                     <ImageView
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:src="@drawable/faq" />
+                        android:src="@drawable/faq"
+                        android:contentDescription="TODO" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -562,12 +565,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
                             android:layout_marginTop="25dp"
                             android:fontFamily="@font/roboto_bold"
                             android:text="FAQ"
                             android:textColor="#000"
-                            android:textSize="30dp" />
+                            android:textSize="30sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -578,10 +580,10 @@
 
 
                     <ImageView
-                        android:id="@+id/faqimg1"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:src="@drawable/faq" />
+                        android:src="@drawable/faq"
+                        android:contentDescription="TODO" />
                 </LinearLayout>
                 <TextView
                     android:layout_width="wrap_content"
@@ -592,7 +594,7 @@
                     android:fontFamily="@font/roboto_bold"
                     android:text="@string/important_links"
                     android:textColor="#C4BFB6"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
                 <HorizontalScrollView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -609,31 +611,36 @@
                             android:layout_width="250dp"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
-                            android:src="@drawable/implink4"/>
+                            android:src="@drawable/implink4"
+                            android:contentDescription="TODO" />
                         <ImageView
                             android:id="@+id/implink2"
                             android:layout_width="250dp"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
-                            android:src="@drawable/implink5"/>
+                            android:src="@drawable/implink5"
+                            android:contentDescription="TODO" />
                         <ImageView
                             android:id="@+id/implink3"
                             android:layout_width="250dp"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
-                            android:src="@drawable/implink1"/>
+                            android:src="@drawable/implink1"
+                            android:contentDescription="TODO" />
                         <ImageView
                             android:id="@+id/implink4"
                             android:layout_width="250dp"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
-                            android:src="@drawable/implink2"/>
+                            android:src="@drawable/implink2"
+                            android:contentDescription="TODO" />
                         <ImageView
                             android:id="@+id/implink5"
                             android:layout_width="250dp"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
-                            android:src="@drawable/implink3"/>
+                            android:src="@drawable/implink3"
+                            android:contentDescription="TODO" />
 
                     </LinearLayout>
 
@@ -651,7 +658,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/collective_intelligence_icon_use" />
+                app:srcCompat="@drawable/collective_intelligence_icon_use"
+                android:contentDescription="TODO" />
 
             <RelativeLayout
                 android:id="@+id/rellayout"
@@ -686,7 +694,8 @@
                         android:layout_height="20dp"
                         android:src="@drawable/ic_baseline_close_24"
                         android:layout_alignParentLeft="true"
-                        android:layout_alignParentTop="true"/>
+                        android:layout_alignParentTop="true"
+                        android:contentDescription="TODO" />
                 </RelativeLayout>
 
                 <RelativeLayout

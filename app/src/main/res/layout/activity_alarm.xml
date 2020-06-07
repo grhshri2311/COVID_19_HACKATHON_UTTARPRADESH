@@ -15,7 +15,7 @@
         android:gravity="center"
         android:text="@string/alarm"
         android:textColor="#2196F3"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:layout_centerHorizontal="true"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -28,7 +28,8 @@
         android:backgroundTint="#2196F3"
         android:clickable="true"
         android:background="#2196F3"
-        android:src="@drawable/ic_add_black_24dp" />
+        android:src="@drawable/ic_add_black_24dp"
+        android:focusable="true" />
 
     <ListView
         android:id="@+id/alarmlist"

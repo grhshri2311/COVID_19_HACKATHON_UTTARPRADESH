@@ -15,7 +15,8 @@
         android:padding="10dp"
         android:layout_margin="30dp"
         android:hint="Enter title"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/alarmdesc"
@@ -25,7 +26,8 @@
         android:ems="10"
         android:hint="Description"
         android:inputType="textPersonName"
-        android:padding="10dp" />
+        android:padding="10dp"
+        android:importantForAutofill="no" />
 
     <TimePicker
         android:id="@+id/timePicker"
@@ -34,9 +36,7 @@
         android:backgroundTint="#6CCFFC"
         android:numbersSelectorColor="#3F51B5"
         android:layout_height="wrap_content"
-        android:headerBackground="#3F51B5"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:headerBackground="#3F51B5" />
     </LinearLayout>
     </ScrollView>
 

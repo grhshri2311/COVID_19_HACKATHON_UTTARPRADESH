@@ -72,8 +72,9 @@ public class test extends AppCompatActivity {
             case MULTIPLE_PERMISSIONS: {
                 boolean flag=true;
                 for(int i=0;i<grantResults.length;i++){
-                    if(grantResults[i]!=PackageManager.PERMISSION_GRANTED){
-                        flag=false;
+                    if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                        flag = false;
+                        break;
                     }
                 }
                 if (flag) {

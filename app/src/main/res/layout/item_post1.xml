@@ -15,7 +15,6 @@
         android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/memory_meta_rel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#FFF">
@@ -28,7 +27,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/statusicon" />
+                android:src="@drawable/statusicon"
+                android:contentDescription="TODO" />
 
             <TextView
                 android:id="@+id/people_name"
@@ -62,20 +62,19 @@
                 android:text="Date" />
 
             <ImageView
-                android:id="@+id/privacy_icon"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_below="@id/people_name"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/date"
-                android:src="@drawable/ic_timeline_black_24dp" />
+                android:src="@drawable/ic_timeline_black_24dp"
+                android:contentDescription="TODO" />
         </RelativeLayout>
 
         <TextView
             android:id="@+id/post"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/memory_meta_rel"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="2dp"
             android:paddingStart="16dp"
@@ -86,7 +85,6 @@
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/memory_meta_rel"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="2dp"
             android:paddingStart="16dp"
@@ -98,7 +96,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/post"
             android:layout_margin="0dp"
             android:id="@+id/quoraitem"
             android:adjustViewBounds="true"
@@ -114,7 +111,8 @@
                 android:layout_marginTop="10dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/collective_intelligence_icon_use" />
+                android:src="@drawable/collective_intelligence_icon_use"
+                android:contentDescription="TODO" />
 
 
             <VideoView
@@ -141,7 +139,6 @@
             android:id="@+id/quoramessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/memory_meta_rel"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="2dp"
             android:paddingStart="16dp"
@@ -162,7 +159,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="false"
             android:layout_marginBottom="5dp"
             android:background="#FFF"
             android:orientation="vertical"
@@ -171,13 +167,10 @@
             android:weightSum="2">
 
             <TextView
-                android:id="@+id/answers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="10dp"
-                android:layout_toEndOf="@+id/people_image"
                 android:text="Answers"
                 android:textColor="#000"
                 android:textSize="16sp"

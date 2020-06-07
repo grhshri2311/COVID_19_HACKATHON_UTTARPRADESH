@@ -26,7 +26,7 @@
                 android:gravity="center"
                 android:text="@string/got_help"
                 android:textColor="@color/GREEN"
-                android:textSize="30dp" />
+                android:textSize="30sp" />
 
         </LinearLayout>
 

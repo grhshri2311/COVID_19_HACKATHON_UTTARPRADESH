@@ -24,7 +24,8 @@
         android:textAlignment="center"
         android:layout_marginBottom="10dp"
         android:src="@drawable/shareqr"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:contentDescription="TODO" />
 
     <TextView
         android:layout_width="match_parent"

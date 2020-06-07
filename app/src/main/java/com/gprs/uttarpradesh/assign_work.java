@@ -10,12 +10,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +47,7 @@ public class assign_work extends AppCompatActivity {
     EditText place;
     SharedPreferences pref;
     SharedPreferences.Editor editor;
-    ArrayList<String> n,r,p,w;
+    ArrayList<String> n,r,p,w,s,c;
     AlertDialog alert;
     Boolean select=true;
     int selectedcount=0;
@@ -74,23 +76,43 @@ public class assign_work extends AppCompatActivity {
         r=new ArrayList<>();
         p=new ArrayList<>();
         w=new ArrayList<>();
+        s=new ArrayList<>();
+        c=new ArrayList<>();
         volunteer = new ArrayList<>();
 
         adapter = new VolunteerAdapter(this, namelist, rolelist, placelist);
         listView.setAdapter(adapter);
 
-        adapter1=new VolunteerAdapter1(this,n,r,p,w);
+        adapter1=new VolunteerAdapter1(this,n,r,p,w,c,s);
         listview1.setAdapter(adapter1);
+
+        final ScrollView sv=findViewById(R.id.sv);
+
+        listview1.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                sv.requestDisallowInterceptTouchEvent(true);
+                int action = event.getActionMasked();
+                switch (action) {
+                    case MotionEvent.ACTION_UP:
+                        sv.requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+                return false;
+            }
+        });
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                view.findViewById(R.id.checked).setVisibility(View.VISIBLE);
-                selectedcount=selectedcount+1;
-                findViewById(R.id.go).setVisibility(View.VISIBLE);
-                Toast.makeText(assign_work.this, selectedcount + " selected",Toast.LENGTH_LONG).show();
-                number.add(position);
-                select=false;
+                if(view.findViewById(R.id.checked).getVisibility()!=View.VISIBLE){
+                    view.findViewById(R.id.checked).setVisibility(View.VISIBLE);
+                    selectedcount = selectedcount + 1;
+                    findViewById(R.id.go).setVisibility(View.VISIBLE);
+                    Toast.makeText(assign_work.this, selectedcount + " selected", Toast.LENGTH_LONG).show();
+                    number.add(position);
+                    select = false;
+                }
                 return true;
             }
         });
@@ -99,7 +121,7 @@ public class assign_work extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(select){
-                    show(position);
+                    show(position,view);
                 }
                 else if(view.findViewById(R.id.checked).getVisibility()==View.VISIBLE){
                     selectedcount=selectedcount-1;
@@ -237,11 +259,16 @@ public class assign_work extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    workhelper workhelper=snapshot.getValue(workhelper.class);
-                    n.add(workhelper.getFname());
+                   WorkAssignHelper workhelper=snapshot.getValue(WorkAssignHelper.class);
+                  n.add(workhelper.getFname());
                     r.add(workhelper.getRole());
                     p.add(workhelper.getPlace());
                     w.add(workhelper.getWork());
+                    s.add(workhelper.getStatus());
+                    c.add(workhelper.getComment());
+
+
+
                 }
                 adapter1.notifyDataSetChanged();
             }
@@ -312,20 +339,22 @@ public class assign_work extends AppCompatActivity {
         finish();
     }
 
-    private void show(final int id) {
+    private void show(final int id, final View view1) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
         builder.setMessage(volunteer.get(id).fname);
 
         LayoutInflater inflater = getLayoutInflater();
-        View view = inflater.inflate(R.layout.volunteerview, null, true);
+        final View view = inflater.inflate(R.layout.bottom_sheet_volunteerview_layout, null, true);
 
 
         TextView email = view.findViewById(R.id.mapemail);
         TextView phone = view.findViewById(R.id.mapphone);
         TextView role = view.findViewById(R.id.maprole);
-        Button select=view.findViewById(R.id.select);
+        final Button selectvolunteer=view.findViewById(R.id.select);
+        TextView name=view.findViewById(R.id.name);
 
+        name.setText(volunteer.get(id).getFname());
         email.setText(volunteer.get(id).email);
         phone.setText(volunteer.get(id).phone);
         role.setText(volunteer.get(id).role);
@@ -352,9 +381,15 @@ public class assign_work extends AppCompatActivity {
             }
         });
 
-        select.setOnClickListener(new View.OnClickListener() {
+        selectvolunteer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                selectedcount=selectedcount+1;
+                findViewById(R.id.go).setVisibility(View.VISIBLE);
+                Toast.makeText(assign_work.this, selectedcount + " selected",Toast.LENGTH_LONG).show();
+                number.add(id);
+                select=false;
+                view1.findViewById(R.id.checked).setVisibility(View.VISIBLE);
                 alert.hide();
             }
         });

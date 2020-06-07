@@ -38,7 +38,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_person"
-        />
+        android:contentDescription="TODO" />
 
         <TextView
             android:id="@+id/topText"
@@ -168,8 +168,8 @@
 
         <ImageButton
             android:id="@+id/language"
-            android:layout_width="160px"
-            android:layout_height="160px"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:layout_gravity="center"
             android:layout_margin="5dp"
             android:layout_marginTop="20dp"
@@ -182,7 +182,8 @@
             android:transitionName="switch"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/gotoRegister" />
+            app:layout_constraintTop_toBottomOf="@+id/gotoRegister"
+            android:contentDescription="TODO" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
