@@ -95,27 +95,24 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:drawableLeft="@drawable/ic_place_black_24dp"
-        android:drawablePadding="16dp"
-        />
+        android:drawablePadding="16dp" />
 
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:drawableLeft="@drawable/nameicon"
-        android:drawablePadding="16dp"
-        />
+        android:drawableLeft="@drawable/ic_person_black_24dp"
+        android:drawablePadding="16dp" />
 
     <TextView
         android:id="@+id/phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:backgroundTint="@color/colorPrimary"
         android:drawableLeft="@drawable/ic_phone_in_talk_black_24dp"
-        android:drawablePadding="16dp"
-        />
-
+        android:drawablePadding="16dp" />
 
 
     <TextView
@@ -123,9 +120,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:backgroundTint="@color/colorPrimary"
         android:drawableLeft="@drawable/ic_assignment_ind_black_24dp"
-        android:drawablePadding="16dp"
-        />
+        android:drawablePadding="16dp" />
 
     <Button
         android:id="@+id/close"

@@ -17,7 +17,7 @@
         android:text="@string/use_password"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="20dp"/>
+        android:layout_margin="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -27,7 +27,7 @@
         android:layout_below="@id/finger"
         android:layout_margin="10dp"
         android:textColor="#000"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/verify"
@@ -40,7 +40,7 @@
         android:gravity="center"
         android:fontFamily="@font/roboto_bold"
         android:layout_above="@id/textView21"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/textView21"
@@ -52,7 +52,6 @@
         android:layout_margin="20dp"
         android:text="@string/confirm_your_fingerprint_so_covid_19_relief_can_verify_it_s_you"
         android:textSize="20sp" />
-
 
 
     <pl.droidsonroids.gif.GifImageView

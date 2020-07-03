@@ -11,6 +11,7 @@ import java.io.Serializable;
 public class Message implements Serializable {
     String id, message, url, title, description;
     Type type;
+
     public Message() {
         this.type = Type.TEXT;
     }

@@ -3,7 +3,6 @@ package com.gprs.uttarpradesh;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -23,7 +22,6 @@ import pl.droidsonroids.gif.GifImageView;
 public class FingerprintHandler extends FingerprintManager.AuthenticationCallback {
 
 
-
     Button pass;
     TextView verify;
     GifImageView finger;
@@ -35,9 +33,9 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 
     public FingerprintHandler(Activity mContext, Button pass, TextView verify, GifImageView finger) {
         context = mContext;
-        this.pass= pass;
-        this.verify= verify;
-        this.finger= finger;
+        this.pass = pass;
+        this.verify = verify;
+        this.finger = finger;
     }
 
     //Implement the startAuth method, which is responsible for starting the fingerprint authentication process//
@@ -75,8 +73,9 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     //onAuthenticationHelp is called when a non-fatal error has occurred. This method provides additional information about the error,
     //so to provide the user with as much feedback as possible I’m incorporating this information into my toast//
     public void onAuthenticationHelp(int helpMsgId, CharSequence helpString) {
-        Toast.makeText(context, "Authentication help\n" + helpString, Toast.LENGTH_LONG).show();
-    }@Override
+    }
+
+    @Override
 
     //onAuthenticationSucceeded is called when a fingerprint has been successfully matched to one of the fingerprints stored on the user’s device//
     public void onAuthenticationSucceeded(
@@ -89,7 +88,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 
             @Override
             public void run() {
-                context.startActivity(new Intent(context,Home.class));
+                context.startActivity(new Intent(context, Home.class));
                 context.finish();
             }
         }, 2000);

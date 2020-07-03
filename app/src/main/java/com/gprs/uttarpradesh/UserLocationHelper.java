@@ -4,17 +4,17 @@ public class UserLocationHelper {
 
     String fname;
     String email;
-    double lat,lon;
+    double lat, lon;
     String role;
     String phone;
 
     public UserLocationHelper(String fname, double lat, double lon, String role, String email, String phone) {
         this.fname = fname;
-        this.lat=lat;
-        this.lon=lon;
+        this.lat = lat;
+        this.lon = lon;
         this.role = role;
-        this.email=email;
-        this.phone=phone;
+        this.email = email;
+        this.phone = phone;
     }
 
     public UserLocationHelper() {

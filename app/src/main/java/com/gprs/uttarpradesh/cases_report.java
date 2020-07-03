@@ -1,17 +1,19 @@
 package com.gprs.uttarpradesh;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -29,31 +31,36 @@ import java.util.Collections;
 import java.util.Iterator;
 
 public class cases_report extends AppCompatActivity {
-    Spinner spinner,spinner2;
+    Spinner spinner, spinner2;
     private RequestQueue queue;
-    ArrayList<String> arrayList,district;
-    ArrayList<String> arrayList1,district1;
+    ArrayList<String> arrayList, district;
+    ArrayList<String> arrayList1, district1;
     ArrayList<String> active;
-    ArrayList<String> confirm,cconfirm;
-    ArrayList<String> death,cdeath;
-    ArrayList<String> recover,crecover;
+    ArrayList<String> confirm, cconfirm;
+    ArrayList<String> death, cdeath;
+    ArrayList<String> recover, crecover;
     ArrayList<String> active1;
     ArrayList<String> confirm1;
     ArrayList<String> death1;
     ArrayList<String> recover1;
-    ArrayAdapter<String> dataAdapter,dataAdapter2;
-    String state=null;
+    ArrayAdapter<String> dataAdapter, dataAdapter2;
+    String state = null;
     ArrayList<JSONObject> object;
+    Button button;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_cases_report);
+
+        button = findViewById(R.id.button2);
 
         queue = Volley.newRequestQueue(this);
         arrayList = new ArrayList();
-        district=new ArrayList<>();
+        district = new ArrayList<>();
         arrayList1 = new ArrayList();
         active = new ArrayList();
         confirm = new ArrayList();
@@ -65,18 +72,29 @@ public class cases_report extends AppCompatActivity {
         active1 = new ArrayList();
         confirm1 = new ArrayList();
         recover1 = new ArrayList();
-        district1=new ArrayList<>();
+        district1 = new ArrayList<>();
         death1 = new ArrayList();
-        object=new ArrayList<>();
+        object = new ArrayList<>();
 
-        final SwipeRefreshLayout swipeRefreshLayout= findViewById(R.id.swipe);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
-        {
+        final SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipe);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onRefresh()
-            {
-                startActivity(new Intent(cases_report.this,cases_report.class));
+            public void onRefresh() {
+                startActivity(new Intent(cases_report.this, cases_report.class));
                 swipeRefreshLayout.setRefreshing(false);
+                finish();
+            }
+        });
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(cases_report.this, visualize.class));
+            }
+        });
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 finish();
             }
         });
@@ -91,12 +109,12 @@ public class cases_report extends AppCompatActivity {
         spinner.setAdapter(dataAdapter);
         spinner.setGravity(11);
 
-        int initialposition=spinner.getSelectedItemPosition();
+        int initialposition = spinner.getSelectedItemPosition();
         spinner.setSelection(initialposition, false);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position>0) {
+                if (position > 0) {
                     for (int i = 0; i < arrayList1.size(); i++) {
                         if (arrayList1.get(i).equals(parent.getItemAtPosition(position))) {
                             state = arrayList1.get(i);
@@ -112,9 +130,8 @@ public class cases_report extends AppCompatActivity {
                             break;
                         }
                     }
-                }
-                else {
-                    state=null;
+                } else {
+                    state = null;
                 }
             }
 
@@ -131,7 +148,7 @@ public class cases_report extends AppCompatActivity {
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position>0) {
+                if (position > 0) {
                     for (int i = 0; i < district1.size(); i++) {
                         if (district1.get(i).equals(parent.getItemAtPosition(position))) {
                             set1(i);
@@ -189,14 +206,14 @@ public class cases_report extends AppCompatActivity {
         textView1.setText(confirm.get(i));
         textView2.setText(death.get(i));
         textView3.setText(recover.get(i));
-        textView4.setText('('+cconfirm.get(i)+')');
-        textView5.setText('('+cdeath.get(i)+')');
-        textView6.setText('('+crecover.get(i)+')');
+        textView4.setText('(' + cconfirm.get(i) + ')');
+        textView5.setText('(' + cdeath.get(i) + ')');
+        textView6.setText('(' + crecover.get(i) + ')');
 
     }
 
     public void visualize(View view) {
-        startActivity(new Intent(cases_report.this,visualize.class));
+        startActivity(new Intent(cases_report.this, visualize.class));
     }
 
     class RetrieveFeedTask extends AsyncTask<Void, Void, String> {
@@ -225,7 +242,7 @@ public class cases_report extends AppCompatActivity {
                     bufferedReader.close();
                     return stringBuilder.toString();
                 } finally {
-                    if (urlConnection!=null)
+                    if (urlConnection != null)
                         urlConnection.disconnect();
                 }
             } catch (Exception e) {
@@ -238,12 +255,11 @@ public class cases_report extends AppCompatActivity {
         protected void onPostExecute(String response) {
 
 
-
             try {
                 JSONArray jsonArray = (JSONArray) new JSONTokener(response).nextValue();
 
-                for(int a=0;a<jsonArray.length();a++){
-                    JSONObject object=jsonArray.getJSONObject(a);
+                for (int a = 0; a < jsonArray.length(); a++) {
+                    JSONObject object = jsonArray.getJSONObject(a);
                     arrayList.add(object.optString("state"));
                     arrayList1.add(object.optString("state"));
                     active.add(object.optString("active"));
@@ -308,17 +324,12 @@ public class cases_report extends AppCompatActivity {
         protected void onPostExecute(String response) {
 
 
-
-
             try {
-                if(state!=null) {
-
-
-
+                if (state != null) {
 
 
                     JSONObject object1 = (JSONObject) new JSONTokener(response).nextValue();
-                    object1=object1.getJSONObject(state).getJSONObject("districtData");
+                    object1 = object1.getJSONObject(state).getJSONObject("districtData");
 
                     Iterator<String> keys = object1.keys();
 
@@ -347,6 +358,7 @@ public class cases_report extends AppCompatActivity {
 
         }
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

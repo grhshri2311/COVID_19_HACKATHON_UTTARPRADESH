@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <LinearLayout
             android:id="@+id/register"
             android:orientation="vertical"
@@ -35,7 +36,7 @@
                     android:fontFamily="sans-serif"
                     android:layout_marginTop="15dp"
                     android:layout_marginLeft="7dp"
-                    android:text="@string/looking_for_products_and_service_to_sell_on_gem_sign_up_now"/>
+                    android:text="@string/looking_for_products_and_service_to_sell_on_gem_sign_up_now" />
 
             </RelativeLayout>
 
@@ -45,31 +46,32 @@
                 android:layout_gravity="left"
                 android:layout_margin="5dp"
                 android:textColor="#009688"
-                android:text="Click here >"/>
+                android:text="Click here >" />
         </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="#FF9800"
-        android:textSize="20sp"
-        android:text="@string/msme_covid_19_related_products"/>
 
-    <ListView
-        android:id="@+id/MSME"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_margin="10dp"
-        android:scrollbars="none"
-        android:layout_weight="2"
-        android:divider="@null"
-        android:dividerHeight="0dp"
-        />
-    <View
-        android:id="@+id/lineabove"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#B1A6A6"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="#FF9800"
+            android:textSize="20sp"
+            android:text="@string/msme_covid_19_related_products" />
+
+        <ListView
+            android:id="@+id/MSME"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_margin="10dp"
+            android:scrollbars="none"
+            android:layout_weight="2"
+            android:divider="@null"
+            android:dividerHeight="0dp" />
+
+        <View
+            android:id="@+id/lineabove"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#B1A6A6" />
 
 
         <LinearLayout
@@ -83,6 +85,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <ImageButton
                     android:id="@+id/logo"
                     android:layout_width="150dp"
@@ -106,7 +109,7 @@
                     android:fontFamily="sans-serif"
                     android:layout_marginTop="15dp"
                     android:layout_marginLeft="7dp"
-                    android:text="@string/action_on_covid_19_relief_for_msme_sector"/>
+                    android:text="@string/action_on_covid_19_relief_for_msme_sector" />
 
             </RelativeLayout>
 
@@ -117,13 +120,11 @@
                 android:layout_gravity="left"
                 android:layout_margin="5dp"
                 android:textColor="#2196F3"
-                android:text="View more >"/>
+                android:text="View more >" />
         </LinearLayout>
 
 
-
-
-</LinearLayout>
+    </LinearLayout>
 
 
 </ScrollView>

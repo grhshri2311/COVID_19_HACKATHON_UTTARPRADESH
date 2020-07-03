@@ -1,8 +1,5 @@
 package com.gprs.uttarpradesh;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,10 +7,14 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class epass extends AppCompatActivity {
 
@@ -24,13 +25,15 @@ public class epass extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_epass);
-        wview= findViewById(R.id.webv);
+        wview = findViewById(R.id.webv);
 
-        Intent intent=getIntent();
-        text=intent.getStringExtra("text");
+        Intent intent = getIntent();
+        text = intent.getStringExtra("text");
 
-        progressDialog=new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this);
 
         progressDialog.setMessage("Loading..."); // Setting Message
         progressDialog.setTitle("Please Wait !"); // Setting Title
@@ -39,7 +42,7 @@ public class epass extends AppCompatActivity {
         progressDialog.setCancelable(true);
 
 
-        WebSettings wsetting=wview.getSettings();
+        WebSettings wsetting = wview.getSettings();
         wsetting.setJavaScriptEnabled(true);
         wsetting.setAllowContentAccess(false);
         wsetting.setSupportZoom(true);
@@ -102,11 +105,9 @@ public class epass extends AppCompatActivity {
             }
 
 
-
-
         });
 
-        String url="http://164.100.68.164/upepass2/";
+        String url = "http://164.100.68.164/upepass2/";
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         startActivity(i);
@@ -114,6 +115,7 @@ public class epass extends AppCompatActivity {
 
 
     }
+
     @Override
     public void onBackPressed() {
         finish();

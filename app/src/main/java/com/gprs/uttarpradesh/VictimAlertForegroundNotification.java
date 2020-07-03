@@ -49,7 +49,7 @@ public class VictimAlertForegroundNotification extends Service {
     public Context context = this;
     String strendPointId;
     public static final Strategy STRATEGY = Strategy.P2P_POINT_TO_POINT;
-    public static final String SERVICE_ID="120001";
+    public static final String SERVICE_ID = "120001";
     private Ringtone ringtone;
     MediaPlayer player;
     BroadcastReceiver br;
@@ -57,12 +57,13 @@ public class VictimAlertForegroundNotification extends Service {
     SharedPreferences.Editor editor;
     VolumeProviderCompat myVolumeProvider;
     private MediaSessionCompat mediaSession;
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         String input = intent.getStringExtra("inputExtra");
         createNotificationChannel();
         pref = getApplicationContext().getSharedPreferences("user", 0); // 0 - for private mode
-        editor=pref.edit();
+        editor = pref.edit();
 
 
         br = new BroadcastReceiver() {
@@ -75,9 +76,9 @@ public class VictimAlertForegroundNotification extends Service {
                             BluetoothAdapter.ERROR);
                     switch (state) {
                         case BluetoothAdapter.STATE_OFF:
-                                Toast.makeText(context,"Geo-Fencing is ON",Toast.LENGTH_LONG).show();
-                                BluetoothAdapter.getDefaultAdapter().enable();
-                                break;
+                            Toast.makeText(context, "Geo-Fencing is ON", Toast.LENGTH_LONG).show();
+                            BluetoothAdapter.getDefaultAdapter().enable();
+                            break;
                         case BluetoothAdapter.STATE_TURNING_OFF:
                             // Bluetooth is turning off;
                             break;
@@ -98,7 +99,7 @@ public class VictimAlertForegroundNotification extends Service {
 
         Intent notificationIntent = new Intent(this, victimalert.class);
 
-        if(pref.getString("status","").equals("victim")){
+        if (pref.getString("status", "").equals("victim")) {
             notificationIntent = new Intent(this, Splash.class);
         }
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
@@ -126,6 +127,7 @@ public class VictimAlertForegroundNotification extends Service {
     public IBinder onBind(Intent intent) {
         return null;
     }
+
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel serviceChannel = new NotificationChannel(
@@ -156,7 +158,7 @@ public class VictimAlertForegroundNotification extends Service {
                 new VolumeProviderCompat(VolumeProviderCompat.VOLUME_CONTROL_RELATIVE, /*max volume*/100, /*initial volume level*/100) {
                     @Override
                     public void onAdjustVolume(int direction) {
-                        if(player.isPlaying())
+                        if (player.isPlaying())
                             player.stop();
 
                         mediaSession.setActive(false);
@@ -171,7 +173,7 @@ public class VictimAlertForegroundNotification extends Service {
 
     @Override
     public void onDestroy() {
-        if(player!=null)
+        if (player != null)
             player.stop();
 
         Nearby.getConnectionsClient(context).stopAllEndpoints();
@@ -184,7 +186,8 @@ public class VictimAlertForegroundNotification extends Service {
     public void onStart(Intent intent, int startid) {
 
     }
-    private void startAdvertising () {
+
+    private void startAdvertising() {
 
         AdvertisingOptions advertisingOptions = new AdvertisingOptions.Builder().setStrategy(STRATEGY).build();
         Nearby.getConnectionsClient(this).startAdvertising("Shriram G", SERVICE_ID, new ConnectionLifecycleCallback() {
@@ -194,6 +197,7 @@ public class VictimAlertForegroundNotification extends Service {
 
                 Nearby.getConnectionsClient(context).acceptConnection(endPointId, mPayloadCallback);
             }
+
             @Override
             public void onConnectionResult(@NonNull String endPointId, @NonNull ConnectionResolution connectionResolution) {
                 switch (connectionResolution.getStatus().getStatusCode()) {
@@ -212,6 +216,7 @@ public class VictimAlertForegroundNotification extends Service {
                         // Unknown status code
                 }
             }
+
             @Override
             public void onDisconnected(@NonNull String s) {
                 strendPointId = null;
@@ -224,15 +229,16 @@ public class VictimAlertForegroundNotification extends Service {
         final SharedPreferences.Editor editor;
 
         pref = getApplicationContext().getSharedPreferences("user", 0);
-        Payload bytesPayload = Payload.fromBytes(('0'+pref.getString("status","")).getBytes());
+        Payload bytesPayload = Payload.fromBytes(('0' + pref.getString("status", "")).getBytes());
 
         Nearby.getConnectionsClient(context).sendPayload(endPointId, bytesPayload);
-        bytesPayload = Payload.fromBytes(('1'+pref.getString("role","")).getBytes());
+        bytesPayload = Payload.fromBytes(('1' + pref.getString("role", "")).getBytes());
 
         Nearby.getConnectionsClient(context).sendPayload(endPointId, bytesPayload);
 
 
     }
+
     private void startDiscovery() {
         DiscoveryOptions discoveryOptions = new DiscoveryOptions.Builder().setStrategy(STRATEGY).build();
         Nearby.getConnectionsClient(context).
@@ -247,6 +253,7 @@ public class VictimAlertForegroundNotification extends Service {
                                         Nearby.getConnectionsClient(context).acceptConnection(endpointId, mPayloadCallback);
 
                                     }
+
                                     @Override
                                     public void onConnectionResult(@NonNull String s, @NonNull ConnectionResolution connectionResolution) {
                                         switch (connectionResolution.getStatus().getStatusCode()) {
@@ -264,11 +271,13 @@ public class VictimAlertForegroundNotification extends Service {
                                                 // Unknown status code
                                         }
                                     }
+
                                     @Override
                                     public void onDisconnected(@NonNull String s) {
                                     }
                                 });
                     }
+
                     @Override
                     public void onEndpointLost(@NonNull String s) {
                         // disconnected
@@ -279,16 +288,16 @@ public class VictimAlertForegroundNotification extends Service {
     private final PayloadCallback mPayloadCallback = new PayloadCallback() {
         @Override
         public void onPayloadReceived(@NonNull String s, @NonNull Payload payload) {
-            final   byte[] receivedBytes = payload.asBytes();
-            String strReceived=new String(receivedBytes);
+            final byte[] receivedBytes = payload.asBytes();
+            String strReceived = new String(receivedBytes);
 
-            if(strReceived.charAt(0)=='0'){
-                if(strReceived.substring(1).equals("victim")) {
+            if (strReceived.charAt(0) == '0') {
+                if (strReceived.substring(1).equals("victim")) {
                     mediaSession.setActive(true);
                     player = MediaPlayer.create(context,
                             Settings.System.DEFAULT_RINGTONE_URI);
                     player.start();
-                    createnotification("Found new victim", "Stay away ! Stay safe !",true);
+                    createnotification("Found new victim", "Stay away ! Stay safe !", true);
                     Intent dialogIntent = new Intent(context, foundvictim.class);
                     dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     VictimAlertForegroundNotification.this.startActivity(dialogIntent);
@@ -301,13 +310,13 @@ public class VictimAlertForegroundNotification extends Service {
                     }
 
                 }
-            }
-            else {
-                createnotification("Found new",strReceived.substring(1)+" found in your surrounding",false);
+            } else {
+                createnotification("Found new", strReceived.substring(1) + " found in your surrounding", false);
             }
 
 
         }
+
         @Override
         public void onPayloadTransferUpdate(@NonNull String s,
                                             @NonNull PayloadTransferUpdate payloadTransferUpdate) {
@@ -318,9 +327,9 @@ public class VictimAlertForegroundNotification extends Service {
     };
 
 
-    void createnotification(String title,String  message,Boolean victim){
+    void createnotification(String title, String message, Boolean victim) {
         Intent resultIntent = new Intent(this, Splash.class);
-        if(victim){
+        if (victim) {
             resultIntent = new Intent(this, foundvictim.class);
         }
         resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -330,7 +339,7 @@ public class VictimAlertForegroundNotification extends Service {
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
         mBuilder.setSmallIcon(R.drawable.report);
-        mBuilder .setContentTitle(title)
+        mBuilder.setContentTitle(title)
                 .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_CALL)
@@ -341,8 +350,7 @@ public class VictimAlertForegroundNotification extends Service {
 
         NotificationManager mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-        {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel notificationChannel = new NotificationChannel("10550", "NOTIFICATION_CHANNEL_NAME", importance);
             notificationChannel.enableLights(true);

@@ -7,7 +7,7 @@ import android.net.NetworkInfo;
 class NetworkUtil {
     public static boolean getConnectivityStatusString(Context context) {
         String status = null;
-        ConnectivityManager cm = (ConnectivityManager)           context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         if (activeNetwork != null) {
             if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {

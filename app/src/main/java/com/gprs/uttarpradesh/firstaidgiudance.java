@@ -1,8 +1,5 @@
 package com.gprs.uttarpradesh;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,6 +11,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 public class firstaidgiudance extends AppCompatActivity {
 
     private WebView wview;
@@ -24,12 +24,12 @@ public class firstaidgiudance extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firstaidgiudance);
-        wview= findViewById(R.id.webv);
+        wview = findViewById(R.id.webv);
 
-        Intent intent=getIntent();
-        text=intent.getStringExtra("text");
+        Intent intent = getIntent();
+        text = intent.getStringExtra("text");
 
-        progressDialog=new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this);
 
         progressDialog.setMessage("Loading..."); // Setting Message
         progressDialog.setTitle("Please Wait !"); // Setting Title
@@ -38,7 +38,7 @@ public class firstaidgiudance extends AppCompatActivity {
         progressDialog.setCancelable(true);
         progressDialog.show();
 
-        WebSettings wsetting=wview.getSettings();
+        WebSettings wsetting = wview.getSettings();
         wsetting.setJavaScriptEnabled(true);
         wsetting.setAllowContentAccess(false);
         wsetting.setSupportZoom(true);
@@ -101,16 +101,14 @@ public class firstaidgiudance extends AppCompatActivity {
             }
 
 
-
-
         });
 
-        String url="https://www.medindia.net/patients/firstaid.asp";
+        String url = "https://www.medindia.net/patients/firstaid.asp";
         wview.loadUrl(url);
 
 
-
     }
+
     @Override
     public void onBackPressed() {
         finish();

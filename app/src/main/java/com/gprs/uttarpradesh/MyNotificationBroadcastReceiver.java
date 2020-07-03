@@ -39,10 +39,10 @@ public class MyNotificationBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(final Context context, Intent intent) {
 
-        this.context=context;
+        this.context = context;
         pref = context.getSharedPreferences("MyPref", 0); // 0 - for private mode
         editor = pref.edit();
-        resultIntent = new Intent(context , Home.class);
+        resultIntent = new Intent(context, Home.class);
         resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         SharedPreferences pref;
@@ -50,7 +50,7 @@ public class MyNotificationBroadcastReceiver extends BroadcastReceiver {
         pref = context.getSharedPreferences("user", 0); // 0 - for private mode
         editor = pref.edit();
 
-        if(!pref.getString("user","").equals("")) {
+        if (!pref.getString("user", "").equals("")) {
             FirebaseDatabase.getInstance().getReference().child("Notification").child(pref.getString("user", "")).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -98,7 +98,7 @@ public class MyNotificationBroadcastReceiver extends BroadcastReceiver {
             });
         }
 
-        AlarmManager manager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent myIntent;
         PendingIntent pendingIntent = null;
 
@@ -107,7 +107,7 @@ public class MyNotificationBroadcastReceiver extends BroadcastReceiver {
         calendar.setTimeInMillis(System.currentTimeMillis());
 
         myIntent = new Intent(context, MyNotificationBroadcastReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(context,0,myIntent,0);
+        pendingIntent = PendingIntent.getBroadcast(context, 0, myIntent, 0);
 
         manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 SystemClock.elapsedRealtime() +

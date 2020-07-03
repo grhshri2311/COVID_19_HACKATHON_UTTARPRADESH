@@ -1,8 +1,5 @@
 package com.gprs.uttarpradesh;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
@@ -15,25 +12,33 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class donate extends AppCompatActivity {
     private WebView wview;
     private ProgressDialog progressDialog;
     TextView UPUPI;
-    ImageButton PM, UP;
+    ImageButton PM;
+    ImageView UP;
     String urlgo = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_donate);
         wview = findViewById(R.id.webv);
         PM = findViewById(R.id.PM);
@@ -63,9 +68,8 @@ public class donate extends AppCompatActivity {
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setData(Uri.parse("https://www.onlinesbi.com/sbicollect/icollecthome.htm?corpID=1965968"));
                     startActivity(i);
-                }
-                catch (ActivityNotFoundException e){
-                    Toast.makeText(donate.this,"You don't have browser installed",Toast.LENGTH_LONG).show();
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(donate.this, "You don't have browser installed", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -155,7 +159,7 @@ public class donate extends AppCompatActivity {
         PM.setVisibility(View.INVISIBLE);
         UP.setVisibility(View.INVISIBLE);
         UPUPI.setVisibility(View.INVISIBLE);
-        LinearLayout UPLL=findViewById(R.id.account);
+        LinearLayout UPLL = findViewById(R.id.account);
         UPLL.setVisibility(View.INVISIBLE);
         wview.loadUrl(urlgo);
     }

@@ -7,15 +7,13 @@ import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.os.Environment;
-import android.view.View;
+import android.view.WindowManager;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.io.File;
 
 public class pdfViewer extends AppCompatActivity {
 
@@ -28,9 +26,11 @@ public class pdfViewer extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_pdf_viewer);
 
-        progressDialog=new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this);
 
         progressDialog.setMessage("Loading..."); // Setting Message
         progressDialog.setTitle("Please Wait !"); // Setting Title
@@ -43,8 +43,8 @@ public class pdfViewer extends AppCompatActivity {
 
         WebView webView = findViewById(R.id.webv1);
 
-        Intent intent=getIntent();
-        text=intent.getStringExtra("text");
+        Intent intent = getIntent();
+        text = intent.getStringExtra("text");
 
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setAllowContentAccess(false);
@@ -64,7 +64,7 @@ public class pdfViewer extends AppCompatActivity {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-               return true;
+                return true;
             }
 
             @Override
@@ -106,12 +106,9 @@ public class pdfViewer extends AppCompatActivity {
             }
 
 
-
-
         });
 
     }
-
 
 
 }

@@ -25,39 +25,40 @@ import com.google.firebase.storage.StorageReference;
 public class Bottomsheetmapfragment extends BottomSheetDialogFragment {
 
     ImageView proimg;
-    String name,phone,email,role;
+    String name, phone, email, role;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        final View view= inflater.inflate(R.layout.bottom_sheet_map_layout, container, false);
+        final View view = inflater.inflate(R.layout.bottom_sheet_map_layout, container, false);
 
-        proimg=view.findViewById(R.id.proimg);
+        proimg = view.findViewById(R.id.proimg);
 
-        name=this.getArguments().getString("name");
-        role=this.getArguments().getString("role");
-        email=this.getArguments().getString("email");
-        phone=this.getArguments().getString("phone");
+        name = this.getArguments().getString("name");
+        role = this.getArguments().getString("role");
+        email = this.getArguments().getString("email");
+        phone = this.getArguments().getString("phone");
 
         view.findViewById(R.id.logout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               dismiss();
+                dismiss();
             }
         });
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
 
-                    TextView name1,role1,email1,phone1;
-                    name1=view.findViewById(R.id.name);
-                    role1=view.findViewById(R.id.role);
-                    phone1=view.findViewById(R.id.mobile);
-                    email1=view.findViewById(R.id.email);
+        TextView name1, role1, email1, phone1;
+        name1 = view.findViewById(R.id.name);
+        role1 = view.findViewById(R.id.role);
+        phone1 = view.findViewById(R.id.mobile);
+        email1 = view.findViewById(R.id.email);
 
-                    name1.setText(name);
-                    role1.setText(role);
-                    phone1.setText(phone);
-                    email1.setText(email);
+        name1.setText(name);
+        role1.setText(role);
+        phone1.setText(phone);
+        email1.setText(email);
 
-        if(phone!=null) {
+        if (phone != null) {
             if (mStorageRef.child(phone) != null) {
                 StorageReference sr = mStorageRef.child("proImg").child(phone + ".jpg");
                 sr.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {

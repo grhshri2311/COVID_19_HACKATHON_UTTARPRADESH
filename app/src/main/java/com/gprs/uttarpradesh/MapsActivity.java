@@ -8,14 +8,12 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -55,7 +53,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_maps);
 
         imageButton = findViewById(R.id.mapmenu);
@@ -78,7 +77,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                             final UserLocationHelper userLocationHelper = snapshot.getValue(UserLocationHelper.class);
 
-                                            if (userLocationHelper.role.equals(item.toString()) && mMap!=null) {
+                                            if (userLocationHelper.role.equals(item.toString()) && mMap != null) {
                                                 LatLng latLng = new LatLng(userLocationHelper.lat, userLocationHelper.lon);
                                                 Marker marker = mMap.addMarker(new MarkerOptions()
                                                         .position(latLng)
@@ -132,7 +131,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     @Override
                     public void onSuccess(Location location) {
                         // Got last known location. In some rare situations this can be null.
-                        if (location != null && mMap!=null) {
+                        if (location != null && mMap != null) {
                             // Add a marker in Sydney and move the camera
                             LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
@@ -186,7 +185,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mUiSettings.setRotateGesturesEnabled(true);
 
 
-            helperHashMap=new HashMap<>();
+        helperHashMap = new HashMap<>();
         FirebaseDatabase.getInstance().getReference().child("Location")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -195,15 +194,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             final UserLocationHelper userLocationHelper = snapshot.getValue(UserLocationHelper.class);
 
 
-
                             LatLng latLng = new LatLng(userLocationHelper.lat, userLocationHelper.lon);
                             Marker marker = mMap.addMarker(new MarkerOptions()
                                     .position(latLng)
                                     .title(userLocationHelper.fname)
-                                    .snippet(userLocationHelper.phone+'\n'+userLocationHelper.role)
+                                    .snippet(userLocationHelper.phone + '\n' + userLocationHelper.role)
                                     .icon(bitmapDescriptorFromVector(MapsActivity.this, R.drawable.ic_place_black_24dp)));
                             marker.showInfoWindow();
-                            helperHashMap.put(marker.getSnippet(),userLocationHelper);
+                            helperHashMap.put(marker.getSnippet(), userLocationHelper);
                             CustomInfoWindow customInfoWindow = new CustomInfoWindow(MapsActivity.this);
                             mMap.setInfoWindowAdapter(customInfoWindow);
                             marker.showInfoWindow();
@@ -217,6 +215,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         }
 
                     }
+
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                     }
@@ -234,18 +233,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void view(String id) {
 
-        Bundle bundle=new Bundle();
-        bundle.putString("name",helperHashMap.get(id).getFname());
-        bundle.putString("phone",helperHashMap.get(id).getPhone());
-        bundle.putString("email",helperHashMap.get(id).getEmail());
-        bundle.putString("role",helperHashMap.get(id).getRole());
+        Bundle bundle = new Bundle();
+        bundle.putString("name", helperHashMap.get(id).getFname());
+        bundle.putString("phone", helperHashMap.get(id).getPhone());
+        bundle.putString("email", helperHashMap.get(id).getEmail());
+        bundle.putString("role", helperHashMap.get(id).getRole());
 
-        BottomSheetDialogFragment f=new Bottomsheetmapfragment();
+        BottomSheetDialogFragment f = new Bottomsheetmapfragment();
         f.setArguments(bundle);
-        f.show(getSupportFragmentManager(),"Dialog");
+        f.show(getSupportFragmentManager(), "Dialog");
 
 
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

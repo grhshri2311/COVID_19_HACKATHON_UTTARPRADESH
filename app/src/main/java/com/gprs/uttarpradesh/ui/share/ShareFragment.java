@@ -7,11 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.gprs.uttarpradesh.BuildConfig;
 import com.gprs.uttarpradesh.R;
@@ -35,7 +32,7 @@ public class ShareFragment extends Fragment {
         shareIntent.putExtra(Intent.EXTRA_TEXT, shareBodyText);
         startActivity(Intent.createChooser(shareIntent, getString(R.string
                 .share_with)));
-        TextView textView=root.findViewById(R.id.text_share);
+        TextView textView = root.findViewById(R.id.text_share);
         textView.setText(shareBodyText);
         return root;
     }

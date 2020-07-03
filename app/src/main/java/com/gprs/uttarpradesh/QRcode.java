@@ -1,6 +1,5 @@
 package com.gprs.uttarpradesh;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -9,9 +8,9 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,21 +39,24 @@ public class QRcode extends AppCompatActivity {
     private Button buttonScan;
     private TextView title;
     ImageView imageViewBitmap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_q_rcode);
 
         buttonScan = (Button) findViewById(R.id.buttonScan);
         title = (TextView) findViewById(R.id.title);
-        imageViewBitmap=findViewById(R.id.qr);
+        imageViewBitmap = findViewById(R.id.qr);
 
 
         buttonScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //  qrScan.initiateScan();
-                startActivity(new Intent(getApplicationContext(),Scanner.class));
+                startActivity(new Intent(getApplicationContext(), Scanner.class));
                 finish();
             }
         });
@@ -62,44 +64,44 @@ public class QRcode extends AppCompatActivity {
 
     }
 
-    public void GenerateClick(){
+    public void GenerateClick() {
         title.setText("Loading QR Code...");
         try {
             //setting size of qr code
-            int width =800,height = 800;
+            int width = 800, height = 800;
             int smallestDimension = width < height ? width : height;
 
 
             //setting parameters for qr code
             String charset = "UTF-8";
-            Map<EncodeHintType, ErrorCorrectionLevel> hintMap =new HashMap<EncodeHintType, ErrorCorrectionLevel>();
+            Map<EncodeHintType, ErrorCorrectionLevel> hintMap = new HashMap<EncodeHintType, ErrorCorrectionLevel>();
             hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
             CreateQRCode(charset, hintMap, smallestDimension, smallestDimension);
 
         } catch (Exception ex) {
-            Log.e("QrGenerate",ex.getMessage());
+            Log.e("QrGenerate", ex.getMessage());
         }
     }
 
-    public  void CreateQRCode(final String charset, final Map hintMap, final int qrCodeheight, final int qrCodewidth){
+    public void CreateQRCode(final String charset, final Map hintMap, final int qrCodeheight, final int qrCodewidth) {
         final SharedPreferences pref;
         final SharedPreferences.Editor editor;
 
         pref = getApplicationContext().getSharedPreferences("user", 0); // 0 - for private mode
         editor = pref.edit();
 
-        FirebaseDatabase.getInstance().getReference().child("Users").child(pref.getString("user","")).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("Users").child(pref.getString("user", "")).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                UserRegistrationHelper userRegistrationHelper=dataSnapshot.getValue(UserRegistrationHelper.class);
-                if(userRegistrationHelper!=null) {
+                UserRegistrationHelper userRegistrationHelper = dataSnapshot.getValue(UserRegistrationHelper.class);
+                if (userRegistrationHelper != null) {
                     String qrCodeData;
-                    qrCodeData="{\n" +
-                            "   \"name\":"+"\""+userRegistrationHelper.getFname()+"\""+",\n" +
-                            "   \"role\":"+"\""+userRegistrationHelper.getRole()+"\""+",\n" +
-                            "   \"phone\":"+"\""+userRegistrationHelper.getPhone()+"\""+",\n" +
-                            "   \"place\" :"+"\""+getApplicationContext().getSharedPreferences("user", 0).getString("city","")+' '+getApplicationContext().getSharedPreferences("user", 0).getString("state","")+"\""+",\n" +
-                            "   \"status\" :"+"\""+getApplicationContext().getSharedPreferences("user", 0).getString("status","")+"\""+"\n" +
+                    qrCodeData = "{\n" +
+                            "   \"name\":" + "\"" + userRegistrationHelper.getFname() + "\"" + ",\n" +
+                            "   \"role\":" + "\"" + userRegistrationHelper.getRole() + "\"" + ",\n" +
+                            "   \"phone\":" + "\"" + userRegistrationHelper.getPhone() + "\"" + ",\n" +
+                            "   \"place\" :" + "\"" + getApplicationContext().getSharedPreferences("user", 0).getString("city", "") + ' ' + getApplicationContext().getSharedPreferences("user", 0).getString("state", "") + "\"" + ",\n" +
+                            "   \"status\" :" + "\"" + getApplicationContext().getSharedPreferences("user", 0).getString("status", "") + "\"" + "\n" +
                             "  }";
                     try {
                         //generating qr code.
@@ -134,8 +136,7 @@ public class QRcode extends AppCompatActivity {
                     } catch (Exception er) {
                         Log.e("QrGenerate", er.getMessage());
                     }
-                }
-                else {
+                } else {
                     title.setText("Check Your Internet Connection");
                 }
 
@@ -157,7 +158,7 @@ public class QRcode extends AppCompatActivity {
             @Override
             public void run() {
                 GenerateClick();
-                 }
+            }
         }, 1000);
 
     }
@@ -174,8 +175,8 @@ public class QRcode extends AppCompatActivity {
 
         canvas.drawBitmap(bitmap, new Matrix(), null);
 
-        int centreX = (canvasWidth  - overlay.getWidth()) /2;
-        int centreY = (canvasHeight - overlay.getHeight()) /2 ;
+        int centreX = (canvasWidth - overlay.getWidth()) / 2;
+        int centreY = (canvasHeight - overlay.getHeight()) / 2;
         canvas.drawBitmap(overlay, centreX, centreY, null);
 
         return combined;

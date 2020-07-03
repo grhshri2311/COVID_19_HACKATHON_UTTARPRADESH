@@ -1,12 +1,12 @@
 package com.gprs.uttarpradesh;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-
 import android.animation.ArgbEvaluator;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class stepstofollow extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stepstofollow);
 
-        btOrder=findViewById(R.id.btnOrder);
+        btOrder = findViewById(R.id.btnOrder);
         btOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +64,7 @@ public class stepstofollow extends AppCompatActivity {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-                if (position%colors.length < (adapter.getCount() -1) && position < (colors.length - 1)) {
+                if (position % colors.length < (adapter.getCount() - 1) && position < (colors.length - 1)) {
                     viewPager.setBackgroundColor(
 
                             (Integer) argbEvaluator.evaluate(
@@ -73,9 +73,7 @@ public class stepstofollow extends AppCompatActivity {
                                     colors[position + 1]
                             )
                     );
-                }
-
-                else {
+                } else {
                     viewPager.setBackgroundColor(colors[colors.length - 1]);
                 }
             }

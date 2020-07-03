@@ -7,8 +7,7 @@
     tools:context=".MapsActivity"
     android:id="@+id/swipe"
     android:orientation="vertical"
-    android:background="#fff"
-    >
+    android:background="#fff">
 
 
     <fragment
@@ -29,13 +28,13 @@
         android:id="@+id/mapmenu"
         android:layout_width="53dp"
         android:layout_height="52dp"
+        android:contentDescription="TODO"
         android:src="@drawable/ic_assignment_ind_black_24dp"
         app:layout_constraintBottom_toBottomOf="@+id/map"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.955"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.865"
-        android:contentDescription="TODO" />
+        app:layout_constraintVertical_bias="0.933" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

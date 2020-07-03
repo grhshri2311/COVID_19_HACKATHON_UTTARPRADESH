@@ -19,39 +19,38 @@ import java.net.URL;
 
 public class APIextract {
 
-    private String city,state;
+    private String city, state;
     Context context;
-    TextView confirm,death;
+    TextView confirm, death;
     private RequestQueue queue;
 
-    APIextract(){
+    APIextract() {
 
     }
 
-    public APIextract(Context context, TextView confirm, TextView death){
-        this.context=context;
-        this.confirm=confirm;
-        this.death=death;
+    public APIextract(Context context, TextView confirm, TextView death) {
+        this.context = context;
+        this.confirm = confirm;
+        this.death = death;
         state();
     }
 
     public APIextract(Context context, String city, String state) {
-        this.context=context;
-        this.city=city;
-        this.state=state;
+        this.context = context;
+        this.city = city;
+        this.state = state;
         queue = Volley.newRequestQueue(context);
 
     }
 
-    public void state(){
+    public void state() {
 
 
-    queue = Volley.newRequestQueue(context);
+        queue = Volley.newRequestQueue(context);
 
         new APIextract.RetrieveFeedTask().execute();
 
     }
-
 
 
     class RetrieveFeedTask extends AsyncTask<Void, Void, String> {
@@ -91,26 +90,23 @@ public class APIextract {
         protected void onPostExecute(String response) {
 
 
-                try {
-                    JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
-                    JSONArray jsonArray=object.getJSONArray("statewise");
-                    JSONObject jsonObject=jsonArray.getJSONObject(0);
+            try {
+                JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
+                JSONArray jsonArray = object.getJSONArray("statewise");
+                JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-                    confirm.setText("Confirmed : "+jsonObject.optString("confirmed"));
-                    death.setText("Deaths : "+jsonObject.optString("deaths"));
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+                confirm.setText(context.getString(R.string.confirmed) + jsonObject.optString("confirmed"));
+                death.setText(context.getString(R.string.death)  + jsonObject.optString("deaths"));
 
 
-                }
+            } catch (Exception e) {
+                e.printStackTrace();
+
+
+            }
 
         }
     }
-
-
-
 
 
 }

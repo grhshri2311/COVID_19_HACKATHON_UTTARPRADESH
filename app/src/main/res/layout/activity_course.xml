@@ -8,7 +8,6 @@
     tools:context=".course">
 
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,8 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@id/lan"
-            android:queryHint="Search course"
-            />
+            android:queryHint="Search course" />
 
         <ToggleButton
             android:id="@+id/lan"

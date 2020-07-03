@@ -11,16 +11,13 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,7 +32,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class ProfileFragment extends Fragment {
 
@@ -49,9 +45,10 @@ public class ProfileFragment extends Fragment {
     String useremail;
     SharedPreferences pref;
     SharedPreferences.Editor editor;
-    int tot,rolecount;
+    int tot, rolecount;
 
     View root;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -60,7 +57,7 @@ public class ProfileFragment extends Fragment {
 
         pref = root.getContext().getSharedPreferences("user", 0); // 0 - for private mode
 
-        useremail=pref.getString("user","");
+        useremail = pref.getString("user", "");
 
         proimg = root.findViewById(R.id.proimg);
         email = root.findViewById(R.id.email);
@@ -81,19 +78,18 @@ public class ProfileFragment extends Fragment {
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
 
-
-        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child("Users").child(useremail);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(useremail);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot!=null){
-                    helper=dataSnapshot.getValue(UserRegistrationHelper.class);
-                    DatabaseReference databaseReference1= FirebaseDatabase.getInstance().getReference().child("Count").child("total");
+                if (dataSnapshot != null) {
+                    helper = dataSnapshot.getValue(UserRegistrationHelper.class);
+                    DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference().child("Count").child("total");
                     databaseReference1.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if(dataSnapshot!=null){
-                                tot=dataSnapshot.getValue(Integer.class);
+                            if (dataSnapshot != null) {
+                                tot = dataSnapshot.getValue(Integer.class);
                                 setvalue();
                             }
                         }
@@ -104,12 +100,12 @@ public class ProfileFragment extends Fragment {
                         }
                     });
 
-                    DatabaseReference databaseReference2= FirebaseDatabase.getInstance().getReference().child("Count").child(helper.getRole());
+                    DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference().child("Count").child(helper.getRole());
                     databaseReference2.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if(dataSnapshot!=null){
-                                rolecount=dataSnapshot.getValue(Integer.class);
+                            if (dataSnapshot != null) {
+                                rolecount = dataSnapshot.getValue(Integer.class);
                                 setvalue();
                             }
                         }
@@ -130,11 +126,8 @@ public class ProfileFragment extends Fragment {
         });
 
 
-
-
-
-        if(mStorageRef.child(useremail)!=null) {
-            StorageReference sr = mStorageRef.child("proImg").child(useremail+".jpg");
+        if (mStorageRef.child(useremail) != null) {
+            StorageReference sr = mStorageRef.child("proImg").child(useremail + ".jpg");
             sr.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                 @Override
                 public void onSuccess(byte[] bytes) {
@@ -167,12 +160,12 @@ public class ProfileFragment extends Fragment {
         phone.setText(helper.getPhone());
         role.setText(helper.getRole());
         pname.setText("Welcome to Profile Page!");
-        pemail.setText(pref.getString("user",""));
-        TextView text,text1,text2,text3;
-        text=root.findViewById(R.id.text);
-        text1=root.findViewById(R.id.text1);
-        text2=root.findViewById(R.id.text2);
-        text3=root.findViewById(R.id.text3);
+        pemail.setText(pref.getString("user", ""));
+        TextView text, text1, text2, text3;
+        text = root.findViewById(R.id.text);
+        text1 = root.findViewById(R.id.text1);
+        text2 = root.findViewById(R.id.text2);
+        text3 = root.findViewById(R.id.text3);
 
         text.setText(helper.getRole());
         text1.setText(String.valueOf(rolecount));
@@ -197,8 +190,8 @@ public class ProfileFragment extends Fragment {
     // Override onActivityResult method
     @Override
     public void onActivityResult(int requestCode,
-                                    int resultCode,
-                                    Intent data) {
+                                 int resultCode,
+                                 Intent data) {
 
         super.onActivityResult(requestCode,
                 resultCode,
@@ -242,7 +235,7 @@ public class ProfileFragment extends Fragment {
             progressDialog.setTitle("Uploading");
             progressDialog.show();
 
-            StorageReference riversRef = mStorageRef.child("proImg").child(useremail+".jpg");
+            StorageReference riversRef = mStorageRef.child("proImg").child(useremail + ".jpg");
             riversRef.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override

@@ -1,9 +1,5 @@
 package com.gprs.uttarpradesh;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -17,6 +13,7 @@ import android.net.http.SslError;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -25,6 +22,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -35,58 +36,61 @@ import com.google.firebase.database.ValueEventListener;
 
 public class help extends AppCompatActivity {
 
-    String name,phone,email,role;
-    double lat,lon;
+    String name, phone, email, role;
+    double lat, lon;
 
     private WebView wview;
     private ProgressDialog progressDialog;
-    Button respond;
+    Button respond,reject;
     private SharedPreferences pref;
     SharedPreferences.Editor editor;
     UserLocationHelper u;
     float[] res = new float[1];
-    TextView name1,phone1,email1,role1,distancce1;
+    TextView name1, phone1, email1, role1, distancce1;
     UserLocationHelper mylocation;
     TextView t;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_help);
         pref = getSharedPreferences("user", 0);
-        respond=findViewById(R.id.respond);
-        name1=findViewById(R.id.name);
-        phone1=findViewById(R.id.phone);
-        email1=findViewById(R.id.email);
-        role1=findViewById(R.id.role);
-        distancce1=findViewById(R.id.distance);
-        t=findViewById(R.id.textView32);
-        wview= findViewById(R.id.webv);
+        respond = findViewById(R.id.respond);
+        reject = findViewById(R.id.reject);
+        name1 = findViewById(R.id.name);
+        phone1 = findViewById(R.id.phone);
+        email1 = findViewById(R.id.email);
+        role1 = findViewById(R.id.role);
+        distancce1 = findViewById(R.id.distance);
+        t = findViewById(R.id.textView32);
+        wview = findViewById(R.id.webv);
 
 
-        FirebaseDatabase.getInstance().getReference().child("Respond").child("Help").child(pref.getString("user","")).addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("Respond").child("Help").child(pref.getString("user", "")).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot!=null && dataSnapshot.getValue()!=null){
-                    u=dataSnapshot.getValue(UserLocationHelper.class);
+                if (dataSnapshot != null && dataSnapshot.getValue() != null) {
+                    u = dataSnapshot.getValue(UserLocationHelper.class);
 
-                    name=u.getFname();
-                    email=u.getEmail();
-                    role=u.getRole();
-                    phone=u.getPhone();
-                    lat=u.getLat();
-                    lon=u.getLon();
+                    name = u.getFname();
+                    email = u.getEmail();
+                    role = u.getRole();
+                    phone = u.getPhone();
+                    lat = u.getLat();
+                    lon = u.getLon();
 
 
+                    name1.setText("Name : " + name);
+                    phone1.setText("Phone : " + phone + " (Click to call)");
+                    email1.setText("Email : " + email + " (Click to mail)");
+                    role1.setText("Role : " + role);
 
-                    name1.setText("Name : "+name);
-                    phone1.setText("Phone : "+phone+" (Click to call)");
-                    email1.setText("Email : "+email+ " (Click to mail)");
-                    role1.setText("Role : "+role);
-
-                    findViewById(R.id.reject).setOnClickListener(new View.OnClickListener() {
+                    reject.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            FirebaseDatabase.getInstance().getReference().child("Respond").child("Help").child(pref.getString("user","")).removeValue();
+                            FirebaseDatabase.getInstance().getReference().child("Respond").child("Help").child(pref.getString("user", "")).removeValue();
                             alert2();
                         }
                     });
@@ -95,7 +99,7 @@ public class help extends AppCompatActivity {
                     respond.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if(mylocation!=null){
+                            if (mylocation != null) {
                                 FirebaseDatabase.getInstance().getReference().child("Respond").child("Help").child(mylocation.getPhone()).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -103,11 +107,11 @@ public class help extends AppCompatActivity {
                                             FirebaseDatabase.getInstance().getReference().child("Respond").child("reply").child(phone).setValue(mylocation).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
-                                                    if(task.isComplete()){
+                                                    if (task.isComplete()) {
                                                         FirebaseDatabase.getInstance().getReference().child("Respond").child("reply").child(phone).addValueEventListener(new ValueEventListener() {
                                                             @Override
                                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                                if(dataSnapshot.getValue()==null)
+                                                                if (dataSnapshot.getValue() == null)
                                                                     alert1();
                                                             }
 
@@ -120,13 +124,12 @@ public class help extends AppCompatActivity {
                                                 }
                                             });
                                             respond.setText("Responding");
-
+                                            reject.setVisibility(View.GONE);
                                             t.setText("Stay Connected !");
                                             t.setTextColor(getResources().getColor(R.color.GREEN));
                                             respond.setBackgroundColor(getResources().getColor(R.color.GREEN));
 
-                                        }
-                                        else{
+                                        } else {
                                             t.setText("Aldready got responder ,Thank you for your contribution !");
                                             t.setTextColor(getResources().getColor(R.color.GREEN));
                                             finish();
@@ -166,22 +169,22 @@ public class help extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                                    "mailto",email, null));
+                                    "mailto", email, null));
                             emailIntent.putExtra(Intent.EXTRA_SUBJECT, "First Responder");
                             startActivity(Intent.createChooser(emailIntent, "Send email..."));
                         }
                     });
 
 
-                    FirebaseDatabase.getInstance().getReference().child("Users").child(pref.getString("user","")).addValueEventListener(new ValueEventListener() {
+                    FirebaseDatabase.getInstance().getReference().child("Users").child(pref.getString("user", "")).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot != null) {
-                                mylocation=dataSnapshot.getValue(UserLocationHelper.class);
+                                mylocation = dataSnapshot.getValue(UserLocationHelper.class);
                                 Location.distanceBetween(mylocation.getLat(), mylocation.getLon(),
-                                        lat,lon, res);
-                                distancce1.setText(res[0] / 1000 +" KM");
-                                String url="https://maps.google.com/?q="+lat+","+lon;
+                                        lat, lon, res);
+                                distancce1.setText(res[0] / 1000 + " KM");
+                                String url = "https://maps.google.com/?q=" + lat + "," + lon;
                                 wview.loadUrl(url);
 
                             }
@@ -216,7 +219,7 @@ public class help extends AppCompatActivity {
                         }
                     });
 
-                    progressDialog=new ProgressDialog(help.this);
+                    progressDialog = new ProgressDialog(help.this);
 
                     progressDialog.setMessage("Loading..."); // Setting Message
                     progressDialog.setTitle("Please Wait !"); // Setting Title
@@ -225,7 +228,7 @@ public class help extends AppCompatActivity {
                     progressDialog.setCancelable(true);
                     progressDialog.show();
 
-                    WebSettings wsetting=wview.getSettings();
+                    WebSettings wsetting = wview.getSettings();
                     wsetting.setJavaScriptEnabled(true);
                     wsetting.setAllowContentAccess(false);
                     wsetting.setSupportZoom(true);
@@ -285,13 +288,10 @@ public class help extends AppCompatActivity {
                         }
 
 
-
-
                     });
 
 
-                }
-                else {
+                } else {
                     t.setText("Already Got help !");
                     t.setTextColor(getResources().getColor(R.color.GREEN));
                     respond.setVisibility(View.INVISIBLE);
@@ -311,11 +311,8 @@ public class help extends AppCompatActivity {
         });
 
 
-
-
-
-
     }
+
     @Override
     public void onBackPressed() {
         alert();
@@ -324,17 +321,18 @@ public class help extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(phone!=null)
+        if (phone != null)
             FirebaseDatabase.getInstance().getReference().child("Respond").child("reply").child(phone).removeValue();
     }
-    void alert(){
+
+    void alert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
         builder.setMessage("Do you want to Exit?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(phone!=null)
+                if (phone != null)
                     FirebaseDatabase.getInstance().getReference().child("Respond").child("reply").child(phone).removeValue();
                 finish();
             }
@@ -350,7 +348,7 @@ public class help extends AppCompatActivity {
 
     }
 
-    void alert1(){
+    void alert1() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
         builder.setMessage("Communication Disconnected !");
@@ -366,7 +364,8 @@ public class help extends AppCompatActivity {
         alert.show();
 
     }
-    void alert2(){
+
+    void alert2() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
         builder.setMessage("Request Rejected !");

@@ -21,8 +21,7 @@
     <color name="color4">#59717c</color>
     <color name="color5">#5FBBF1</color>
 
-    <!-- 100, 87, 54 etc.. - OPACITY IN PERCENTAGE -->
+    <color name="whiteTextColor">#fff</color>
 
-    <!-- 100, 87, 54 etc.. - OPACITY IN PERCENTAGE -->
 
 </resources>

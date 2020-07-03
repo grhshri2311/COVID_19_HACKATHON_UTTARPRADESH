@@ -5,13 +5,11 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityOptions;
 import android.app.AlarmManager;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -23,44 +21,42 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
-import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.internal.NavigationMenu;
-import com.google.android.material.snackbar.Snackbar;
-
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.NotificationCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
-import androidx.fragment.app.Fragment;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.BuildConfig;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -69,20 +65,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import androidx.drawerlayout.widget.DrawerLayout;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import android.view.Menu;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -90,7 +72,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class Home extends AppCompatActivity{
+public class Home extends AppCompatActivity {
 
     private static final int LAUNCH_SECOND_ACTIVITY = 2;
     private AppBarConfiguration mAppBarConfiguration;
@@ -99,48 +81,147 @@ public class Home extends AppCompatActivity{
     SharedPreferences.Editor editor;
     DrawerLayout drawer;
     BroadcastReceiver br;
-    TextView headename,headerphone,headerrole;
+    TextView headename, headerrole;
     ImageView headerimage;
     TextView notificationnumber;
     NavController navController;
 
+    DrawerLayout constraintLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
+        pref = getApplicationContext().getSharedPreferences("user", 0); // 0 - for private mode
+        editor = pref.edit();
+
+        FirebaseDatabase.getInstance().getReference().child("Assess").child(pref.getString("user", "")).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot != null && dataSnapshot.getValue()!=null) {
+                    UserSelfAssessHelper u=dataSnapshot.getValue(UserSelfAssessHelper.class);
+                    Integer status = u.getStatus();
+                    if (status != null && status == 1) {
+                        editor.putString("status", "victim");
+                        editor.apply();
+                        if (!isMyServiceRunning(VictimAlertForegroundNotification.class)) {
+                            startService(VictimAlertForegroundNotification.class);
+                        }
+                    } else {
+                        editor.putString("status", "normal");
+                        editor.commit();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child(pref.getString("user", "")).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UserRegistrationHelper userRegistrationHelper = dataSnapshot.getValue(UserRegistrationHelper.class);
+                if (userRegistrationHelper != null) {
+                    editor.putBoolean("verify", userRegistrationHelper.getVerify());
+                    editor.putString("role", userRegistrationHelper.getRole());
+                    editor.commit();
+                } else {
+                    editor.putString("role", "not defined");
+                    editor.commit();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        pref =getSharedPreferences("user", 0); //
-        editor=pref.edit();
+        pref = getSharedPreferences("user", 0); //
+        editor = pref.edit();
         br = new InternetBroadcastReciever();
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         this.registerReceiver(br, filter);
 
 
-        if(pref.getString("user","").equals("")){
-            startActivity(new Intent(Home.this,logouthome.class), ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        constraintLayout = findViewById(R.id.drawer_layout);
+
+        if (pref.getString("user", "").equals("")) {
+            startActivity(new Intent(Home.this, logouthome.class), ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
             finish();
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDateTime = dateFormat.format(new Date()); // Find todays date
+
+
+        if (!PreferenceManager.getDefaultSharedPreferences(this).getString("today1", "").equals(currentDateTime)) {
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putString("today1", currentDateTime).apply();
+            FirebaseDatabase.getInstance().getReference().child("IdentityVerification").child(pref.getString("user", "")).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot == null || dataSnapshot.getValue() == null) {
+                        Snackbar snackbar = Snackbar
+                                .make(constraintLayout, "Please verify your Identity before start providing services", Snackbar.LENGTH_LONG)
+                                .setDuration(5000)
+                                .setAction("Verify", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        startActivity(new Intent(Home.this, IdentityVerification.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                                    }
+                                });
+
+                        snackbar.show();
+                    } else {
+                        IdentityVerificationHelper i = dataSnapshot.getValue(IdentityVerificationHelper.class);
+                        if (i.getStatus().equals("rejected")) {
+                            Snackbar snackbar = Snackbar
+                                    .make(constraintLayout, "Please verify your Identity before start providing services", Snackbar.LENGTH_LONG)
+                                    .setDuration(5000)
+                                    .setAction("Verify", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            startActivity(new Intent(Home.this, IdentityVerification.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                                        }
+                                    });
+
+                            snackbar.show();
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
         }
 
 
-        getdetails();
 
         if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             startAlarm(false);
             startAlarm(true);
         }
 
-
-
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-
+        navigationView.setItemIconTintList(null);
 
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_share,R.id.nav_notification,R.id.nav_profile,R.id.nav_covidcases,R.id.nav_updates,R.id.nav_settings,R.id.nav_share)
+                R.id.nav_home, R.id.nav_share, R.id.nav_notification, R.id.nav_profile, R.id.nav_covidcases, R.id.nav_updates, R.id.nav_settings, R.id.nav_share)
                 .setDrawerLayout(drawer)
                 .build();
 
@@ -148,82 +229,166 @@ public class Home extends AppCompatActivity{
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         bottomNav = findViewById(R.id.bottom_nav);
+        bottomNav.setItemIconTintList(null);
         NavigationUI.setupWithNavController(bottomNav, navController);
 
-        View hView =  navigationView.getHeaderView(0);
+        View hView = navigationView.getHeaderView(0);
         headename = hView.findViewById(R.id.navheadername);
-        headerphone= hView.findViewById(R.id.navheaderphone);
-        headerrole= hView.findViewById(R.id.navheaderrole);
-        headerimage=hView.findViewById(R.id.navheaderimage);
+        headerrole = hView.findViewById(R.id.navheaderrole);
+        headerimage = hView.findViewById(R.id.navheaderimage);
 
-        new notificationHelper(this).createOngoingNotification("COVID19RELIEF","Stay Safe from COVID-19");
+        new notificationHelper(this).createOngoingNotification("COVID19RELIEF", "Stay Safe from COVID-19");
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getTitle().toString()){
-                    case "Home": navController.navigate(menuItem.getItemId());break;
-                    case "Covid Updates": navController.navigate(menuItem.getItemId());break;
-
-                    case "Cases Report": navController.navigate(menuItem.getItemId());break;
-
-                    case "Notification": navController.navigate(menuItem.getItemId());break;
-
-                    case "Profile": navController.navigate(menuItem.getItemId());break;
-                    case "Settings":navController.navigate(menuItem.getItemId());break;
-
-                    case "Generate/scan QR":startActivity(new Intent(Home.this,QRcode.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
-                    case "Donate":startActivity(new Intent(Home.this,donate.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
-
-                    case "First Responder":startActivity(new Intent(Home.this,firstresponder.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
-
-                    case "Geo fencing":startActivity(new Intent(Home.this,victimalert.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
-
-                    case "Mapping":startActivity(new Intent(Home.this,MapsActivity.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
-
-                    case "Self-Assess":startActivity(new Intent(Home.this,self_asses.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
-
-                    case "Alarm Manager":startActivity(new Intent(Home.this,Alarm.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
-
-                    case "Assign work":startActivity(new Intent(Home.this,assign_work.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
-
-                    case "Appointments/Admissions":new Bottomsheetadmissionfragment().show(getSupportFragmentManager(),"Dialog");break;
-
-                    case "MSME products":startActivity(new Intent(Home.this,MSME.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
-                    case "Unorganized Sector workers":startActivity(new Intent(Home.this,unorganizedsectors.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
-                    case "Medical shops":
-                        Intent intent=new Intent(Home.this,Medicalshops.class);
-                        intent.putExtra("text","Pharmacies");
-                        startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                switch (menuItem.getItemId()) {
+                    case R.id.nav_home:
+                        navController.navigate(menuItem.getItemId());
                         break;
-                    case "Hospital near me":
-                        intent=new Intent(Home.this,Medicalshops.class);
-                        intent.putExtra("text","Hospitals");
-                        startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
-                        break;
-                    case "Public health care location":startActivity(new Intent(Home.this,publichealthcare.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
-                    case "Online Course":startActivity(new Intent(Home.this,course.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
-                    case "Labs for test":
-                        startActivity(new Intent(Home.this,Labsfortestingandresults.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                    case R.id.nav_updates:
+                        navController.navigate(menuItem.getItemId());
                         break;
 
-                    case "ePass and Government service":
+                    case R.id.nav_covidcases:
+                        navController.navigate(menuItem.getItemId());
+                        break;
+
+                    case R.id.nav_notification:
+                        navController.navigate(menuItem.getItemId());
+                        break;
+
+                    case R.id.nav_profile:
+                        navController.navigate(menuItem.getItemId());
+                        break;
+                    case R.id.nav_settings:
+                        navController.navigate(menuItem.getItemId());
+                        break;
+
+                    case R.id.nav_qr:
+                        startActivity(new Intent(Home.this, QRcode.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        break;
+                    case R.id.donate:
+                        startActivity(new Intent(Home.this, donate.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        break;
+
+                    case R.id.firstresponder:
+                        if (pref.getBoolean("verify", false))
+                            startActivity(new Intent(Home.this, firstresponder.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        else {
+                            Snackbar snackbar = Snackbar
+                                    .make(constraintLayout, "Please verify your Identity before start using services", Snackbar.LENGTH_LONG)
+                                    .setDuration(5000)
+                                    .setAction("Verify", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            startActivity(new Intent(Home.this, IdentityVerification.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                                        }
+                                    });
+
+                            snackbar.show();
+                        }
+                        break;
+
+                    case R.id.scan:
+                        startActivity(new Intent(Home.this, victimalert.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        break;
+
+                    case R.id.mapping:
+                        if (pref.getBoolean("verify", false))
+                            startActivity(new Intent(Home.this, MapsActivity.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        else {
+                            Snackbar snackbar = Snackbar
+                                    .make(constraintLayout, "Please verify your Identity before start using services", Snackbar.LENGTH_LONG)
+                                    .setDuration(5000)
+                                    .setAction("Verify", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            startActivity(new Intent(Home.this, IdentityVerification.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                                        }
+                                    });
+
+                            snackbar.show();
+                        }
+                        break;
+
+                    case R.id.selfassess:
+                        startActivity(new Intent(Home.this, SelfAssessment.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        break;
+
+                    case R.id.alarm:
+                        startActivity(new Intent(Home.this, Alarm.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        break;
+
+                    case R.id.assignwork:
+                        startActivity(new Intent(Home.this, WorkAssignHome.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        break;
+
+                    case R.id.hosadmission:
+                        new Bottomsheetadmissionfragment().show(getSupportFragmentManager(), "Dialog");
+                        break;
+
+                    case R.id.msme:
+                        startActivity(new Intent(Home.this, MSME.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        break;
+                    case R.id.workers:
+                        if (pref.getBoolean("verify", false))
+                            startActivity(new Intent(Home.this, unorganizedsectors.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        else {
+                            Snackbar snackbar = Snackbar
+                                    .make(constraintLayout, "Please verify your Identity before start using services", Snackbar.LENGTH_LONG)
+                                    .setDuration(5000)
+                                    .setAction("Verify", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            startActivity(new Intent(Home.this, IdentityVerification.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                                        }
+                                    });
+
+                            snackbar.show();
+                        }
+                        break;
+                    case R.id.mshop:
+                        Intent intent = new Intent(Home.this, Medicalshops.class);
+                        intent.putExtra("text", "Pharmacies");
+                        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        break;
+                    case R.id.hos:
+                        intent = new Intent(Home.this, Medicalshops.class);
+                        intent.putExtra("text", "Hospitals");
+                        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        break;
+                    case R.id.publiccare:
+                        startActivity(new Intent(Home.this, publichealthcare.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        break;
+                    case R.id.onlinecourse:
+                        startActivity(new Intent(Home.this, course.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        break;
+                    case R.id.labs:
+                        startActivity(new Intent(Home.this, Labsfortestingandresults.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        break;
+
+                    case R.id.epass:
                         try {
                             Intent i = new Intent(Intent.ACTION_VIEW);
                             i.setData(Uri.parse("http://164.100.68.164/upepass2/"));
                             startActivity(i);
-                        }
-                        catch (ActivityNotFoundException e){
-                            Toast.makeText(Home.this,"You don't have browser installed",Toast.LENGTH_LONG).show();
+                        } catch (ActivityNotFoundException e) {
+                            Toast.makeText(Home.this, "You don't have browser installed", Toast.LENGTH_LONG).show();
                         }
                         break;
 
-                    case "Quora":startActivity(new Intent(Home.this,quora.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
+                    case R.id.quora:
+                        startActivity(new Intent(Home.this, Quora.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        break;
 
-                    case "Helpline":startActivity(new Intent(Home.this,helpline.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());break;
+                    case R.id.helpline:
+                        startActivity(new Intent(Home.this, helpline.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        break;
 
 
-                    case "Share":final String appPackageName = BuildConfig.APPLICATION_ID;
+                    case R.id.nav_share:
+                        final String appPackageName = BuildConfig.APPLICATION_ID;
                         final String appName = getString(R.string.app_name);
                         Intent shareIntent = new Intent(Intent.ACTION_SEND);
                         shareIntent.setType("text/plain");
@@ -235,18 +400,136 @@ public class Home extends AppCompatActivity{
                                 .share_with)));
                         navController.navigate(menuItem.getItemId());
                         break;
-                    case "Whatsapp Queries":
-                        try {
-                            whatsapp(Home.this, "919013151515");
-                        }
-                        catch (IllegalStateException e){
-                            Toast.makeText(Home.this,"You have no whatsapp",Toast.LENGTH_LONG).show();
+                    case R.id.chatbot:
+                        startActivity(new Intent(Home.this, Chatbot.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        break;
+                    case R.id.todo:
+                        if (pref.getBoolean("verify", false))
+                            startActivity(new Intent(Home.this, ToDoHome.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        else {
+                            Snackbar snackbar = Snackbar
+                                    .make(constraintLayout, "Please verify your Identity before start using services", Snackbar.LENGTH_LONG)
+                                    .setDuration(5000)
+                                    .setAction("Verify", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            startActivity(new Intent(Home.this, IdentityVerification.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                                        }
+                                    });
+
+                            snackbar.show();
                         }
                         break;
+                    case R.id.docounselling:
+                        if (pref.getBoolean("verify", false))
+                            startActivity(new Intent(Home.this, DoCounselling.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        else {
+                            Snackbar snackbar = Snackbar
+                                    .make(constraintLayout, "Please verify your Identity before start using services", Snackbar.LENGTH_LONG)
+                                    .setDuration(5000)
+                                    .setAction("Verify", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            startActivity(new Intent(Home.this, IdentityVerification.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                                        }
+                                    });
+
+                            snackbar.show();
+                        }
+                        break;
+                    case R.id.takecounselling:
+                        if (pref.getBoolean("verify", false))
+                            startActivity(new Intent(Home.this, Counselling.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        else {
+                            Snackbar snackbar = Snackbar
+                                    .make(constraintLayout, "Please verify your Identity before start using services", Snackbar.LENGTH_LONG)
+                                    .setDuration(5000)
+                                    .setAction("Verify", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            startActivity(new Intent(Home.this, IdentityVerification.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                                        }
+                                    });
+
+                            snackbar.show();
+                        }
+                        break;
+                    case R.id.material:
+                        if (pref.getBoolean("verify", false))
+                            startActivity(new Intent(Home.this, MaterialCollection.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        else {
+                            Snackbar snackbar = Snackbar
+                                    .make(constraintLayout, "Please verify your Identity before start using services", Snackbar.LENGTH_LONG)
+                                    .setDuration(5000)
+                                    .setAction("Verify", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            startActivity(new Intent(Home.this, IdentityVerification.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                                        }
+                                    });
+
+                            snackbar.show();
+                        }
+                        break;
+                    case R.id.isolation:
+                        if (pref.getBoolean("verify", false))
+                            startActivity(new Intent(Home.this, Isolation.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        else {
+                            Snackbar snackbar = Snackbar
+                                    .make(constraintLayout, "Please verify your Identity before start using services", Snackbar.LENGTH_LONG)
+                                    .setDuration(5000)
+                                    .setAction("Verify", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            startActivity(new Intent(Home.this, IdentityVerification.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                                        }
+                                    });
+
+                            snackbar.show();
+                        }
+                        break;
+                    case R.id.orphan:
+                        if (pref.getBoolean("verify", false))
+                            startActivity(new Intent(Home.this, OrphanAndVulnerable.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        else {
+                            Snackbar snackbar = Snackbar
+                                    .make(constraintLayout, "Please verify your Identity before start using services", Snackbar.LENGTH_LONG)
+                                    .setDuration(5000)
+                                    .setAction("Verify", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            startActivity(new Intent(Home.this, IdentityVerification.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                                        }
+                                    });
+
+                            snackbar.show();
+                        }
+                        break;
+                    case R.id.doverification:
+                        if (pref.getString("role", "").equals(getString(R.string.monitors)))
+                            startActivity(new Intent(Home.this, VerifyIdentitymonitor.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        else {
+                            Snackbar snackbar = Snackbar
+                                    .make(constraintLayout, "Only Monitors can use this feature", Snackbar.LENGTH_LONG);
+
+                            snackbar.show();
+                        }
+                        break;
+                    case R.id.verification:
+                        startActivity(new Intent(Home.this, IdentityVerification.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        break;
+                    case R.id.whatsapp:
+                        try {
+                            whatsapp(Home.this, "919013151515");
+                        } catch (IllegalStateException e) {
+                            Toast.makeText(Home.this, "You have no whatsapp", Toast.LENGTH_LONG).show();
+                        }
+                        break;
+
                 }
 
                 drawer.closeDrawer(GravityCompat.START);
-                if(menuItem.getTitle().equals("Notification"))
+                if (menuItem.getTitle().equals("Notification"))
                     notificationnumber.setVisibility(View.INVISIBLE);
                 headename.setText(String.valueOf(menuItem.getItemId()));
                 return false;
@@ -255,26 +538,14 @@ public class Home extends AppCompatActivity{
         drawer.setBackgroundColor(Color.WHITE);
 
         setheader();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        final String currentDateTime = dateFormat.format(new Date()); // Find todays date
-
-        if(!PreferenceManager.getDefaultSharedPreferences(this).getString("today","").equals(currentDateTime)) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    PreferenceManager.getDefaultSharedPreferences(Home.this).edit().putString("today",currentDateTime).apply();
-                    startActivity(new Intent(Home.this,stepstofollow.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
-                }
-            }, 30000);
-        }
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        currentDateTime = dateFormat.format(new Date()); // Find todays date
 
 
-
-
-        FirebaseDatabase.getInstance().getReference().child("Location").child(pref.getString("user","")).addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("Location").child(pref.getString("user", "")).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot!=null) {
+                if (dataSnapshot != null) {
                     UserLocationHelper u = dataSnapshot.getValue(UserLocationHelper.class);
 
                     Geocoder geocoder;
@@ -285,14 +556,12 @@ public class Home extends AppCompatActivity{
                         addresses = geocoder.getFromLocation(u.getLat(), u.getLon(), 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
 
 
-
                         String city = addresses.get(0).getLocality();
-                        String state=addresses.get(0).getAdminArea();
+                        String state = addresses.get(0).getAdminArea();
 
-                        editor.putString("city",city);
-                        editor.putString("state",state);
+                        editor.putString("city", city);
+                        editor.putString("state", state);
                         editor.apply();
-
 
 
                     } catch (IOException e) {
@@ -309,11 +578,9 @@ public class Home extends AppCompatActivity{
             }
         });
 
-       if(!isMyServiceRunning(AlarmForegroundNotification.class)) {
+        if (!isMyServiceRunning(AlarmForegroundNotification.class)) {
             startService(AlarmForegroundNotification.class);
         }
-
-
 
 
         sendBroadcast(new Intent(this, Restarter.class).setAction("Help"));
@@ -322,28 +589,27 @@ public class Home extends AppCompatActivity{
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 navController.navigate(menuItem.getItemId());
-                if(menuItem.getTitle().equals("Notification"))
+                if (menuItem.getTitle().equals("Notification"))
                     notificationnumber.setVisibility(View.INVISIBLE);
-                if(menuItem.getTitle().equals("Donate")){
-                    startActivity(new Intent(Home.this,donate.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                if (menuItem.getTitle().equals("Donate")) {
+                    startActivity(new Intent(Home.this, donate.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
                 }
                 return true;
             }
         });
-        notificationnumber=findViewById(R.id.notificationnumber);
+        notificationnumber = findViewById(R.id.notificationnumber);
 
 
-        FirebaseDatabase.getInstance().getReference().child("Notification").child(pref.getString("user","")).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("Notification").child(pref.getString("user", "")).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot!=null){
-                    Long count1=dataSnapshot.getChildrenCount();
-                    if(count1>=1) {
+                if (dataSnapshot != null) {
+                    Long count1 = dataSnapshot.getChildrenCount();
+                    if (count1 >= 1) {
                         notificationnumber.setVisibility(View.VISIBLE);
                         notificationnumber.setText(String.valueOf(count1));
 
-                    }
-                    else
+                    } else
                         notificationnumber.setVisibility(View.INVISIBLE);
                 }
 
@@ -356,7 +622,6 @@ public class Home extends AppCompatActivity{
         });
 
 
-
     }
 
     private void setheader() {
@@ -366,8 +631,8 @@ public class Home extends AppCompatActivity{
         String useremail = pref.getString("user", "");
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
 
-        if(mStorageRef.child(useremail)!=null) {
-            StorageReference sr = mStorageRef.child("proImg").child(useremail+".jpg");
+        if (mStorageRef.child(useremail) != null) {
+            StorageReference sr = mStorageRef.child("proImg").child(useremail + ".jpg");
             sr.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                 @Override
                 public void onSuccess(byte[] bytes) {
@@ -383,7 +648,6 @@ public class Home extends AppCompatActivity{
         }
 
 
-
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(useremail);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -391,10 +655,7 @@ public class Home extends AppCompatActivity{
                 if (dataSnapshot != null) {
                     UserRegistrationHelper helper = dataSnapshot.getValue(UserRegistrationHelper.class);
                     headename.setText(helper.getFname());
-                    headerphone.setText(helper.getPhone());
                     headerrole.setText(helper.getRole());
-                    bottomNav.getMenu().getItem(3).setIcon(getDrawable(R.drawable.ic_notifications_active_black_24dp1));
-
                 }
             }
 
@@ -404,8 +665,6 @@ public class Home extends AppCompatActivity{
             }
         });
     }
-
-
 
 
     @Override
@@ -421,6 +680,7 @@ public class Home extends AppCompatActivity{
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
     boolean doubleBackToExitPressedOnce = false;
 
     @Override
@@ -428,11 +688,9 @@ public class Home extends AppCompatActivity{
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        }
-        else if(!bottomNav.getMenu().getItem(0).isChecked()){
+        } else if (!bottomNav.getMenu().getItem(0).isChecked()) {
             navController.navigate(bottomNav.getMenu().getItem(0).getItemId());
-        }
-        else {
+        } else {
             if (doubleBackToExitPressedOnce) {
                 finish();
                 return;
@@ -455,47 +713,35 @@ public class Home extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id=item.getItemId();
-        if(item.getItemId() == android.R.id.home){ // use android.R.id
+        int id = item.getItemId();
+        if (id == R.id.identity) {
+            startActivity(new Intent(Home.this, IdentityVerification.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+        }
+        if (item.getItemId() == android.R.id.home) { // use android.R.id
             drawer.openDrawer(GravityCompat.START);
         }
-        if(id==R.id.logoutmenu){
-           startAlarm(false);
+        if (id == R.id.logoutmenu) {
+            startAlarm(false);
 
-            new Bottomsheetlogoutfragment().show(getSupportFragmentManager(),"Dialog");
-
-        }
-
-        if(id==R.id.chatbot){
-            startActivityForResult(new Intent(Home.this,Chatbot.class), LAUNCH_SECOND_ACTIVITY);
+            new Bottomsheetlogoutfragment().show(getSupportFragmentManager(), "Dialog");
 
         }
-        if(id==R.id.nav_qr){
-            startActivity(new Intent(Home.this,QRcode.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());        }
-        if(id==R.id.translate){
-            SharedPreferences pref;
-            SharedPreferences.Editor editor;
-            pref = getApplicationContext().getSharedPreferences("language", 0); // 0 - for private mode
-            editor = pref.edit();
-            if (pref.getString("lang", "").equals("")) {
-                editor.putString("lang", "hi");
-                editor.apply();
-                setAppLocale("hi");
-            } else {
-                editor.putString("lang", "");
-                editor.commit();
-                setAppLocale("en");
-            }
-            finish();
-            overridePendingTransition(0, 0);
-            startActivity(getIntent());
-            overridePendingTransition(0, 0);
+
+        if (id == R.id.chatbot) {
+            startActivityForResult(new Intent(Home.this, Chatbot.class), LAUNCH_SECOND_ACTIVITY, ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+
+        }
+        if (id == R.id.nav_qr) {
+            startActivity(new Intent(Home.this, QRcode.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+        }
+        if (id == R.id.translate) {
+            new Bottomsheetlanguagefragment().show(getSupportFragmentManager(), "Dialog");
         }
 
-        if(id==R.id.nav_settings) {
+        if (id == R.id.nav_settings) {
             navController.navigate(R.id.nav_settings);
         }
-        if(id==R.id.share){
+        if (id == R.id.share) {
             navController.navigate(R.id.nav_share);
             final String appPackageName = BuildConfig.APPLICATION_ID;
             final String appName = getString(R.string.app_name);
@@ -534,11 +780,11 @@ public class Home extends AppCompatActivity{
 
     }
 
-    private void setAppLocale(String localeCode){
+    private void setAppLocale(String localeCode) {
         Resources resources = getResources();
         DisplayMetrics dm = resources.getDisplayMetrics();
         Configuration config = resources.getConfiguration();
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR1){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             config.setLocale(new Locale(localeCode.toLowerCase()));
         } else {
             config.locale = new Locale(localeCode.toLowerCase());
@@ -546,65 +792,13 @@ public class Home extends AppCompatActivity{
         resources.updateConfiguration(config, dm);
     }
 
-    void  getdetails(){
-        final SharedPreferences pref;
-        final SharedPreferences.Editor editor;
 
-        pref = getApplicationContext().getSharedPreferences("user", 0); // 0 - for private mode
-        editor = pref.edit();
-
-        FirebaseDatabase.getInstance().getReference().child("Users").child(pref.getString("user","")).child("status").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Integer status=dataSnapshot.getValue(Integer.class);
-                if(status!=null && status==1) {
-                    editor.putString("status", "victim");
-                    editor.apply();
-                    if(!isMyServiceRunning(VictimAlertForegroundNotification.class)) {
-                        startService(VictimAlertForegroundNotification.class);
-                    }
-                }
-                else {
-                    editor.putString("status", "normal");
-                    editor.commit();
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        FirebaseDatabase.getInstance().getReference().child("Users").child(pref.getString("user","")).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                UserRegistrationHelper userRegistrationHelper=dataSnapshot.getValue(UserRegistrationHelper.class);
-                if(userRegistrationHelper!=null) {
-                    editor.putString("role", userRegistrationHelper.getRole());
-                    editor.commit();
-                }
-                else {
-                    editor.putString("role", "not defined");
-                    editor.commit();
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        try{
+        try {
             unregisterReceiver(br);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
@@ -616,7 +810,7 @@ public class Home extends AppCompatActivity{
         final AlertDialog alert = builder.create();
 
 
-        LayoutInflater inflater=getLayoutInflater();
+        LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.activity_chatbotintro, null, true);
 
 
@@ -636,7 +830,7 @@ public class Home extends AppCompatActivity{
 
     void startAlarm(boolean set) {
 
-        AlarmManager manager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent myIntent;
 
 
@@ -645,43 +839,38 @@ public class Home extends AppCompatActivity{
         calendar.setTimeInMillis(System.currentTimeMillis());
 
 
-
-
-        manager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         PendingIntent pendingIntent = null;
 
         // SET TIME HERE
         calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
 
-       myIntent = new Intent(Home.this, YourLocationBroadcastReciever.class);
-        pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),0,myIntent,0);
+        myIntent = new Intent(Home.this, YourLocationBroadcastReciever.class);
+        pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, myIntent, 0);
 
 
-        if(set){
+        if (set) {
 
             manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                     SystemClock.elapsedRealtime() +
                             1 * 1000, pendingIntent);
 
-        }
-        else
-        if (manager!= null) {
+        } else if (manager != null) {
             manager.cancel(pendingIntent);
         }
 
         myIntent = new Intent(Home.this, MyNotificationBroadcastReceiver.class);
-        PendingIntent pendingIntent1 = PendingIntent.getBroadcast(getApplicationContext(),0,myIntent,0);
+        PendingIntent pendingIntent1 = PendingIntent.getBroadcast(getApplicationContext(), 0, myIntent, 0);
 
 
-        if(set){
+        if (set) {
 
             manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                     SystemClock.elapsedRealtime() +
                             1 * 1000, pendingIntent1);
 
-        }
-        else {
+        } else {
             if (manager != null) {
                 manager.cancel((pendingIntent1));
             }
@@ -689,17 +878,16 @@ public class Home extends AppCompatActivity{
 
 
         myIntent = new Intent(Home.this, HelpneededBroadcastReceiver.class);
-        PendingIntent pendingIntent2 = PendingIntent.getBroadcast(getApplicationContext(),0,myIntent,0);
+        PendingIntent pendingIntent2 = PendingIntent.getBroadcast(getApplicationContext(), 0, myIntent, 0);
 
 
-        if(set){
+        if (set) {
 
             manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                     SystemClock.elapsedRealtime() +
                             1 * 1000, pendingIntent2);
 
-        }
-        else {
+        } else {
             if (manager != null) {
                 manager.cancel((pendingIntent2));
             }
@@ -713,14 +901,24 @@ public class Home extends AppCompatActivity{
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == LAUNCH_SECOND_ACTIVITY) {
-            if(resultCode == Activity.RESULT_OK){
-                String result=data.getStringExtra("result");
-                switch (result){
-                    case "casesreport":navController.navigate(bottomNav.getMenu().getItem(2).getItemId());break;
-                    case "updates":navController.navigate(bottomNav.getMenu().getItem(1).getItemId());break;
-                    case "home":navController.navigate(bottomNav.getMenu().getItem(0).getItemId());break;
-                    case "notification":navController.navigate(bottomNav.getMenu().getItem(3).getItemId());break;
-                    case "profile":navController.navigate(bottomNav.getMenu().getItem(4).getItemId());break;
+            if (resultCode == Activity.RESULT_OK) {
+                String result = data.getStringExtra("result");
+                switch (result) {
+                    case "casesreport":
+                        navController.navigate(bottomNav.getMenu().getItem(2).getItemId());
+                        break;
+                    case "updates":
+                        navController.navigate(bottomNav.getMenu().getItem(1).getItemId());
+                        break;
+                    case "home":
+                        navController.navigate(bottomNav.getMenu().getItem(0).getItemId());
+                        break;
+                    case "notification":
+                        navController.navigate(bottomNav.getMenu().getItem(3).getItemId());
+                        break;
+                    case "profile":
+                        navController.navigate(bottomNav.getMenu().getItem(4).getItemId());
+                        break;
 
 
                 }
@@ -733,19 +931,25 @@ public class Home extends AppCompatActivity{
 
     public static void whatsapp(Activity activity, String phone) {
         String formattedNumber = (phone);
-        try{
-            Intent sendIntent =new Intent("android.intent.action.MAIN");
+        try {
+            Intent sendIntent = new Intent("android.intent.action.MAIN");
             sendIntent.setComponent(new ComponentName("com.whatsapp", "com.whatsapp.Conversation"));
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.setType("text/plain");
-            sendIntent.putExtra(Intent.EXTRA_TEXT,"Press 1 for latest updates");
-            sendIntent.putExtra("jid", formattedNumber +"@s.whatsapp.net");
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "Press 1 for latest updates");
+            sendIntent.putExtra("jid", formattedNumber + "@s.whatsapp.net");
             sendIntent.setPackage("com.whatsapp");
             activity.startActivity(sendIntent);
+        } catch (Exception e) {
+            Toast.makeText(activity, "You don't have Whatsapp" + e.toString(), Toast.LENGTH_SHORT).show();
         }
-        catch(Exception e)
-        {
-            Toast.makeText(activity,"You don't have Whatsapp"+ e.toString(),Toast.LENGTH_SHORT).show();
+    }
+
+    public void callhelpline(View view) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:" + "1075"));
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
         }
     }
 }

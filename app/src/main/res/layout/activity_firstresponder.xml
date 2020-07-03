@@ -79,6 +79,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView">
+
                 <RelativeLayout
                     android:id="@+id/mystatus"
                     android:background="@drawable/customborder_home"
@@ -116,11 +117,12 @@
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
                     android:layout_weight="1">
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:onClick="alert"
                         android:layout_height="match_parent"
-                        android:background="#204E40">
+                        android:background="#BA93FF">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -128,7 +130,8 @@
                             android:layout_below="@id/train"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
-                            android:textColor="#ffffff"
+                            android:textColor="#000"
+                            android:padding="5dp"
                             android:text="@string/alert_nearby"
                             android:textSize="15sp"
                             app:fontFamily="@font/roboto_medium" />
@@ -165,6 +168,7 @@
                             android:layout_marginTop="10dp"
                             android:text="@string/dial_108"
                             android:gravity="center"
+                            android:padding="5dp"
                             android:textSize="15sp"
                             app:fontFamily="@font/roboto_medium" />
 
@@ -212,6 +216,7 @@
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
                             android:text="@string/dial_100"
+                            android:padding="5dp"
                             android:textSize="15sp"
                             app:fontFamily="@font/roboto_medium" />
 
@@ -244,6 +249,7 @@
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
                             android:gravity="center"
+                            android:padding="5dp"
                             android:text="@string/dial_101"
                             android:textSize="15sp"
                             app:fontFamily="@font/roboto_medium" />
@@ -257,7 +263,6 @@
                             android:src="@drawable/fire"
                             android:contentDescription="TODO" />
                     </RelativeLayout>
-
 
 
                 </androidx.cardview.widget.CardView>
@@ -294,6 +299,7 @@
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
                             android:text="@string/nearby_hospitals"
+                            android:padding="5dp"
                             android:gravity="center"
                             android:textSize="15sp"
                             app:fontFamily="@font/roboto_medium" />
@@ -307,7 +313,6 @@
                             app:srcCompat="@drawable/hospital"
                             android:contentDescription="TODO" />
                     </RelativeLayout>
-
 
 
                 </androidx.cardview.widget.CardView>
@@ -330,6 +335,7 @@
                             android:layout_below="@id/train111"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
+                            android:padding="5dp"
                             android:gravity="center"
                             android:text="@string/medical_shops"
                             android:textSize="15sp"
@@ -350,9 +356,7 @@
             </LinearLayout>
 
 
-
             <LinearLayout
-                android:id="@+id/linearLayout6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -380,6 +384,7 @@
                             android:layout_centerHorizontal="true"
                             android:gravity="center"
                             android:layout_marginTop="10dp"
+                            android:padding="5dp"
                             android:text="@string/first_aid_guidance"
                             android:textSize="15sp"
                             app:fontFamily="@font/roboto_medium" />
@@ -400,6 +405,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1">
+
                     <RelativeLayout
                         android:id="@+id/helpline"
                         android:onClick="helpline"
@@ -414,6 +420,7 @@
                             android:layout_marginTop="10dp"
                             android:text="@string/helpline"
                             android:textSize="15sp"
+                            android:padding="5dp"
                             app:fontFamily="@font/roboto_medium" />
 
                         <ImageView

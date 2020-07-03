@@ -1,9 +1,5 @@
 package com.gprs.uttarpradesh;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,10 +7,15 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -43,21 +44,23 @@ public class Forgotpassword extends AppCompatActivity {
     TextInputLayout pass;
     TextInputLayout cpass;
     TextInputLayout mobile;
-    Button reset,login;
+    Button reset, login;
     private ProgressDialog progressDialog;
     private String verificationCodeBySystem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_forgotpassword);
-        mobile=findViewById(R.id.email123);
-        pass=findViewById(R.id.password123);
-        cpass=findViewById(R.id.mobile123);
-        login=findViewById(R.id.login123);
-        reset=findViewById(R.id.go123);
+        mobile = findViewById(R.id.email123);
+        pass = findViewById(R.id.password123);
+        cpass = findViewById(R.id.mobile123);
+        login = findViewById(R.id.login123);
+        reset = findViewById(R.id.go123);
 
-        progressDialog=new ProgressDialog(Forgotpassword.this);
+        progressDialog = new ProgressDialog(Forgotpassword.this);
         progressDialog.setTitle("Logging In");
         progressDialog.setMessage("connecting...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -66,7 +69,7 @@ public class Forgotpassword extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Forgotpassword.this,Login.class));
+                startActivity(new Intent(Forgotpassword.this, Login.class));
                 finish();
             }
         });
@@ -74,7 +77,7 @@ public class Forgotpassword extends AppCompatActivity {
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validate(mobile,pass,cpass)){
+                if (validate(mobile, pass, cpass)) {
                     progressDialog.show();
                     change();
 
@@ -84,10 +87,12 @@ public class Forgotpassword extends AppCompatActivity {
 
 
     }
-    boolean valid=false;
-    void change(){
-        final FirebaseDatabase database=FirebaseDatabase.getInstance();
-        final DatabaseReference reference=database.getReference("Users").child(mobile.getEditText().getText().toString());
+
+    boolean valid = false;
+
+    void change() {
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference reference = database.getReference("Users").child(mobile.getEditText().getText().toString());
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -103,54 +108,53 @@ public class Forgotpassword extends AppCompatActivity {
                         }
                         reference.setValue(helper);
                         progressDialog.hide();
-                        Toast.makeText(Forgotpassword.this,"Password Changed",Toast.LENGTH_LONG).show();
+                        Toast.makeText(Forgotpassword.this, "Password Changed", Toast.LENGTH_LONG).show();
                         startActivity(new Intent(Forgotpassword.this, Login.class));
                         finish();
 
-                    }
-                    else
+                    } else
                         validatemobile();
-                }
-                else {
+                } else {
                     progressDialog.hide();
                     mobile.setError("Mobile number doesn't exists");
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError error) {
                 progressDialog.hide();
-                Toast.makeText(Forgotpassword.this,error.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(Forgotpassword.this, error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
-    public static boolean validate(TextInputLayout mobile, TextInputLayout pass, final TextInputLayout cpass){
-        String emailPatter="[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-        String passwordPatter= "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,40})";
 
-        if(mobile.getEditText().getText().toString().isEmpty()) {
-            mobile.setError("\nMobile cannot be empty\n");return false;
-        }
-        else{
+    public static boolean validate(TextInputLayout mobile, TextInputLayout pass, final TextInputLayout cpass) {
+        String emailPatter = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        String passwordPatter = "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,40})";
+
+        if (mobile.getEditText().getText().toString().isEmpty()) {
+            mobile.setError("\nMobile cannot be empty\n");
+            return false;
+        } else {
             mobile.setError("");
             mobile.setErrorEnabled(false);
         }
 
 
-        if(pass.getEditText().getText().toString().isEmpty()) {
-            pass.setError("\nPassword cannot be empty\n");return false;
-        }
-        else  if(!pass.getEditText().getText().toString().matches(passwordPatter)){
+        if (pass.getEditText().getText().toString().isEmpty()) {
+            pass.setError("\nPassword cannot be empty\n");
+            return false;
+        } else if (!pass.getEditText().getText().toString().matches(passwordPatter)) {
             pass.setError("\nPassword Must contain atleast\nOne Uppercase ,\nOne Lowercase ,\nOne Number ,\nOne Special character and \nBetween 8 to 16 letter length\n");
             return false;
-        }
-        else{
+        } else {
             pass.setError("");
             pass.setErrorEnabled(false);
         }
-        if(!pass.getEditText().getText().toString().equals(cpass.getEditText().getText().toString())) {
-            cpass.setError("\nPassword Mismatched\n");return false;
-        }
-        else{
+        if (!pass.getEditText().getText().toString().equals(cpass.getEditText().getText().toString())) {
+            cpass.setError("\nPassword Mismatched\n");
+            return false;
+        } else {
             cpass.setError("");
             cpass.setErrorEnabled(false);
         }
@@ -158,36 +162,36 @@ public class Forgotpassword extends AppCompatActivity {
 
         return true;
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(this,Login.class));
+        startActivity(new Intent(this, Login.class));
         finish();
     }
 
     private static final String ALGORITHM = "AES";
     private static final String KEY = "1Hbfh667adfDEJ78";
 
-    public static String encrypt(String value) throws Exception
-    {
+    public static String encrypt(String value) throws Exception {
         Key key = generateKey();
         Cipher cipher = Cipher.getInstance(ALGORITHM);
         cipher.init(Cipher.ENCRYPT_MODE, key);
-        byte [] encryptedByteValue = cipher.doFinal(value.getBytes(StandardCharsets.UTF_8));
+        byte[] encryptedByteValue = cipher.doFinal(value.getBytes(StandardCharsets.UTF_8));
         String encryptedValue64 = Base64.encodeToString(encryptedByteValue, Base64.DEFAULT);
         return encryptedValue64;
 
     }
-    private static Key generateKey() throws Exception
-    {
-        Key key = new SecretKeySpec(KEY.getBytes(),ALGORITHM);
+
+    private static Key generateKey() throws Exception {
+        Key key = new SecretKeySpec(KEY.getBytes(), ALGORITHM);
         return key;
     }
 
     private void validatemobile() {
 
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                "+91 "+mobile.getEditText().getText().toString(),        // Phone number to verify
+                "+91 " + mobile.getEditText().getText().toString(),        // Phone number to verify
                 60,                 // Timeout duration
                 TimeUnit.SECONDS,   // Unit of timeout
                 TaskExecutors.MAIN_THREAD,               // Activity (for callback binding)
@@ -202,7 +206,7 @@ public class Forgotpassword extends AppCompatActivity {
         builder.setCancelable(false);
         builder.setMessage("Verify your Mobile number ");
 
-        LinearLayout lila1= new LinearLayout(this);
+        LinearLayout lila1 = new LinearLayout(this);
         lila1.setOrientation(LinearLayout.VERTICAL); //1 is for vertical orientation
         final EditText input = new EditText(this);
         LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -215,13 +219,12 @@ public class Forgotpassword extends AppCompatActivity {
         builder.setPositiveButton("Verify", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(final DialogInterface dialog, int which) {
-                if(input.getText().toString().equals("")){
-                    Toast.makeText(Forgotpassword.this,"Enter valid OTP",Toast.LENGTH_LONG).show();
+                if (input.getText().toString().equals("")) {
+                    Toast.makeText(Forgotpassword.this, "Enter valid OTP", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
                     verifymobile();
 
-                }
-                else {
+                } else {
                     progressDialog.show();
                     dialog.dismiss();
                     verifycode(input.getText().toString());
@@ -241,11 +244,11 @@ public class Forgotpassword extends AppCompatActivity {
 
     }
 
-    private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks=new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+    private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
         @Override
         public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
-            verificationCodeBySystem=s;
+            verificationCodeBySystem = s;
         }
 
         @Override
@@ -262,26 +265,25 @@ public class Forgotpassword extends AppCompatActivity {
 
         @Override
         public void onVerificationFailed(@NonNull FirebaseException e) {
-            Toast.makeText(Forgotpassword.this,"Authentication failed"+e.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(Forgotpassword.this, "Authentication failed" + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     };
 
     private void verifycode(String code) {
-        PhoneAuthCredential credential=PhoneAuthProvider.getCredential(verificationCodeBySystem,code);
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationCodeBySystem, code);
         signinwithcredentials(credential);
     }
 
     private void signinwithcredentials(final PhoneAuthCredential credential) {
-        FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener(Forgotpassword.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    valid=true;
+                if (task.isSuccessful()) {
+                    valid = true;
                     change();
-                }
-                else
-                    Toast.makeText(Forgotpassword.this,"Incorrect OTP",Toast.LENGTH_LONG).show();
+                } else
+                    Toast.makeText(Forgotpassword.this, "Incorrect OTP", Toast.LENGTH_LONG).show();
                 verifymobile();
             }
         });

@@ -1,39 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".postquestion">
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
         android:background="#00000000"
+        android:fillViewport="true"
         android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#fff"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_bold"
-                android:text="@string/post_your_queries_here"
-                android:textColor="#000"
-                android:textSize="18sp"
-                android:transitionName="logo_text" />
+                android:background="@color/colorPrimary"
+                android:theme="@style/AppTheme.AppBarOverlay">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:padding="10dp"
+                        android:text="@string/post_your_queries_here"
+                        android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
+                </RelativeLayout>
+            </com.google.android.material.appbar.AppBarLayout>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_height="match_parent"
+                android:paddingLeft="20sp"
+                android:paddingRight="20sp"
+                android:paddingBottom="20sp"
                 android:layout_marginBottom="20dp"
                 android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/attach"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/ic_baseline_attach_file_24"
+                    android:layout_gravity="right" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -53,89 +71,24 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Description"
-                    android:transitionName="email">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/desc"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Message"
+                    android:hint="@string/type_your_message_here"
+                    android:layout_marginTop="10dp"
                     android:transitionName="email">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/message"
                         android:layout_width="match_parent"
-                        android:layout_height="189dp"
-                        android:gravity="center"
-                        android:inputType="textLongMessage" />
+                        android:layout_height="150dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:gravity="center"
-                    android:orientation="vertical" >
-
-                    <!-- chatintro picture button -->
-
-                    <Button
-                        android:id="@+id/btnCapturePicture"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:background="#F8EFEF"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
-                        android:text="@string/upload_picture"
-                        android:textColor="#000000" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:gravity="center_horizontal"
-                        android:text="OR"
-                        android:textColor="#000000" />
-
-                    <!-- Record video button -->
-
-                    <Button
-                        android:id="@+id/btnRecordVideo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="#DBCDCD"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
-                        android:text="@string/upload_vedio"
-                        android:textColor="#000000" />
-                </LinearLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/password"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/password"
-                    android:transitionName="password"
-                    app:passwordToggleEnabled="true"/>
 
                 <Button
                     android:id="@+id/post"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="20sp"
                     android:layout_marginBottom="5dp"
-                    android:background="#000"
+                    android:background="@color/colorPrimary"
                     android:text="@string/post"
                     android:textColor="#fff"
                     android:transitionName="go" />

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".intro">
 
-<androidx.viewpager.widget.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/screen_viewpager"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -26,13 +26,13 @@
         android:background="#fff"
         android:drawableRight="@drawable/ic_arrow_forward_black_24dp"
         android:drawableTint="@color/gradient_start_color"
-        android:text="Next"
+        android:text="@string/next"
         android:textColor="@color/gradient_start_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-<com.google.android.material.tabs.TabLayout
-     android:id="@+id/tab_indicator"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -46,7 +46,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:tabBackground="@drawable/indicator_selector">
 
-</com.google.android.material.tabs.TabLayout>
+    </com.google.android.material.tabs.TabLayout>
+
     <Button
         android:visibility="invisible"
         android:id="@+id/btn_get_started"
@@ -58,7 +59,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="64dp"
         android:background="@drawable/btn_gradient_style"
-        android:text="Get Started"
+        android:text="@string/get_started"
         android:textColor="#fff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -74,7 +75,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
-        android:text="Skip"
+        android:text="@string/skip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -1,7 +1,6 @@
 package com.gprs.uttarpradesh;
 
 
-import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -9,7 +8,11 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -30,8 +33,10 @@ import androidx.media.VolumeProviderCompat;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,24 +49,23 @@ public class AlarmForegroundNotification extends Service {
     private NotificationManager mNotificationManager;
     private NotificationCompat.Builder mBuilder;
     public static final String NOTIFICATION_CHANNEL_ID = "10005";
-    String message;
     Context context;
     Intent resultIntent;
     Ringtone ringtoneAlarm;
-    int timer=0;
+    int timer = 0;
     String extStorageDirectory = Environment.getExternalStorageDirectory()
             .toString();
     File f = new File(extStorageDirectory + "/COVI19RELIEF/alarm/obj.dat");
     VolumeProviderCompat myVolumeProvider;
 
 
-    ArrayList<String> name, desc, time;
-    ArrayList<Boolean> onoff;
+    ArrayList<String> name, time;
+    ArrayList<Boolean> onoff, repeat, deletea;
     private MediaSessionCompat mediaSession;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.println(Log.INFO,"Alarm","Alarm started");
+        Log.println(Log.INFO, "Alarm", "Alarm started");
         String input = intent.getStringExtra("inputExtra");
         createNotificationChannel();
 
@@ -82,11 +86,34 @@ public class AlarmForegroundNotification extends Service {
         return START_NOT_STICKY;
     }
 
+    public static Bitmap drawableToBitmap(Drawable drawable) {
+        Bitmap bitmap = null;
+
+        if (drawable instanceof BitmapDrawable) {
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+            if (bitmapDrawable.getBitmap() != null) {
+                return bitmapDrawable.getBitmap();
+            }
+        }
+
+        if (drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
+            bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
+        } else {
+            bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        }
+
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+        return bitmap;
+    }
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
+
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel serviceChannel = new NotificationChannel(
@@ -98,25 +125,26 @@ public class AlarmForegroundNotification extends Service {
             manager.createNotificationChannel(serviceChannel);
         }
     }
+
     public void startService(Class<?> serviceClass) {
         Intent serviceIntent = new Intent(this, serviceClass);
         serviceIntent.putExtra("inputExtra", "Foreground Service Example in Android");
         ContextCompat.startForegroundService(this, serviceIntent);
     }
+
     @Override
     public void onCreate() {
         this.context = this;
-        Log.println(Log.INFO,"Alarm","Alarm started running");
-               resultIntent = new Intent(context, Alarm.class);
+        Log.println(Log.INFO, "Alarm", "Alarm started running");
+        resultIntent = new Intent(context, Alarm.class);
         resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Uri alarmTone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         ringtoneAlarm = RingtoneManager.getRingtone(context, alarmTone);
 
 
         name = new ArrayList<>();
-        desc = new ArrayList<>();
         time = new ArrayList<>();
-        onoff=new ArrayList<>();
+        onoff = new ArrayList<>();
 
         loadMap();
 
@@ -131,7 +159,7 @@ public class AlarmForegroundNotification extends Service {
                 new VolumeProviderCompat(VolumeProviderCompat.VOLUME_CONTROL_RELATIVE, /*max volume*/100, /*initial volume level*/100) {
                     @Override
                     public void onAdjustVolume(int direction) {
-                        if(ringtoneAlarm.isPlaying())
+                        if (ringtoneAlarm.isPlaying())
                             ringtoneAlarm.stop();
 
                         mediaSession.setActive(false);
@@ -141,45 +169,50 @@ public class AlarmForegroundNotification extends Service {
         mediaSession.setPlaybackToRemote(myVolumeProvider);
 
 
+        new CountDownTimer(3000, 3000) {
+            public void onTick(long l) {
+            }
 
-        new CountDownTimer(3000, 3000)
-        {
-            public void onTick(long l) {}
-            public void onFinish()
-            {
-                Log.println(Log.INFO,"Timer",String.valueOf(timer));
-                if(timer==0) {
+            public void onFinish() {
+                Log.println(Log.INFO, "Timer", String.valueOf(timer));
+                if (timer == 0) {
 
-                    if(f.exists())
-
-                    {
+                    if (f.exists()) {
 
                         loadMap();
 
                         SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
                         final String currentDateTime = dateFormat.format(new Date());
                         for (int i = 0; i < name.size(); i++) {
-                            Log.println(Log.INFO,"array",time.get(i));
-                            Log.println(Log.INFO,"cur",currentDateTime);
+                            Log.println(Log.INFO, "array", time.get(i));
+                            Log.println(Log.INFO, "cur", currentDateTime);
                             if (currentDateTime.equals(time.get(i)) && onoff.get(i)) {
-
                                 mediaSession.setActive(true);
-
                                 ringtoneAlarm.play();
                                 notifyalarm(name.get(i));
-                                timer=20;
+                                timer = 20;
                                 Intent intent1 = new Intent(context, alarmremember.class);
                                 intent1.putExtra("name", name.get(i));
-                                intent1.putExtra("desc", desc.get(i));
                                 context.startActivity(intent1);
+                                if (repeat.get(i).equals(false)) {
+                                    onoff.set(i, false);
+                                    saveMap();
+                                }
+                                if (deletea.get(i).equals(true)) {
+                                    name.remove(i);
+                                    time.remove(i);
+                                    onoff.remove(i);
+                                    repeat.remove(i);
+                                    deletea.remove(i);
+                                    saveMap();
+                                }
+                                break;
                             }
                         }
                         start();
-                    }
-                    else
+                    } else
                         start();
-                }
-                else {
+                } else {
                     timer = timer - 1;
                     start();
                 }
@@ -203,69 +236,82 @@ public class AlarmForegroundNotification extends Service {
 
     }
 
-        private void loadMap () {
-            try {
-                FileInputStream fileInputStream = new FileInputStream(f);
-                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-                name = (ArrayList<String>) objectInputStream.readObject();
-                desc = (ArrayList<String>) objectInputStream.readObject();
-                time = (ArrayList<String>) objectInputStream.readObject();
-                onoff = (ArrayList<Boolean>) objectInputStream.readObject();
-                objectInputStream.close();
-                fileInputStream.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-
+    private void loadMap() {
+        try {
+            FileInputStream fileInputStream = new FileInputStream(f);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            name = (ArrayList<String>) objectInputStream.readObject();
+            time = (ArrayList<String>) objectInputStream.readObject();
+            repeat = (ArrayList<Boolean>) objectInputStream.readObject();
+            deletea = (ArrayList<Boolean>) objectInputStream.readObject();
+            onoff = (ArrayList<Boolean>) objectInputStream.readObject();
+            objectInputStream.close();
+            fileInputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
-        void notifyalarm (String s){
-            PendingIntent resultPendingIntent = PendingIntent.getActivity(context,
-                    0 /* Request code */, resultIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT);
-            mBuilder = new NotificationCompat.Builder(context);
-            mBuilder.setSmallIcon(R.drawable.report);
-            mBuilder.setContentTitle("Alarm")
-                    .setOnlyAlertOnce(true)
-                    .setContentText(s)
-                    .setAutoCancel(true)
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setCategory(NotificationCompat.CATEGORY_CALL)
-                    .setFullScreenIntent(resultPendingIntent, true)
-                    .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
-                    .setContentIntent(resultPendingIntent);
 
-            mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+    }
+
+    void notifyalarm(String s) {
+        resultIntent.putExtra("name", s);
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(context,
+                0 /* Request code */, resultIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder = new NotificationCompat.Builder(context);
+        mBuilder.setSmallIcon(R.drawable.report);
+        mBuilder.setContentTitle("Alarm")
+                .setOnlyAlertOnce(true)
+                .setContentText(s)
+                .setOnlyAlertOnce(true)
+                .setAutoCancel(true)
+                .setLargeIcon(drawableToBitmap(context.getDrawable(R.drawable.alarmtransparent)))
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_CALL)
+                .setFullScreenIntent(resultPendingIntent, true)
+                .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
+                .setContentIntent(resultPendingIntent);
+
+        mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                int importance = NotificationManager.IMPORTANCE_HIGH;
-                NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "NOTIFICATION_CHANNEL_NAME", importance);
-                notificationChannel.enableLights(true);
-                notificationChannel.setLightColor(Color.RED);
-                notificationChannel.enableVibration(true);
-                notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-                assert mNotificationManager != null;
-                mBuilder.setChannelId(NOTIFICATION_CHANNEL_ID);
-                mNotificationManager.createNotificationChannel(notificationChannel);
-            }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "NOTIFICATION_CHANNEL_NAME", importance);
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.RED);
+            notificationChannel.enableVibration(true);
+            notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
             assert mNotificationManager != null;
-            mNotificationManager.notify(11/* Request Code */, mBuilder.build());
+            mBuilder.setChannelId(NOTIFICATION_CHANNEL_ID);
+            mNotificationManager.createNotificationChannel(notificationChannel);
         }
+        assert mNotificationManager != null;
+        mNotificationManager.notify(11/* Request Code */, mBuilder.build());
+    }
 
-
-    private boolean isMyServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
-            }
+    void saveMap() {
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(f);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(name);
+            objectOutputStream.writeObject(time);
+            objectOutputStream.writeObject(repeat);
+            objectOutputStream.writeObject(deletea);
+            objectOutputStream.writeObject(onoff);
+            objectOutputStream.flush();
+            objectOutputStream.close();
+            fileOutputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return false;
     }
-    }
+}
 
 

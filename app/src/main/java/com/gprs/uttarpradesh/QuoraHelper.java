@@ -5,31 +5,39 @@ import java.util.ArrayList;
 
 public class QuoraHelper {
 
-   String title,desc,message,role,phone,name,time;
-   boolean nil,image,vedio;
-   ArrayList<String> answer;
-   ArrayList<String> user;
+    String title, message, role, phone, name, time;
+    boolean nil, image, vedio;
+    ArrayList<String> answer;
+    ArrayList<String> user;
+    ArrayList<String> userlike;
     String uri;
 
 
+    public ArrayList<String> getUserlike() {
+        return userlike;
+    }
+
+    public void setUserlike(ArrayList<String> userlike) {
+        this.userlike = userlike;
+    }
 
     public QuoraHelper() {
     }
 
-    public QuoraHelper(String title, String desc, String message, String role, String phone, String name, String time, boolean nil, boolean image, boolean vedio, ArrayList<String> arrayList, String url, ArrayList<String> user) {
+    public QuoraHelper(String title, String message, String role, String phone, String name, String time, boolean nil, boolean image, boolean vedio, ArrayList<String> arrayList, String url, ArrayList<String> user) {
         this.title = title;
-        this.desc = desc;
         this.message = message;
         this.role = role;
         this.phone = phone;
         this.name = name;
         this.time = time;
-        this.nil=nil;
-        this.image=image;
-        this.vedio=vedio;
-        this.answer=arrayList;
-        this.uri=url;
-        this.user=user;
+        this.nil = nil;
+        this.image = image;
+        this.vedio = vedio;
+        this.answer = arrayList;
+        this.uri = url;
+        userlike = new ArrayList<>();
+        this.user = user;
     }
 
     public ArrayList<String> getUser() {
@@ -54,16 +62,6 @@ public class QuoraHelper {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
     }
 
     public String getUri() {

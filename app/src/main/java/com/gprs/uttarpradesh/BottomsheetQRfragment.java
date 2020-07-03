@@ -25,7 +25,7 @@ public class BottomsheetQRfragment extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        final View view= inflater.inflate(R.layout.scanresult, container, false);
+        final View view = inflater.inflate(R.layout.scanresult, container, false);
 
         view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,30 +34,29 @@ public class BottomsheetQRfragment extends BottomSheetDialogFragment {
             }
         });
 
-        TextView title1=view.findViewById(R.id.title);
+        TextView title1 = view.findViewById(R.id.title);
 
-        TextView name1=view.findViewById(R.id.name);
-        name1.setText("Name : "+this.getArguments().getString("name"));
-        TextView role1=view.findViewById(R.id.role);
+        TextView name1 = view.findViewById(R.id.name);
+        name1.setText("Name : " + this.getArguments().getString("name"));
+        TextView role1 = view.findViewById(R.id.role);
         role1.setText(this.getArguments().getString("role"));
-        TextView phone1=view.findViewById(R.id.phone);
+        TextView phone1 = view.findViewById(R.id.phone);
         phone1.setText(this.getArguments().getString("phone"));
-        TextView place1=view.findViewById(R.id.place);
+        TextView place1 = view.findViewById(R.id.place);
         place1.setText(this.getArguments().getString("place"));
 
-        if(this.getArguments().getString("title").equals("normal")){
+        if (this.getArguments().getString("title").equals("normal")) {
             title1.setTextColor(Color.GREEN);
-            title1.setText(this.getArguments().getString("name")+" is Safe !");
-        }
-        else if(this.getArguments().getString("title").equals("victim")){
+            title1.setText(this.getArguments().getString("name") + " is Safe !");
+        } else if (this.getArguments().getString("title").equals("victim")) {
             title1.setTextColor(Color.RED);
-            title1.setText(this.getArguments().getString("name")+" is found Victim !");
+            title1.setText(this.getArguments().getString("name") + " is found Victim !");
         }
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
-        final ImageView proimg=view.findViewById(R.id.proimg);
+        final ImageView proimg = view.findViewById(R.id.proimg);
 
-        if(mStorageRef.child(this.getArguments().getString("phone"))!=null) {
-            StorageReference sr = mStorageRef.child("proImg").child(this.getArguments().getString("phone")+".jpg");
+        if (mStorageRef.child(this.getArguments().getString("phone")) != null) {
+            StorageReference sr = mStorageRef.child("proImg").child(this.getArguments().getString("phone") + ".jpg");
             sr.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                 @Override
                 public void onSuccess(byte[] bytes) {

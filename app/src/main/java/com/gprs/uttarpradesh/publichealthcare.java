@@ -1,341 +1,122 @@
 package com.gprs.uttarpradesh;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-
+import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 public class publichealthcare extends AppCompatActivity {
 
-    ArrayList<String> district,hospital,type,district1,hospital1,type1;
-    SearchView searchView;
-    ListView listView;
-    CustomPubliccareAdapter customPubliccareAdapter;
+    CardView mapview, listview;
+    TextView maptext, listtext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_publichealthcare);
+        final ViewPager viewPager = findViewById(R.id.view_pager);
 
-        searchView=findViewById(R.id.search);
-        listView=findViewById(R.id.list);
+        listview = findViewById(R.id.listview);
+        listtext = findViewById(R.id.listtext);
+        maptext = findViewById(R.id.maptext);
+        mapview = findViewById(R.id.mapview);
 
-
-        String dis[]={"Agra",
-                "Mathura",
-                "Firozabad",
-                "Firozabad",
-                "Mainpuri",
-                "Aligarh",
-                "Etah",
-                "Hathras",
-                "Kasganj",
-                "Azamgarh",
-                "Ballia",
-                "Amethi",
-                        "Sultanpur",
-                        "Ambedkarnagar",
-                        "Ayodhya",
-                        "Ayodhya",
-                        "Ayodhya",
-                        "Barabanki",
-                        "Bareilly",
-                        "Badaun",
-                        "Pilibhit",
-                        "Shahjahanpur",
-                        "Basti",
-
-                        "Siddhartha Nagar",
-
-                        "Santkabir Nagar",
-                        "Chitrakoot",
-
-                        "Hamirpur",
-
-                        "Mahoba",
-
-                        "Banda",
-                        "Shrawasti",
-
-                        "Balrampur",
-                        "Bahraich",
-
-                        "Gonda",
-                        "Gonda",
-                        "Gorakhpur",
-                        "Gorakhpur",
-                        "Deoria",
-                        "Mahrajganj",
-
-                        "Kushinagar",
-                        "Jalaun",
-
-                        "Jhansi",
-                        "Jhansi",
-                        "Lalitpur",
-
-                        "Kannauj",
-                        "Etawah",
-
-                        "Auraiya",
-
-                        "Farrukhabad",
-
-                        "Kanpur Dehat",
-
-                        "Kanpur Nagar",
-
-
-                        "Lucknow",
-                        "Lucknow",
-                        "Lucknow",
-
-
-                        "Unnao",
-
-                        "Hardoi",
-
-                        "Sitapur",
-
-                        "Raibareili",
-
-                        "LakhimpurKhiri",
-
-
-                        "Bagpat",
-                        "Bulandshahr",
-                        "Bulandshahr",
-
-                        "Meerut",
-                        "GB Nagar",
-                        "Ghaziabad",
-
-                        "Hapur",
-
-                        "Rampur",
-                        "Sambhal",
-
-
-                        "Bijnor",
-                        "Moradabad",
-                        "Amroha",
-
-
-                        "Prayagraj",
-                        "Prayagraj",
-                        "Prayagraj",
-                        "Kaushambi",
-
-                        "Pratapgarh",
-
-                        "Fatehpur",
-
-                        "Shamli",
-                        "Muzaffarnagar",
-
-                        "Saharanpur",
-
-
-                        "Mirzapur",
-                        "Bhadohi",
-
-                        "Sonbhadra",
-                        "Ghazipur",
-
-
-                        "Chandauli",
-
-                        "Jaunpur",
-                        "Varanasi\n"
-        };
-
-        String hos[]={"CHC Baroli Ahir",
-                "CHC Vrindavan"  ,
-                "CHC Jasrana",
-                "CHC Deedamai",
-                "CHC Bhogon",
-                "CHC Harduaganj",
-                "CHC Baghwala,",
-                "CHC Mursan",
-                "DCH soron",
-                "CHC-Kolhukhor",
-                "CHC Basantpur",
-                "CHC Gauriganj",
-                        "CHC Kurwar",
-                        "CHC jalalpur",
-                        "Mashudha",
-                        "100 Bedded Kumarganj",
-                        "Hospital",
-                        "Old Building District",
-                        "Women Hospital",
-                        "CHC Satarik",
-                        "Bithrichainpur",
-                        "CHC Ujhani",
-                        "CHC Jahanabad",
-                        "CHC-Dadraul",
-                        "Munderwa",
-
-                        "CHC Birdpur",
-
-                        "CHC Khalilabad",
-                        "CHC Shiv Rampur",
-
-                        "CHC Kurara",
-
-                        "CHC Panwari",
-
-                        "CHC Naraini",
-                        "CHC Bhangha",
-
-                        "Memorial Hospital",
-                        "CHC Chittaura",
-
-                        "Railway Hospital",
-                        "Pandri kripal",
-                        "CHC, Chargawan",
-                        "LNM Railway Hospital",
-                        "Guari Bazar",
-                        "CHC Mithaura",
-
-                        "CHC Sapaha",
-                        "CHC  Konch",
-
-                        "CHC Badagaon",
-                        "Railway Hospital",
-                        "CHC Talbehat",
-
-                        "CHC Tirwa",
-                        "CHC Jaswant Nagar",
-
-                        "MCH wing CHC Dibiyapur,",
-
-                        "CHC Baraun",
-
-                        "CHC Gajner",
-
-                        "CHC Sarsaul",
-
-
-                        "RSM 100 BED DCH BKT",
-                        "CHC Malihabad",
-                        "CHC Mohanlalganj",
-
-
-                        "CHC, Bichhiya",
-
-                        "CHC Bawan",
-
-                        "CHC Khairabad",
-
-                        "CHC ROHANIYA",
-
-                        "Bhejam",
-
-
-                        "Khekra",
-                        "SSMJ KHURJA",
-                        "JP Hospital Anupshahar",
-
-                        "CHC- Jani Khurd",
-                        "CHC Bisrakh",
-                        "CHC Muradnagar",
-
-                        "CHC Hapur",
-
-                        "CHC Milak",
-                        "CHC Narauli",
-
-
-                        "CHC  Nazibabad",
-                        "DWC Hospital",
-                        "Old building of DCH",
-
-
-                        "CHC Kotwa at Bani-",
-                        "CRPF Camp Hospital",
-                        "Central Hospital Railways",
-                        "PHC Manjhanpur- Vistar Patal",
-
-                        "Trauma Centre sadar",
-
-                        "CHC Thariyaon",
-
-                        "CHC Jhinjhna",
-                        "CHC Makhiyall",
-
-                        "CHC Fatehpur",
-
-
-                        "CHC Vindhyachal Mirzapur",
-                        "CHC Bhadohi",
-
-                        "CHC Madhupur",
-                        "CHC, mohamadabad",
-
-
-                        "CHC Bhogawar",
-
-                        "CHC",
-
-                        "UCHC Shivpur\n"
-        };
-
-
-
-
-        district=new ArrayList<String>(Arrays.asList(dis));
-        String typ[]=new String[district.size()];
-
-        for(int i=0;i<district.size();i++){
-            typ[i]="L1";
-        }
-        hospital=new ArrayList<String>(Arrays.asList(hos));
-        type=new ArrayList<String>(Arrays.asList(typ));
-        district1=new ArrayList<>(district);
-        type1=new ArrayList<>(type);
-        hospital1=new ArrayList<>(hospital);
-
-        customPubliccareAdapter =new CustomPubliccareAdapter(this,hospital1,district1,type1);
-        listView.setAdapter(customPubliccareAdapter);
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
-                hospital1.clear();
-                district1.clear();
-                type1.clear();
+        listview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listview.setCardBackgroundColor(Color.parseColor("#3F51B5"));
+                listtext.setTextColor(Color.parseColor("#ffffff"));
+                maptext.setTextColor(Color.parseColor("#000000"));
+                mapview.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                viewPager.setCurrentItem(1, true);
+            }
+        });
+        mapview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listview.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                listtext.setTextColor(Color.parseColor("#000000"));
+                maptext.setTextColor(Color.parseColor("#ffffff"));
+                mapview.setCardBackgroundColor(Color.parseColor("#3F51B5"));
+                viewPager.setCurrentItem(0, true);
+            }
+        });
 
-                int i;
-                for(i=0;i<hospital.size();i++){
-                    if(i<hospital.size() && i<district.size() && i<type.size())
-                        if(hospital.get(i).toLowerCase().contains(query.toLowerCase())){
-                            hospital1.add(hospital.get(i));
-                            district1.add(district.get(i));
-                            type1.add(type.get(i));
-                        }
-                }
-                if(hospital1.size()!=0){
-                    customPubliccareAdapter.notifyDataSetChanged();
-                    Toast.makeText(publichealthcare.this, String.valueOf(hospital1.size())+" results found",Toast.LENGTH_LONG).show();
+        viewPager.setEnabled(false);
+        viewPager.setAdapter(new publichealthcare.MyPagerAdapter(getSupportFragmentManager()));
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-                }
-                else{
-                    Toast.makeText(publichealthcare.this, String.valueOf(i)+"No Match found",Toast.LENGTH_LONG).show();
-                }
-                return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
+            public void onPageSelected(int position) {
+                if (position == 0) {
+                    listview.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                    listtext.setTextColor(Color.parseColor("#000000"));
+                    maptext.setTextColor(Color.parseColor("#ffffff"));
+                    mapview.setCardBackgroundColor(Color.parseColor("#3F51B5"));
+                } else {
+                    listview.setCardBackgroundColor(Color.parseColor("#3F51B5"));
+                    listtext.setTextColor(Color.parseColor("#ffffff"));
+                    maptext.setTextColor(Color.parseColor("#000000"));
+                    mapview.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                }
+            }
 
-                return false;
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
 
     }
+
+    private class MyPagerAdapter extends FragmentPagerAdapter {
+
+        public MyPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int pos) {
+            switch (pos) {
+
+                case 0:
+                    return new fragment_publiccaremaptview();
+                case 1:
+                    return new fragment_publiccarelistview();
+                default:
+                    return new fragment_publiccaremaptview();
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+    }
 }
+
+
+
+
+

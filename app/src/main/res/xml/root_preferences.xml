@@ -34,8 +34,6 @@
             app:title="Get daily updates" />
 
 
-
-
     </PreferenceCategory>
 
 </PreferenceScreen>

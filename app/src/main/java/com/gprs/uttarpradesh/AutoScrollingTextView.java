@@ -21,6 +21,7 @@ public class AutoScrollingTextView extends TextView {
     public Scroller scroller;
     public float speed = DEFAULT_SPEED;
     public boolean continuousScrolling = true;
+
     public AutoScrollingTextView(Context context) {
         super(context);
         init(null, 0);
@@ -63,7 +64,8 @@ public class AutoScrollingTextView extends TextView {
         setScroller(scroller);
     }
 
-    @Override    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         if (scroller.isFinished()) {
             scroll();
@@ -90,7 +92,8 @@ public class AutoScrollingTextView extends TextView {
         }
     }
 
-    @Override    protected void onDraw(Canvas canvas) {
+    @Override
+    protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (null == scroller)
             return;

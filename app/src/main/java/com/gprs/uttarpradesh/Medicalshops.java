@@ -1,9 +1,5 @@
 package com.gprs.uttarpradesh;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,10 +7,15 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,13 +31,15 @@ public class Medicalshops extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_medicalshops);
-        wview= findViewById(R.id.webv1);
+        wview = findViewById(R.id.webv1);
 
-        Intent intent=getIntent();
-        text=intent.getStringExtra("text");
+        Intent intent = getIntent();
+        text = intent.getStringExtra("text");
 
-        progressDialog=new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this);
 
         progressDialog.setMessage("Loading..."); // Setting Message
         progressDialog.setTitle("Please Wait !"); // Setting Title
@@ -45,7 +48,7 @@ public class Medicalshops extends AppCompatActivity {
         progressDialog.setCancelable(true);
         progressDialog.show();
 
-        WebSettings wsetting=wview.getSettings();
+        WebSettings wsetting = wview.getSettings();
         wsetting.setJavaScriptEnabled(true);
         wsetting.setAllowContentAccess(false);
         wsetting.setSupportZoom(true);
@@ -108,8 +111,6 @@ public class Medicalshops extends AppCompatActivity {
             }
 
 
-
-
         });
 
         final SharedPreferences pref;
@@ -118,12 +119,12 @@ public class Medicalshops extends AppCompatActivity {
         pref = getApplicationContext().getSharedPreferences("user", 0); // 0 - for private mode
         editor = pref.edit();
 
-        FirebaseDatabase.getInstance().getReference().child("Location").child(pref.getString("user","")).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("Location").child(pref.getString("user", "")).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                UserLocationHelper userLocationHelper=dataSnapshot.getValue(UserLocationHelper.class);
-                if(userLocationHelper!=null){
-                    String url="https://www.google.com/maps/search/"+text+"/@"+ userLocationHelper.getLat() +','+ userLocationHelper.getLon();
+                UserLocationHelper userLocationHelper = dataSnapshot.getValue(UserLocationHelper.class);
+                if (userLocationHelper != null) {
+                    String url = "https://www.google.com/maps/search/" + text + "/@" + userLocationHelper.getLat() + ',' + userLocationHelper.getLon();
                     wview.loadUrl(url);
                 }
 
@@ -136,12 +137,8 @@ public class Medicalshops extends AppCompatActivity {
         });
 
 
-
-
-
-
-
     }
+
     @Override
     public void onBackPressed() {
         finish();

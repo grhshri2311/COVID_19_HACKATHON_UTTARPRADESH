@@ -1,18 +1,11 @@
 package com.gprs.uttarpradesh;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityOptions;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -20,55 +13,46 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.net.Uri;
-import android.os.Build;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
-import android.widget.Toolbar;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
-import java.io.IOException;
-import java.text.ParseException;
+import java.io.InputStream;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-
-import static java.lang.Math.abs;
-import static java.lang.Math.log;
 
 public class logouthome extends AppCompatActivity {
 
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 111;
     private static final int REQUEST_INVITE = 10115;
-    RelativeLayout selfassess, dashmap, updates, case_report, helpline, donate, scan, medstore, epass, admission;
-    Toolbar toolbar;
+    RelativeLayout selfassess, updates, case_report, helpline, donate, medstore, epass, admission;
     TextView confirm, death;
     BroadcastReceiver br;
     private FusedLocationProviderClient fusedLocationClient;
@@ -79,8 +63,36 @@ public class logouthome extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_logouthome);
 
+        ImageView implink1, implink2, implink3, implink4, implink5, advice1, advice2, advice3, advice4, advice5, advice6;
+        implink1 = findViewById(R.id.implink1);
+        implink2 = findViewById(R.id.implink2);
+        implink3 = findViewById(R.id.implink3);
+        implink4 = findViewById(R.id.implink4);
+        implink5 = findViewById(R.id.implink5);
+
+        advice1 = findViewById(R.id.advice1);
+        advice2 = findViewById(R.id.advice2);
+        advice3 = findViewById(R.id.advice3);
+        advice4 = findViewById(R.id.advice4);
+        advice5 = findViewById(R.id.advice5);
+        advice6 = findViewById(R.id.advice6);
+
+
+        new logouthome.SetImage(advice1).execute("https://www.cuchd.in/covid-19/img/icon-1.png");
+        new logouthome.SetImage(advice2).execute("https://www.cuchd.in/covid-19/img/icon-2.png");
+        new logouthome.SetImage(advice3).execute("https://www.cuchd.in/covid-19/img/icon-3.png");
+        new logouthome.SetImage(advice4).execute("https://www.cuchd.in/covid-19/img/icon-4.png");
+        new logouthome.SetImage(advice5).execute("https://www.cuchd.in/covid-19/img/icon-5.png");
+        new logouthome.SetImage(advice6).execute("https://www.cuchd.in/covid-19/img/icon-6.png");
+        new logouthome.SetImage(implink1).execute("https://jan-sampark.nic.in/jansampark/images/campaign/2016/01-Jan/Minister/images/mygov-logo.png");
+        new logouthome.SetImage(implink2).execute("https://pbs.twimg.com/profile_images/876679325285662721/bhGcfaXx.jpg");
+        new logouthome.SetImage(implink3).execute("https://cdn.telanganatoday.com/wp-content/uploads/2020/05/Centre-marks-six-districts-.jpg");
+        new logouthome.SetImage(implink4).execute("https://i.pinimg.com/564x/65/30/a5/6530a5e862c58d78b12625850fe1b256.jpg");
+        new logouthome.SetImage(implink5).execute("https://tukuz.com/wp-content/uploads/2019/12/national-rural-health-mission-logo-vector.png");
 
         pref = getApplicationContext().getSharedPreferences("user", 0); // 0 - for private mode
         editor = pref.edit();
@@ -91,6 +103,80 @@ public class logouthome extends AppCompatActivity {
             startAlarm(true);
         }
 
+
+        findViewById(R.id.group1).setTag("open");
+        findViewById(R.id.group2).setTag("open");
+        findViewById(R.id.group3).setTag("open");
+        findViewById(R.id.group4).setTag("open");
+
+
+        findViewById(R.id.group1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (findViewById(R.id.group1).getTag().equals("open")) {
+                    findViewById(R.id.group1).setTag("close");
+                    findViewById(R.id.healthcare).setVisibility(View.VISIBLE);
+                    ImageView imageView = findViewById(R.id.healthmenu);
+                    imageView.setImageDrawable(getDrawable(R.drawable.ic_baseline_keyboard_arrow_down_24));
+                } else {
+                    findViewById(R.id.group1).setTag("open");
+                    findViewById(R.id.healthcare).setVisibility(View.GONE);
+                    ImageView imageView = findViewById(R.id.healthmenu);
+                    imageView.setImageDrawable(getDrawable(R.drawable.ic_baseline_keyboard_arrow_up_24));
+                }
+            }
+        });
+
+        findViewById(R.id.group2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (findViewById(R.id.group2).getTag().equals("open")) {
+                    findViewById(R.id.group2).setTag("close");
+                    findViewById(R.id.disastermanagement).setVisibility(View.VISIBLE);
+                    ImageView imageView = findViewById(R.id.disastermanagementmenu);
+                    imageView.setImageDrawable(getDrawable(R.drawable.ic_baseline_keyboard_arrow_down_24));
+                } else {
+                    findViewById(R.id.group2).setTag("open");
+                    findViewById(R.id.disastermanagement).setVisibility(View.GONE);
+                    ImageView imageView = findViewById(R.id.disastermanagementmenu);
+                    imageView.setImageDrawable(getDrawable(R.drawable.ic_baseline_keyboard_arrow_up_24));
+                }
+            }
+        });
+
+        findViewById(R.id.group3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (findViewById(R.id.group3).getTag().equals("open")) {
+                    findViewById(R.id.group3).setTag("close");
+                    findViewById(R.id.education).setVisibility(View.VISIBLE);
+                    ImageView imageView = findViewById(R.id.educationmenu);
+                    imageView.setImageDrawable(getDrawable(R.drawable.ic_baseline_keyboard_arrow_down_24));
+                } else {
+                    findViewById(R.id.group3).setTag("open");
+                    findViewById(R.id.education).setVisibility(View.GONE);
+                    ImageView imageView = findViewById(R.id.educationmenu);
+                    imageView.setImageDrawable(getDrawable(R.drawable.ic_baseline_keyboard_arrow_up_24));
+                }
+            }
+        });
+
+        findViewById(R.id.group4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (findViewById(R.id.group4).getTag().equals("open")) {
+                    findViewById(R.id.group4).setTag("close");
+                    findViewById(R.id.general).setVisibility(View.VISIBLE);
+                    ImageView imageView = findViewById(R.id.generalmenu);
+                    imageView.setImageDrawable(getDrawable(R.drawable.ic_baseline_keyboard_arrow_down_24));
+                } else {
+                    findViewById(R.id.group4).setTag("open");
+                    findViewById(R.id.general).setVisibility(View.GONE);
+                    ImageView imageView = findViewById(R.id.generalmenu);
+                    imageView.setImageDrawable(getDrawable(R.drawable.ic_baseline_keyboard_arrow_up_24));
+                }
+            }
+        });
 
         if (!pref.getString("user", "").equals("")) {
             startActivity(new Intent(logouthome.this, Login.class), ActivityOptions.makeSceneTransitionAnimation(logouthome.this).toBundle());
@@ -118,8 +204,6 @@ public class logouthome extends AppCompatActivity {
 
         donate = findViewById(R.id.donate);
         helpline = findViewById(R.id.helpline);
-        scan = findViewById(R.id.scan);
-        dashmap = findViewById(R.id.dashmap);
         epass = findViewById(R.id.epass);
 
         selfassess = findViewById(R.id.selfassess);
@@ -128,7 +212,7 @@ public class logouthome extends AppCompatActivity {
         updates = findViewById(R.id.updates);
         medstore = findViewById(R.id.medstore);
         admission = findViewById(R.id.admission);
-
+        case_report = findViewById(R.id.case_report);
 
         TextView scrolltextview = findViewById(R.id.scrollingtextview);
         scrolltextview.setSelected(true);
@@ -139,6 +223,50 @@ public class logouthome extends AppCompatActivity {
 
         case_report = findViewById(R.id.case_report);
         setToolBar();
+
+
+        findViewById(R.id.publicadvice).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(logouthome.this, stepstofollow.class);
+                startActivity(i, ActivityOptions.makeSceneTransitionAnimation(logouthome.this).toBundle());
+            }
+        });
+
+        findViewById(R.id.media).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(logouthome.this, Media.class);
+                startActivity(i, ActivityOptions.makeSceneTransitionAnimation(logouthome.this).toBundle());
+            }
+        });
+
+
+        findViewById(R.id.getdirection).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(logouthome.this, Labsfortestingandresults.class);
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(logouthome.this).toBundle());
+            }
+        });
+
+
+        findViewById(R.id.action).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(logouthome.this, pdfViewer.class);
+                intent.putExtra("text", "https://drive.google.com/file/d/1cEkR_bTmlz8se71Xtbtk1t4OlhLJYdPA/view?usp=sharing");
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(logouthome.this).toBundle());
+            }
+        });
+
+
+        findViewById(R.id.donatehome).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(logouthome.this, donate.class), ActivityOptions.makeSceneTransitionAnimation(logouthome.this).toBundle());
+            }
+        });
 
 
         ImageView i1, i2, i3, i4, i5;
@@ -190,35 +318,21 @@ public class logouthome extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.publiccare).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(logouthome.this, publichealthcare.class);
-                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(logouthome.this).toBundle());
-            }
-        });
-        findViewById(R.id.onlinecourse).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(logouthome.this, course.class);
-                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(logouthome.this).toBundle());
-            }
-        });
+
         ImageView shelter;
         LinearLayout faq, faq1;
-        shelter = findViewById(R.id.shelter);
         faq = findViewById(R.id.faq);
         faq1 = findViewById(R.id.faq1);
 
-
-        shelter.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.donatehome).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(logouthome.this, pdfViewer.class);
-                intent.putExtra("text", "https://drive.google.com/file/d/1mWap_8QEc3HUAiIpPM65K2rZiPjudMO1/view");
+                Intent intent = new Intent(logouthome.this, donate.class);
                 startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(logouthome.this).toBundle());
             }
         });
+
+
         faq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -240,47 +354,23 @@ public class logouthome extends AppCompatActivity {
         epass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse("http://164.100.68.164/upepass2/"));
-                    startActivity(i);
-                } catch (ActivityNotFoundException e) {
-                    Toast.makeText(logouthome.this, "You don't have browser installed", Toast.LENGTH_LONG).show();
-                }
+                startActivity(new Intent(logouthome.this, epass.class), ActivityOptions.makeSceneTransitionAnimation(logouthome.this).toBundle());
             }
         });
 
         admission.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Bottomsheetadmissionfragment().show(getSupportFragmentManager(),"Dialog");            }
+                new Bottomsheetadmissionfragment().show(getSupportFragmentManager(), "Dialog");
+            }
         });
 
         medstore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(logouthome.this, Medicalshops.class);
-                intent.putExtra("text", "Pharmacies");
+                intent.putExtra("text", "Hospitals");
                 startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(logouthome.this).toBundle());
-            }
-        });
-
-
-        scan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!pref.getString("status", "").equals("victim"))
-                    startActivity(new Intent(logouthome.this, victimalert.class), ActivityOptions.makeSceneTransitionAnimation(logouthome.this).toBundle());
-                else {
-                    Toast.makeText(logouthome.this, "You are found victim \nYou can't use this festure!", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-        dashmap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(logouthome.this, MapsActivity.class), ActivityOptions.makeSceneTransitionAnimation(logouthome.this).toBundle());
             }
         });
 
@@ -301,7 +391,7 @@ public class logouthome extends AppCompatActivity {
         selfassess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(logouthome.this, self_asses.class), ActivityOptions.makeSceneTransitionAnimation(logouthome.this).toBundle());
+                startActivity(new Intent(logouthome.this, SelfAssessment.class), ActivityOptions.makeSceneTransitionAnimation(logouthome.this).toBundle());
             }
         });
 
@@ -349,23 +439,7 @@ public class logouthome extends AppCompatActivity {
 
         }
         if (id == R.id.translate) {
-            SharedPreferences pref;
-            SharedPreferences.Editor editor;
-            pref = getApplicationContext().getSharedPreferences("language", 0); // 0 - for private mode
-            editor = pref.edit();
-            if (pref.getString("lang", "").equals("")) {
-                editor.putString("lang", "hi");
-                editor.apply();
-                setAppLocale("hi");
-            } else {
-                editor.putString("lang", "");
-                editor.commit();
-                setAppLocale("en");
-            }
-            finish();
-            overridePendingTransition(0, 0);
-            startActivity(getIntent());
-            overridePendingTransition(0, 0);
+            new Bottomsheetlanguagefragment().show(getSupportFragmentManager(), "Dialog");
         }
 
         if (id == R.id.share) {
@@ -410,27 +484,6 @@ public class logouthome extends AppCompatActivity {
                 doubleBackToExitPressedOnce = false;
             }
         }, 2000);
-    }
-
-    public void Exit1() {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(false);
-        builder.setMessage("Do you want to Exit?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finish();
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
     }
 
     void startAlarm(boolean set) {
@@ -499,65 +552,6 @@ public class logouthome extends AppCompatActivity {
 
     }
 
-    void location() {
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        fusedLocationClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
-            @Override
-            public void onComplete(@NonNull Task<Location> task) {
-                if (task.isSuccessful()) {
-                    if (task.getResult() != null) {
-                        Location location = task.getResult();
-
-                        Geocoder geocoder;
-                        List<Address> addresses;
-                        geocoder = new Geocoder(logouthome.this, Locale.getDefault());
-
-                        try {
-                            addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-
-
-                            String city = addresses.get(0).getLocality();
-                            String state = addresses.get(0).getAdminArea();
-
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                    } else {
-
-                        Toast.makeText(logouthome.this, "Please turn on GPS and accept location permission", Toast.LENGTH_LONG).show();
-                    }
-                } else {
-
-                    Toast.makeText(logouthome.this, "Please turn on GPS", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
-
-    private void setAppLocale(String localeCode){
-        Resources resources = getResources();
-        DisplayMetrics dm = resources.getDisplayMetrics();
-        Configuration config = resources.getConfiguration();
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR1){
-            config.setLocale(new Locale(localeCode.toLowerCase()));
-        } else {
-            config.locale = new Locale(localeCode.toLowerCase());
-        }
-        resources.updateConfiguration(config, dm);
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -567,10 +561,10 @@ public class logouthome extends AppCompatActivity {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(logouthome.this,"Permission granted",Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(logouthome.this,Home.class));
+                    Toast.makeText(logouthome.this, "Permission granted", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(logouthome.this, Home.class));
                 } else {
-                    Toast.makeText(logouthome.this,"Permission denied",Toast.LENGTH_LONG).show();
+                    Toast.makeText(logouthome.this, "Permission denied", Toast.LENGTH_LONG).show();
                     finish();
                 }
                 return;
@@ -583,52 +577,49 @@ public class logouthome extends AppCompatActivity {
 
 
     public void alarm(View view) {
-        startActivity(new Intent(this,Alarm.class));
+        startActivity(new Intent(this, Alarm.class));
     }
 
     public void firstresponder(View view) {
-        startActivity(new Intent(logouthome.this,firstresponder.class), ActivityOptions.makeSceneTransitionAnimation(logouthome.this).toBundle());
+        startActivity(new Intent(logouthome.this, firstresponder.class), ActivityOptions.makeSceneTransitionAnimation(logouthome.this).toBundle());
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        try{
+        try {
             unregisterReceiver(br);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
 
     public void chatbot(View view) {
-        startActivity(new Intent(logouthome.this,Chatbot.class), ActivityOptions.makeSceneTransitionAnimation(logouthome.this).toBundle());
+        startActivity(new Intent(logouthome.this, Chatbot.class), ActivityOptions.makeSceneTransitionAnimation(logouthome.this).toBundle());
     }
 
     public void whatsapp(View view) {
         try {
             whatsapp(this, "919013151515");
-        }
-        catch (IllegalStateException e){
-            Toast.makeText(this,"You have no whatsapp",Toast.LENGTH_LONG).show();
+        } catch (IllegalStateException e) {
+            Toast.makeText(this, "You have no whatsapp", Toast.LENGTH_LONG).show();
         }
     }
 
+
     public static void whatsapp(Activity activity, String phone) {
         String formattedNumber = (phone);
-        try{
-            Intent sendIntent =new Intent("android.intent.action.MAIN");
+        try {
+            Intent sendIntent = new Intent("android.intent.action.MAIN");
             sendIntent.setComponent(new ComponentName("com.whatsapp", "com.whatsapp.Conversation"));
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.setType("text/plain");
-            sendIntent.putExtra(Intent.EXTRA_TEXT,"Press 1 for latest updates");
-            sendIntent.putExtra("jid", formattedNumber +"@s.whatsapp.net");
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "Press 1 for latest updates");
+            sendIntent.putExtra("jid", formattedNumber + "@s.whatsapp.net");
             sendIntent.setPackage("com.whatsapp");
             activity.startActivity(sendIntent);
-        }
-        catch(Exception e)
-        {
-            Toast.makeText(activity,"You don't have Whatsapp"+ e.toString(),Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(activity, "You don't have Whatsapp" + e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -639,7 +630,7 @@ public class logouthome extends AppCompatActivity {
         final AlertDialog alert = builder.create();
 
 
-        LayoutInflater inflater=getLayoutInflater();
+        LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.activity_chatbotintro, null, true);
 
 
@@ -679,30 +670,41 @@ public class logouthome extends AppCompatActivity {
 
     }
 
-    public void assign(View view) {
-        startActivity(new Intent(logouthome.this,assign_work.class));
-
-    }
 
     public void labs(View view) {
-        startActivity(new Intent(logouthome.this,Labsfortestingandresults.class), ActivityOptions.makeSceneTransitionAnimation(logouthome.this).toBundle());
+        startActivity(new Intent(logouthome.this, Labsfortestingandresults.class), ActivityOptions.makeSceneTransitionAnimation(logouthome.this).toBundle());
     }
 
     public void msme(View view) {
-        startActivity(new Intent(logouthome.this,MSME.class), ActivityOptions.makeSceneTransitionAnimation(logouthome.this).toBundle());
+        startActivity(new Intent(logouthome.this, MSME.class), ActivityOptions.makeSceneTransitionAnimation(logouthome.this).toBundle());
 
     }
 
     public void hosnear(View view) {
-        Intent intent=new Intent(this,Medicalshops.class);
-        intent.putExtra("text","Hospitals");
-        startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        Intent intent = new Intent(this, Medicalshops.class);
+        intent.putExtra("text", "Hospitals");
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
     public void login(View view) {
-        startActivity(new Intent(logouthome.this,Login.class), ActivityOptions.makeSceneTransitionAnimation(logouthome.this).toBundle());
+        startActivity(new Intent(logouthome.this, Login.class), ActivityOptions.makeSceneTransitionAnimation(logouthome.this).toBundle());
         finish();
     }
+
+    public void onlinecourse(View view) {
+        startActivity(new Intent(logouthome.this, course.class), ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+    }
+
+    public void sectorworkers(View view) {
+        startActivity(new Intent(logouthome.this, unorganizedsectors.class), ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+
+    }
+
+    public void publiccare(View view) {
+        startActivity(new Intent(this, publichealthcare.class), ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+
+    }
+
 
     private void share() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -710,8 +712,7 @@ public class logouthome extends AppCompatActivity {
         builder.setTitle("Share");
 
 
-
-        LayoutInflater inflater=getLayoutInflater();
+        LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_share, null, true);
         view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         final String appPackageName = BuildConfig.APPLICATION_ID;
@@ -720,7 +721,7 @@ public class logouthome extends AppCompatActivity {
         String shareBodyText = "https://play.google.com/store/apps/details?id=" +
                 appPackageName;
 
-        TextView textView=view.findViewById(R.id.text_share);
+        TextView textView = view.findViewById(R.id.text_share);
         textView.setText(shareBodyText);
 
         builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
@@ -737,7 +738,32 @@ public class logouthome extends AppCompatActivity {
 
     }
 
-    public void sectorworkers(View view) {
-        startActivity(new Intent(logouthome.this,unorganizedsectors.class), ActivityOptions.makeSceneTransitionAnimation(logouthome.this).toBundle());
+
+    class SetImage extends AsyncTask<String, Void, Bitmap> {
+
+        ImageView imageView;
+
+        public SetImage(ImageView bmImage) {
+            this.imageView = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            imageView.setImageBitmap(result);
+
+        }
     }
+
 }

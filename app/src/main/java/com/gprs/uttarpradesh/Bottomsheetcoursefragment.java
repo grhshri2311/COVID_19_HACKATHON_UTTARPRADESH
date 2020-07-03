@@ -26,29 +26,28 @@ public class Bottomsheetcoursefragment extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        final View view= inflater.inflate(R.layout.coursedetails, container, false);
+        final View view = inflater.inflate(R.layout.coursedetails, container, false);
 
-        TextView namet=view.findViewById(R.id.name);
-        TextView inst=view.findViewById(R.id.ins);
-        TextView pricet=view.findViewById(R.id.price);
-        ImageView image=view.findViewById(R.id.image);
+        TextView namet = view.findViewById(R.id.name);
+        TextView inst = view.findViewById(R.id.ins);
+        TextView pricet = view.findViewById(R.id.price);
+        ImageView image = view.findViewById(R.id.image);
 
         new DownloadImageTask(image)
-                .execute((String)this.getArguments().get("image_480x270"));
-        namet.setText((String)this.getArguments().get("title"));
-        inst.setText((String)this.getArguments().get("ins1"));
-        pricet.setText((String)this.getArguments().get("s"));
+                .execute((String) this.getArguments().get("image_480x270"));
+        namet.setText((String) this.getArguments().get("title"));
+        inst.setText((String) this.getArguments().get("ins1"));
+        pricet.setText((String) this.getArguments().get("s"));
 
 
-
-        Button register=view.findViewById(R.id.register);
+        Button register = view.findViewById(R.id.register);
 
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(),pdfViewer.class);
-                intent.putExtra("text",(String)Bottomsheetcoursefragment.this.getArguments().get("url"));
+                Intent intent = new Intent(getContext(), pdfViewer.class);
+                intent.putExtra("text", (String) Bottomsheetcoursefragment.this.getArguments().get("url"));
                 getContext().startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
             }
         });

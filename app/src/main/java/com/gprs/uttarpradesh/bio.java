@@ -13,6 +13,7 @@ import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -50,9 +51,12 @@ public class bio extends AppCompatActivity {
     private FingerprintManager.CryptoObject cryptoObject;
     private FingerprintManager fingerprintManager;
     private KeyguardManager keyguardManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_bio);
 
         SharedPreferences pref;
@@ -60,19 +64,19 @@ public class bio extends AppCompatActivity {
 
         pref = getApplicationContext().getSharedPreferences("user", 0); // 0 - for private mode
         editor = pref.edit();
-        if(pref.getString("user","").equals("")){
-            startActivity(new Intent(bio.this,Login.class), ActivityOptions.makeSceneTransitionAnimation(bio.this).toBundle());
+        if (pref.getString("user", "").equals("")) {
+            startActivity(new Intent(bio.this, Login.class), ActivityOptions.makeSceneTransitionAnimation(bio.this).toBundle());
             finish();
         }
 
-        if(!PreferenceManager.getDefaultSharedPreferences(this).getBoolean("finger",false)){
-            startActivity(new Intent(bio.this,Home.class), ActivityOptions.makeSceneTransitionAnimation(bio.this).toBundle());
+        if (!PreferenceManager.getDefaultSharedPreferences(this).getBoolean("finger", false)) {
+            startActivity(new Intent(bio.this, Home.class), ActivityOptions.makeSceneTransitionAnimation(bio.this).toBundle());
             finish();
         }
 
-        pass=findViewById(R.id.pass);
-        verify=findViewById(R.id.verify);
-        finger=findViewById(R.id.finger);
+        pass = findViewById(R.id.pass);
+        verify = findViewById(R.id.verify);
+        finger = findViewById(R.id.finger);
 
         pass.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +89,7 @@ public class bio extends AppCompatActivity {
 
                 editor.clear();
                 editor.apply();
-                startActivity(new Intent(bio.this,Login.class), ActivityOptions.makeSceneTransitionAnimation(bio.this).toBundle());
+                startActivity(new Intent(bio.this, Login.class), ActivityOptions.makeSceneTransitionAnimation(bio.this).toBundle());
                 finish();
             }
         });
@@ -135,7 +139,7 @@ public class bio extends AppCompatActivity {
 
                     // Here, I’m referencing the FingerprintHandler class that we’ll create in the next section. This class will be responsible
                     // for starting the authentication process (via the startAuth method) and processing the authentication process events//
-                    FingerprintHandler helper = new FingerprintHandler(this,pass,verify,finger);
+                    FingerprintHandler helper = new FingerprintHandler(this, pass, verify, finger);
                     helper.startAuth(fingerprintManager, cryptoObject);
                 }
             }

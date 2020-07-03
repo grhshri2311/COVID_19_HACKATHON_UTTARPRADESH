@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:scrollbars="none"
     tools:context=".unorganizedsectors">
 
     <LinearLayout
@@ -46,6 +48,7 @@
                     android:text="Jansunwai - Samadhan Portal &amp; Mobile Application:"
                     android:textColor="#000"
                     android:textSize="20sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -53,7 +56,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:text="प्रवासी पंजीकरण: उत्तर प्रदेश से अन्य राज्य जाने हेतु क्लिक करें प्रवासी पंजीकरण: अन्य राज्यों से उत्तर प्रदेश आने हेतु क्लिक करें आवेदन की स्थिति / डाउनलोड स्वीकृत ई-पास"
-                    android:layout_toLeftOf="@id/logo"/>
+                    android:layout_toLeftOf="@id/logo" />
 
             </RelativeLayout>
 
@@ -66,6 +69,7 @@
                 android:text="Go to website >"
                 android:textColor="#2196F3" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -102,6 +106,7 @@
                     android:text="Special Trains:"
                     android:textColor="#000"
                     android:textSize="20sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -111,7 +116,7 @@
                     android:layout_marginLeft="10dp"
                     android:text="Relief for migrants! Indian Railways’ Shramik Special trains to run with full capacity; have up to 3 stoppages"
                     android:gravity="left"
-                    android:layout_toLeftOf="@id/train"/>
+                    android:layout_toLeftOf="@id/train" />
 
             </RelativeLayout>
 
@@ -131,6 +136,47 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:contentDescription="TODO" />
+
+        <Button
+            android:id="@+id/dohelp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_margin="20dp"
+            android:background="@drawable/centre_button"
+            android:layout_marginBottom="10dp"
+            android:text="@string/do_160_160_help"
+            android:textColor="@color/whiteTextColor" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#B1A6A6"
+            android:layout_marginBottom="10dp" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:background="#fff"
+            android:layout_height="320dp" />
+
+        <View
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#B1A6A6" />
+
+        <Button
+            android:id="@+id/btnNeedHelp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/centre_button"
+            android:text="@string/add_160_160_help_160_160_request"
+            android:textColor="@color/whiteTextColor" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -148,7 +194,7 @@
                 android:textSize="20sp"
                 android:layout_marginLeft="10dp"
                 android:background="@color/white"
-                android:padding="10dp"/>
+                android:padding="10dp" />
 
             <Button
                 android:id="@+id/aboutUs"
@@ -176,7 +222,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
-                android:id="@+id/recyclerView"/>
+                android:id="@+id/recyclerView" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

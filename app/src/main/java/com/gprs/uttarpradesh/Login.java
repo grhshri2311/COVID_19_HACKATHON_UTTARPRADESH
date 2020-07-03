@@ -1,29 +1,24 @@
 package com.gprs.uttarpradesh;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.DisplayMetrics;
 import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
@@ -34,23 +29,23 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
-import java.util.Locale;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
 public class Login extends AppCompatActivity {
-    Animation top,bottom;
+    Animation top, bottom;
 
-    TextView register,toptext,forgot,textView7;
+    TextView register, toptext, forgot, textView7;
     ImageView imageView5;
-    TextInputLayout inputEmail,inputPassword;
+    TextInputLayout inputEmail, inputPassword;
     Button login;
     private ProgressDialog progressDialog;
-    ImageButton language;
+    ImageView language;
 
     private SharedPreferences pref;
     SharedPreferences.Editor editor;
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -58,35 +53,36 @@ public class Login extends AppCompatActivity {
 
         pref = getApplicationContext().getSharedPreferences("user", 0); // 0 - for private mode
 
-        if(!pref.getString("user","").equals("")){
-            startActivity(new Intent(Login.this,bio.class));
+        if (!pref.getString("user", "").equals("")) {
+            startActivity(new Intent(Login.this, bio.class));
             finish();
         }
 
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
 
-        register=findViewById(R.id.gotoRegister);
-        toptext=findViewById(R.id.topText);
-        imageView5=findViewById(R.id.imageView5);
-        inputEmail=findViewById(R.id.inputEmail);
-        inputPassword=findViewById(R.id.inputPassword);
-        login=findViewById(R.id.btnLogin);
-        forgot=findViewById(R.id.forgotPassword);
-        textView7=findViewById(R.id.textView7);
-        language=findViewById(R.id.language);
-        progressDialog=new ProgressDialog(Login.this);
+        register = findViewById(R.id.gotoRegister);
+        toptext = findViewById(R.id.topText);
+        imageView5 = findViewById(R.id.imageView5);
+        inputEmail = findViewById(R.id.inputEmail);
+        inputPassword = findViewById(R.id.inputPassword);
+        login = findViewById(R.id.btnLogin);
+        forgot = findViewById(R.id.forgotPassword);
+        textView7 = findViewById(R.id.textView7);
+        language = findViewById(R.id.language);
+        progressDialog = new ProgressDialog(Login.this);
         progressDialog.setTitle("Logging In");
         progressDialog.setMessage("connecting...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
 
-        top= AnimationUtils.loadAnimation(this,R.anim.top_anim);
-        bottom= AnimationUtils.loadAnimation(this,R.anim.bottom_anim);
+        top = AnimationUtils.loadAnimation(this, R.anim.top_anim);
+        bottom = AnimationUtils.loadAnimation(this, R.anim.bottom_anim);
 
         toptext.setAnimation(top);
         imageView5.setAnimation(top);
@@ -101,32 +97,15 @@ public class Login extends AppCompatActivity {
         language.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences pref;
-                SharedPreferences.Editor editor;
-                pref = getApplicationContext().getSharedPreferences("language", 0); // 0 - for private mode
-                editor = pref.edit();
-                if (pref.getString("lang", "").equals("")) {
-                    editor.putString("lang", "hi");
-                    editor.apply();
-                    setAppLocale("hi");
-                } else {
-                    editor.putString("lang", "");
-                    editor.commit();
-                    setAppLocale("en");
-                }
-                finish();
-                overridePendingTransition(0, 0);
-                startActivity(getIntent());
-                overridePendingTransition(0, 0);
+                new Bottomsheetlanguagefragment().show(getSupportFragmentManager(), "Dialog");
             }
         });
-
 
 
         forgot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Login.this,Forgotpassword.class));
+                startActivity(new Intent(Login.this, Forgotpassword.class));
                 finish();
             }
         });
@@ -134,7 +113,7 @@ public class Login extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validate(inputEmail,inputPassword)){
+                if (validate(inputEmail, inputPassword)) {
                     progressDialog.show();
 
 
@@ -149,20 +128,19 @@ public class Login extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(Login.this,Register.class);
-                Pair[]pairs=new Pair[6];
-                pairs[0]=new Pair<View, String>(toptext,"text1");
-                pairs[1]=new Pair<View, String>(imageView5,"image");
-                pairs[2]=new Pair<View, String>(inputEmail,"phone");
-                pairs[3]=new Pair<View, String>(inputPassword,"password");
-                pairs[4]=new Pair<View, String>(login,"go");
-                pairs[5]=new Pair<View, String>(register,"switch");
+                Intent intent = new Intent(Login.this, Register.class);
+                Pair[] pairs = new Pair[6];
+                pairs[0] = new Pair<View, String>(toptext, "text1");
+                pairs[1] = new Pair<View, String>(imageView5, "image");
+                pairs[2] = new Pair<View, String>(inputEmail, "phone");
+                pairs[3] = new Pair<View, String>(inputPassword, "password");
+                pairs[4] = new Pair<View, String>(login, "go");
+                pairs[5] = new Pair<View, String>(register, "switch");
 
                 //wrap the call in API level 21 or higher
-                if(android.os.Build.VERSION.SDK_INT>=android.os.Build.VERSION_CODES.LOLLIPOP)
-                {
-                    ActivityOptions options=ActivityOptions.makeSceneTransitionAnimation(Login.this,pairs);
-                    startActivity(intent,options.toBundle());
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Login.this, pairs);
+                    startActivity(intent, options.toBundle());
                 }
                 finish();
             }
@@ -171,26 +149,26 @@ public class Login extends AppCompatActivity {
     }
 
     private boolean validate(TextInputLayout mobile, TextInputLayout password) {
-        if(mobile.getEditText().getText().toString().isEmpty()) {
-            mobile.setError("\nMobile cannot be empty\n");return false;
-        }
-        else{
+        if (mobile.getEditText().getText().toString().isEmpty()) {
+            mobile.setError("\nMobile cannot be empty\n");
+            return false;
+        } else {
             mobile.setError("");
             mobile.setErrorEnabled(false);
         }
-        if(password.getEditText().getText().toString().isEmpty()) {
-            password.setError("\nPassword cannot be empty\n");return false;
-        }
-        else{
+        if (password.getEditText().getText().toString().isEmpty()) {
+            password.setError("\nPassword cannot be empty\n");
+            return false;
+        } else {
             password.setError("");
             password.setErrorEnabled(false);
         }
         return true;
     }
 
-    void checkUser(final String phone1, final String pass){
-        final FirebaseDatabase database=FirebaseDatabase.getInstance();
-        final DatabaseReference reference=database.getReference("Users").child(phone1);
+    void checkUser(final String phone1, final String pass) {
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference reference = database.getReference("Users").child(phone1);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -199,20 +177,19 @@ public class Login extends AppCompatActivity {
                 UserRegistrationHelper helper = dataSnapshot.getValue(UserRegistrationHelper.class);
                 if (helper != null) {
                     try {
-                        if(helper.getPass().equals(encrypt(pass))){
+                        if (helper.getPass().equals(encrypt(pass))) {
                             SharedPreferences pref;
                             SharedPreferences.Editor editor;
 
                             pref = getApplicationContext().getSharedPreferences("user", 0); // 0 - for private mode
                             editor = pref.edit();
 
-                            editor.putString("user",phone1);
+                            editor.putString("user", phone1);
                             editor.apply();
 
-                            startActivity(new Intent(Login.this,Home.class),ActivityOptions.makeSceneTransitionAnimation(Login.this).toBundle());
+                            startActivity(new Intent(Login.this, Home.class), ActivityOptions.makeSceneTransitionAnimation(Login.this).toBundle());
                             finish();
-                        }
-                        else {
+                        } else {
                             progressDialog.hide();
                             inputPassword.setError("Invalid Password");
                         }
@@ -221,34 +198,21 @@ public class Login extends AppCompatActivity {
                     }
 
 
-                }
-                else {
+                } else {
                     progressDialog.hide();
                     inputEmail.setError("Mobile number doesn't exists");
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError error) {
                 progressDialog.hide();
-                Toast.makeText(Login.this,error.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(Login.this, error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
 
-
-
-    private void setAppLocale(String localeCode){
-        Resources resources = getResources();
-        DisplayMetrics dm = resources.getDisplayMetrics();
-        Configuration config = resources.getConfiguration();
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR1){
-            config.setLocale(new Locale(localeCode.toLowerCase()));
-        } else {
-            config.locale = new Locale(localeCode.toLowerCase());
-        }
-        resources.updateConfiguration(config, dm);
-    }
     @Override
     public void onBackPressed() {
         Exit1();
@@ -278,19 +242,18 @@ public class Login extends AppCompatActivity {
     private static final String ALGORITHM = "AES";
     private static final String KEY = "1Hbfh667adfDEJ78";
 
-    public static String encrypt(String value) throws Exception
-    {
+    public static String encrypt(String value) throws Exception {
         Key key = generateKey();
         Cipher cipher = Cipher.getInstance(ALGORITHM);
         cipher.init(Cipher.ENCRYPT_MODE, key);
-        byte [] encryptedByteValue = cipher.doFinal(value.getBytes(StandardCharsets.UTF_8));
+        byte[] encryptedByteValue = cipher.doFinal(value.getBytes(StandardCharsets.UTF_8));
         String encryptedValue64 = Base64.encodeToString(encryptedByteValue, Base64.DEFAULT);
         return encryptedValue64;
 
     }
-    private static Key generateKey() throws Exception
-    {
-        Key key = new SecretKeySpec(KEY.getBytes(),ALGORITHM);
+
+    private static Key generateKey() throws Exception {
+        Key key = new SecretKeySpec(KEY.getBytes(), ALGORITHM);
         return key;
     }
 

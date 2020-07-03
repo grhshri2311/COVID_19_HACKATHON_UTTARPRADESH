@@ -11,7 +11,7 @@ public class CustomInfoWindow implements GoogleMap.InfoWindowAdapter {
 
     private Activity context;
 
-    public CustomInfoWindow(Activity context){
+    public CustomInfoWindow(Activity context) {
         this.context = context;
     }
 

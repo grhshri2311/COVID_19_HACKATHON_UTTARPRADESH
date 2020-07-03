@@ -7,22 +7,22 @@
         android:title="@string/assistant"
         android:id="@+id/chatbot"
         app:showAsAction="always"
-        android:icon="@drawable/chatbot"/>
+        android:icon="@drawable/chatboticon1"
+        android:iconTint="#ffffff" />
 
     <item
         android:title="@string/translate"
         android:id="@+id/translate"
         app:showAsAction="always"
-        android:icon="@drawable/hindismall"/>
+        android:iconTint="#FFFFFF"
+        android:icon="@drawable/ic_baseline_translate_24" />
 
     <item
         android:title="@string/share"
         android:id="@+id/share"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_share_black_24dp"
-        />
-
-
+        android:iconTint="#FFFFFF"
+        android:icon="@drawable/ic_share_black_24dp" />
 
 
 </menu>

@@ -1,7 +1,6 @@
 package com.gprs.uttarpradesh;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,20 +10,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -40,34 +33,35 @@ import java.util.Iterator;
 
 public class CasesReportFragment extends Fragment {
 
-    Spinner spinner,spinner2;
+    Spinner spinner, spinner2;
     Button button;
     private RequestQueue queue;
-    ArrayList<String> arrayList,district;
-    ArrayList<String> arrayList1,district1;
+    ArrayList<String> arrayList, district;
+    ArrayList<String> arrayList1, district1;
     ArrayList<String> active;
-    ArrayList<String> confirm,cconfirm;
-    ArrayList<String> death,cdeath;
-    ArrayList<String> recover,crecover;
+    ArrayList<String> confirm, cconfirm;
+    ArrayList<String> death, cdeath;
+    ArrayList<String> recover, crecover;
     ArrayList<String> active1;
     ArrayList<String> confirm1;
     ArrayList<String> death1;
     ArrayList<String> recover1;
-    ArrayAdapter<String> dataAdapter,dataAdapter2;
-    String state=null;
+    ArrayAdapter<String> dataAdapter, dataAdapter2;
+    String state = null;
     ArrayList<JSONObject> object;
 
     View root;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.fragment_casesreport, container, false);
 
 
-        button=root.findViewById(R.id.button2);
+        button = root.findViewById(R.id.button2);
         queue = Volley.newRequestQueue(root.getContext());
         arrayList = new ArrayList();
-        district=new ArrayList<>();
+        district = new ArrayList<>();
         arrayList1 = new ArrayList();
         active = new ArrayList();
         confirm = new ArrayList();
@@ -79,9 +73,9 @@ public class CasesReportFragment extends Fragment {
         active1 = new ArrayList();
         confirm1 = new ArrayList();
         recover1 = new ArrayList();
-        district1=new ArrayList<>();
+        district1 = new ArrayList<>();
         death1 = new ArrayList();
-        object=new ArrayList<>();
+        object = new ArrayList<>();
 
 
         spinner = root.findViewById(R.id.state_select);
@@ -101,12 +95,12 @@ public class CasesReportFragment extends Fragment {
         spinner.setAdapter(dataAdapter);
         spinner.setGravity(11);
 
-        int initialposition=spinner.getSelectedItemPosition();
+        int initialposition = spinner.getSelectedItemPosition();
         spinner.setSelection(initialposition, false);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position>0) {
+                if (position > 0) {
                     for (int i = 0; i < arrayList1.size(); i++) {
                         if (arrayList1.get(i).equals(parent.getItemAtPosition(position))) {
                             state = arrayList1.get(i);
@@ -122,9 +116,8 @@ public class CasesReportFragment extends Fragment {
                             break;
                         }
                     }
-                }
-                else {
-                    state=null;
+                } else {
+                    state = null;
                 }
             }
 
@@ -141,7 +134,7 @@ public class CasesReportFragment extends Fragment {
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position>0) {
+                if (position > 0) {
                     for (int i = 0; i < district1.size(); i++) {
                         if (district1.get(i).equals(parent.getItemAtPosition(position))) {
                             set1(i);
@@ -200,14 +193,14 @@ public class CasesReportFragment extends Fragment {
         textView1.setText(confirm.get(i));
         textView2.setText(death.get(i));
         textView3.setText(recover.get(i));
-        textView4.setText('('+cconfirm.get(i)+')');
-        textView5.setText('('+cdeath.get(i)+')');
-        textView6.setText('('+crecover.get(i)+')');
+        textView4.setText('(' + cconfirm.get(i) + ')');
+        textView5.setText('(' + cdeath.get(i) + ')');
+        textView6.setText('(' + crecover.get(i) + ')');
 
     }
 
     public void visualize(View view) {
-        startActivity(new Intent(root.getContext(),visualize.class));
+        startActivity(new Intent(root.getContext(), visualize.class));
     }
 
     class RetrieveFeedTask extends AsyncTask<Void, Void, String> {
@@ -236,7 +229,7 @@ public class CasesReportFragment extends Fragment {
                     bufferedReader.close();
                     return stringBuilder.toString();
                 } finally {
-                    if (urlConnection!=null)
+                    if (urlConnection != null)
                         urlConnection.disconnect();
                 }
             } catch (Exception e) {
@@ -249,12 +242,11 @@ public class CasesReportFragment extends Fragment {
         protected void onPostExecute(String response) {
 
 
-
             try {
                 JSONArray jsonArray = (JSONArray) new JSONTokener(response).nextValue();
 
-                for(int a=0;a<jsonArray.length();a++){
-                    JSONObject object=jsonArray.getJSONObject(a);
+                for (int a = 0; a < jsonArray.length(); a++) {
+                    JSONObject object = jsonArray.getJSONObject(a);
                     arrayList.add(object.optString("state"));
                     arrayList1.add(object.optString("state"));
                     active.add(object.optString("active"));
@@ -319,17 +311,12 @@ public class CasesReportFragment extends Fragment {
         protected void onPostExecute(String response) {
 
 
-
-
             try {
-                if(state!=null) {
-
-
-
+                if (state != null) {
 
 
                     JSONObject object1 = (JSONObject) new JSONTokener(response).nextValue();
-                    object1=object1.getJSONObject(state).getJSONObject("districtData");
+                    object1 = object1.getJSONObject(state).getJSONObject("districtData");
 
                     Iterator<String> keys = object1.keys();
 

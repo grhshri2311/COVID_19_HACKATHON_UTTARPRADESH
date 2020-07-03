@@ -3,20 +3,16 @@ package com.gprs.uttarpradesh;
 
 import android.Manifest;
 import android.app.ActivityOptions;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.budiyev.android.codescanner.CodeScanner;
@@ -36,19 +32,21 @@ import org.json.JSONObject;
 public class Scanner extends AppCompatActivity {
     CodeScanner codeScanner;
     CodeScannerView scannView;
-    String name,title,role,phone,place;
+    String name, title, role, phone, place;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_scanner);
         scannView = findViewById(R.id.scannerView);
-        codeScanner = new CodeScanner(this,scannView);
+        codeScanner = new CodeScanner(this, scannView);
 
         findViewById(R.id.generate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Scanner.this,QRcode.class), ActivityOptions.makeSceneTransitionAnimation(Scanner.this).toBundle());
+                startActivity(new Intent(Scanner.this, QRcode.class), ActivityOptions.makeSceneTransitionAnimation(Scanner.this).toBundle());
                 finish();
             }
         });
@@ -60,15 +58,15 @@ public class Scanner extends AppCompatActivity {
                     @Override
                     public void run() {
                         ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
-                        toneGen1.startTone(ToneGenerator.TONE_CDMA_CONFIRM,150);
+                        toneGen1.startTone(ToneGenerator.TONE_CDMA_CONFIRM, 150);
 
                         try {
                             JSONObject object = new JSONObject(result.getText());
-                            title=object.optString("status");
-                            name=object.optString("name");
-                            role="Role : "+object.optString("role");
-                            phone="Phone : "+object.optString("phone");
-                            place="Place : "+object.optString("place");
+                            title = object.optString("status");
+                            name = object.optString("name");
+                            role = "Role : " + object.optString("role");
+                            phone = "Phone : " + object.optString("phone");
+                            place = "Place : " + object.optString("place");
                             show();
                             new Handler().postDelayed(new Runnable() {
                                 @Override
@@ -76,8 +74,7 @@ public class Scanner extends AppCompatActivity {
                                     codeScanner.startPreview();
                                 }
                             }, 3000);
-                        }
-                        catch (Exception e){
+                        } catch (Exception e) {
                             findViewById(R.id.rellayout).setVisibility(View.VISIBLE);
                             new Handler().postDelayed(new Runnable() {
                                 @Override
@@ -132,16 +129,16 @@ public class Scanner extends AppCompatActivity {
     }
 
     private void show() {
-        Bundle bundle=new Bundle();
-        bundle.putString("name",name);
-        bundle.putString("phone",phone);
-        bundle.putString("place",place);
-        bundle.putString("role",role);
-        bundle.putString("title",title);
+        Bundle bundle = new Bundle();
+        bundle.putString("name", name);
+        bundle.putString("phone", phone);
+        bundle.putString("place", place);
+        bundle.putString("role", role);
+        bundle.putString("title", title);
 
-        BottomSheetDialogFragment f=new BottomsheetQRfragment();
+        BottomSheetDialogFragment f = new BottomsheetQRfragment();
         f.setArguments(bundle);
-        f.show(getSupportFragmentManager(),"Dialog");
+        f.show(getSupportFragmentManager(), "Dialog");
     }
 
 

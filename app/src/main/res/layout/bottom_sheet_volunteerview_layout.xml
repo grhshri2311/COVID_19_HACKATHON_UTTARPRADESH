@@ -11,7 +11,6 @@
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -96,8 +95,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:drawableLeft="@drawable/ic_email_black_24dp"
-        android:drawablePadding="16dp"
-        />
+        android:drawablePadding="16dp" />
 
     <TextView
         android:id="@+id/mapphone"
@@ -105,8 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:drawableLeft="@drawable/ic_phone_in_talk_black_24dp"
-        android:drawablePadding="16dp"
-        />
+        android:drawablePadding="16dp" />
 
     <TextView
         android:id="@+id/maprole"
@@ -114,8 +111,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:drawableLeft="@drawable/ic_assignment_ind_black_24dp"
-        android:drawablePadding="16dp"
-        />
+        android:drawablePadding="16dp" />
 
     <Button
         android:id="@+id/select"

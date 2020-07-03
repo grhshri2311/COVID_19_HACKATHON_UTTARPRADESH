@@ -17,31 +17,29 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class Bottomsheetadmissionfragment extends BottomSheetDialogFragment {
 
-    TextView hos,test,ord;
+    TextView hos, test, ord;
     String urlgo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        final View view= inflater.inflate(R.layout.activity_hospital, container, false);
+        final View view = inflater.inflate(R.layout.activity_hospital, container, false);
 
 
-
-        hos=view.findViewById(R.id.hos);
-        test=view.findViewById(R.id.test);
-        ord=view.findViewById(R.id.ord);
+        hos = view.findViewById(R.id.hos);
+        test = view.findViewById(R.id.test);
+        ord = view.findViewById(R.id.ord);
 
         hos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                urlgo="http://www.aarogyasetumitr.in/";
+                urlgo = "https://ors.gov.in/copp/welcome.jsp?NICSecurityORS=KVJF-IIQJ-X44U-BM3H-SPSG-SF4I-YIQL-DIRP";
                 try {
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setData(Uri.parse(urlgo));
                     startActivity(i);
-                }
-                catch (ActivityNotFoundException e){
-                    Toast.makeText(getActivity(),"You don't have browser installed",Toast.LENGTH_LONG).show();
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getActivity(), "You don't have browser installed", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -49,14 +47,13 @@ public class Bottomsheetadmissionfragment extends BottomSheetDialogFragment {
         test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                urlgo="http://www.aarogyasetumitr.in/#labTest";
+                urlgo = "https://ors.gov.in/copp/welcome.jsp?NICSecurityORS=KVJF-IIQJ-X44U-BM3H-SPSG-SF4I-YIQL-DIRP";
                 try {
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setData(Uri.parse(urlgo));
                     startActivity(i);
-                }
-                catch (ActivityNotFoundException e){
-                    Toast.makeText(getActivity(),"You don't have browser installed",Toast.LENGTH_LONG).show();
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getActivity(), "You don't have browser installed", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -64,14 +61,13 @@ public class Bottomsheetadmissionfragment extends BottomSheetDialogFragment {
         ord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                urlgo="http://www.aarogyasetumitr.in/#onlnMed";
+                urlgo = "https://ors.gov.in/copp/welcome.jsp?NICSecurityORS=KVJF-IIQJ-X44U-BM3H-SPSG-SF4I-YIQL-DIRP";
                 try {
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setData(Uri.parse(urlgo));
                     startActivity(i);
-                }
-                catch (ActivityNotFoundException e){
-                    Toast.makeText(getActivity(),"You don't have browser installed",Toast.LENGTH_LONG).show();
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getActivity(), "You don't have browser installed", Toast.LENGTH_LONG).show();
                 }
             }
         });

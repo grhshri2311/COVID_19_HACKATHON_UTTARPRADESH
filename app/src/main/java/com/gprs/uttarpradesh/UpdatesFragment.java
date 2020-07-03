@@ -1,7 +1,6 @@
 package com.gprs.uttarpradesh;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,8 +33,9 @@ public class UpdatesFragment extends Fragment {
     Dialog dialog;
     final String API_KEY = "81e919346ed94b8491dc88809d40d4eb";
     Adapter adapter;
-    List<Articles>  articles = new ArrayList<>();
+    List<Articles> articles = new ArrayList<>();
     View root;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -55,40 +55,30 @@ public class UpdatesFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                retrieveJson("",country,API_KEY);
+                retrieveJson("", country, API_KEY);
             }
         });
-        retrieveJson("covid uttar pradesh adityanath india",country,API_KEY);
-
-
-        btnAboutUs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(root.getContext(),website.class));            }
-        });
-
-
-
+        retrieveJson("covid uttar pradesh adityanath india", country, API_KEY);
 
 
         return root;
     }
 
 
-    public void retrieveJson(String query ,String country, String apiKey){
+    public void retrieveJson(String query, String country, String apiKey) {
 
 
         swipeRefreshLayout.setRefreshing(true);
-        Call<Headlines> call= ApiClient.getInstance().getApi().getSpecificData(query,apiKey);
+        Call<Headlines> call = ApiClient.getInstance().getApi().getSpecificData(query, apiKey);
 
         call.enqueue(new Callback<Headlines>() {
             @Override
             public void onResponse(Call<Headlines> call, Response<Headlines> response) {
-                if (response.isSuccessful() && response.body().getArticles() != null){
+                if (response.isSuccessful() && response.body().getArticles() != null) {
                     swipeRefreshLayout.setRefreshing(false);
                     articles.clear();
                     articles = response.body().getArticles();
-                    adapter = new Adapter(root.getContext(),articles);
+                    adapter = new Adapter(root.getContext(), articles);
                     recyclerView.setAdapter(adapter);
                 }
             }
@@ -101,7 +91,7 @@ public class UpdatesFragment extends Fragment {
         });
     }
 
-    public String getCountry(){
+    public String getCountry() {
         Locale locale = Locale.getDefault();
         String country = locale.getCountry();
         return country.toLowerCase();

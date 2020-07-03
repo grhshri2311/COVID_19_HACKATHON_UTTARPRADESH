@@ -1,17 +1,15 @@
 package com.gprs.uttarpradesh;
 
 
-
-
 public class UserRegistrationHelper {
 
     String fname;
     String email;
-    double lat,lon;
+    double lat, lon;
     String phone;
     String role;
     String pass;
-
+    Boolean verify;
 
 
     public UserRegistrationHelper() {
@@ -20,11 +18,20 @@ public class UserRegistrationHelper {
     public UserRegistrationHelper(String fname, String email, double lat, double lon, String phone, String role, String pass) {
         this.fname = fname;
         this.email = email;
-        this.lat=lat;
-        this.lon=lon;
+        this.lat = lat;
+        this.lon = lon;
         this.phone = phone;
         this.role = role;
-        this.pass=pass;
+        this.pass = pass;
+        verify = false;
+    }
+
+    public Boolean getVerify() {
+        return verify;
+    }
+
+    public void setVerify(Boolean verify) {
+        this.verify = verify;
     }
 
     public String getPass() {

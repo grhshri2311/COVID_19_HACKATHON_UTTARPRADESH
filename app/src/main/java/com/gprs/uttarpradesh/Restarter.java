@@ -14,29 +14,27 @@ import java.util.Calendar;
 
 public class Restarter extends BroadcastReceiver {
 
-Context context;
+    Context context;
+
     @Override
     public void onReceive(final Context context, Intent intent) {
 
-        this.context=context;
-       startHelpNeed(true,3);
+        this.context = context;
+        startHelpNeed(true, 3);
         startNotification();
-       startYourLoction();
-        String action=intent.getAction();
+        startYourLoction();
+        String action = intent.getAction();
 
-        switch (action){
-            case "VictimAlert":if (!isMyServiceRunning(VictimAlertForegroundNotification.class)) {
-                                 startService(VictimAlertForegroundNotification.class);
-                                 break;
-            }
+        switch (action) {
+            case "VictimAlert":
+                if (!isMyServiceRunning(VictimAlertForegroundNotification.class)) {
+                    startService(VictimAlertForegroundNotification.class);
+                    break;
+                }
         }
-              if(!isMyServiceRunning(AlarmForegroundNotification.class)) {
-                    startService(AlarmForegroundNotification.class);
-                    }
-
-
-
-
+        if (!isMyServiceRunning(AlarmForegroundNotification.class)) {
+            startService(AlarmForegroundNotification.class);
+        }
 
 
     }
@@ -57,8 +55,7 @@ Context context;
         return false;
     }
 
-    void startHelpNeed ( boolean set, int sec){
-
+    void startHelpNeed(boolean set, int sec) {
 
 
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -85,8 +82,8 @@ Context context;
     }
 
 
-    void startNotification(){
-        AlarmManager manager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+    void startNotification() {
+        AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent myIntent;
         PendingIntent pendingIntent = null;
 
@@ -95,7 +92,7 @@ Context context;
         calendar.setTimeInMillis(System.currentTimeMillis());
 
         myIntent = new Intent(context, MyNotificationBroadcastReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(context,0,myIntent,0);
+        pendingIntent = PendingIntent.getBroadcast(context, 0, myIntent, 0);
 
         manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 SystemClock.elapsedRealtime() +
@@ -103,9 +100,9 @@ Context context;
 
     }
 
-    void  startYourLoction(){
+    void startYourLoction() {
 
-        AlarmManager manager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent myIntent;
 
 
@@ -114,9 +111,7 @@ Context context;
         calendar.setTimeInMillis(System.currentTimeMillis());
 
 
-
-
-        manager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent pendingIntent = null;
 
         // SET TIME HERE
@@ -124,12 +119,12 @@ Context context;
         calendar.setTimeInMillis(System.currentTimeMillis());
 
         myIntent = new Intent(context, YourLocationBroadcastReciever.class);
-        pendingIntent = PendingIntent.getBroadcast(context,0,myIntent,0);
+        pendingIntent = PendingIntent.getBroadcast(context, 0, myIntent, 0);
 
 
-          manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                    SystemClock.elapsedRealtime() +
-                            1 * 1000, pendingIntent);
+        manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                SystemClock.elapsedRealtime() +
+                        1 * 1000, pendingIntent);
 
     }
 

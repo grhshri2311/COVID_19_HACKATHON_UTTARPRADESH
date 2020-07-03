@@ -1,14 +1,15 @@
 package com.gprs.uttarpradesh;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.ToggleButton;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -31,27 +32,29 @@ public class course extends AppCompatActivity {
     SearchView searchView;
     ToggleButton toggleButton;
     ListView listView;
-    ArrayList name,ins,type,image,id;
+    ArrayList name, ins, type, image, id;
     CustomCourseAdapter customCourseAdapter;
-    String language="en",key="";
+    String language = "en", key = "";
     private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_course);
 
-        searchView=findViewById(R.id.search);
-        toggleButton=findViewById(R.id.lan);
-        listView=findViewById(R.id.list);
+        searchView = findViewById(R.id.search);
+        toggleButton = findViewById(R.id.lan);
+        listView = findViewById(R.id.list);
 
-        name=new ArrayList();
-        ins=new ArrayList();
-        type=new ArrayList();
-        image=new ArrayList();
-        id=new ArrayList();
+        name = new ArrayList();
+        ins = new ArrayList();
+        type = new ArrayList();
+        image = new ArrayList();
+        id = new ArrayList();
 
-        progressDialog=new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Loading");
         progressDialog.setMessage("Please wait...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -62,14 +65,12 @@ public class course extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 progressDialog.show();
-                if(isChecked)
-                {
+                if (isChecked) {
 
-                    language="hi";
+                    language = "hi";
                     requestWithSomeHttpHeaders();
-                }
-                else {
-                    language="en";
+                } else {
+                    language = "en";
                     requestWithSomeHttpHeaders();
                 }
             }
@@ -79,7 +80,7 @@ public class course extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 progressDialog.show();
-                key=query;
+                key = query;
                 requestWithSomeHttpHeaders();
                 return false;
             }
@@ -90,7 +91,7 @@ public class course extends AppCompatActivity {
             }
         });
 
-        customCourseAdapter=new CustomCourseAdapter(this,name,ins,type,image,id);
+        customCourseAdapter = new CustomCourseAdapter(this, name, ins, type, image, id);
         listView.setAdapter(customCourseAdapter);
 
 
@@ -104,22 +105,21 @@ public class course extends AppCompatActivity {
         image.clear();
         id.clear();
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://www.udemy.com/api-2.0/courses/?search="+key+"&language="+language;
+        String url = "https://www.udemy.com/api-2.0/courses/?search=" + key + "&language=" + language;
         StringRequest getRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>()
-                {
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 
                         // response
                         try {
-                            JSONObject obj= (JSONObject) new JSONTokener(response).nextValue();
+                            JSONObject obj = (JSONObject) new JSONTokener(response).nextValue();
                             JSONArray array = (JSONArray) obj.getJSONArray("results");
 
-                            for(int i=0;i<array.length();i++){
-                                JSONObject jsonObject=array.getJSONObject(i);
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject jsonObject = array.getJSONObject(i);
                                 name.add(jsonObject.optString("title"));
-                                JSONArray jsonArray=jsonObject.getJSONArray("visible_instructors");
+                                JSONArray jsonArray = jsonObject.getJSONArray("visible_instructors");
                                 ins.add(jsonArray.getJSONObject(0).optString("display_name"));
                                 type.add(jsonObject.getJSONObject("price_detail").optString("amount"));
                                 image.add(jsonObject.optString("image_125_H"));
@@ -143,18 +143,17 @@ public class course extends AppCompatActivity {
 
                     }
                 },
-                new Response.ErrorListener()
-                {
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO Auto-generated method stub
-                        Log.d("ERROR","error => "+error.toString());
+                        Log.d("ERROR", "error => " + error.toString());
                     }
                 }
         ) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String>  params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<String, String>();
                 params.put("Accept", "application/json, text/plain, */*");
                 params.put("Authorization", "Basic MklCTUxWNEdaSTFLbXNwU0FNTVh2eXplSmVQUjc4SVFDT0VXN1pSRjpvbjh0UTdxa1dEaXBaT1E1TFEwc0RBdzZkNEdvcmg5c1FiTFRQWk1HcnYwS1pwbDZSdzZtbEdiajY1RnlreWRhTVFPNFhreUZNeDF5SXppR25pOHBGMnBaSzl4ZDBseW5BY0RUOWhNbkhmUDEzWHlyYTlMbGxZdUFtdW9BUmtMMg==");
                 params.put("Content-Type", "application/json;charset=utf-8");

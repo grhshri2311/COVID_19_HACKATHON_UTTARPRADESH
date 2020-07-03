@@ -33,12 +33,13 @@ import com.google.firebase.storage.StorageReference;
 public class Bottomsheetlogoutfragment extends BottomSheetDialogFragment {
 
     ImageView proimg;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        final View view= inflater.inflate(R.layout.bottom_sheet_logout_layout, container, false);
+        final View view = inflater.inflate(R.layout.bottom_sheet_logout_layout, container, false);
 
-        proimg=view.findViewById(R.id.proimg);
+        proimg = view.findViewById(R.id.proimg);
 
         view.findViewById(R.id.logout).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,21 +67,21 @@ public class Bottomsheetlogoutfragment extends BottomSheetDialogFragment {
         SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("user", 0); // 0 - for private mode
         SharedPreferences.Editor editor = pref.edit();
 
-        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child("Users").child(pref.getString("user",""));
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(pref.getString("user", ""));
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot != null) {
                     UserRegistrationHelper helper = dataSnapshot.getValue(UserRegistrationHelper.class);
-                    TextView name,role,place,phone;
-                    name=view.findViewById(R.id.name);
-                    role=view.findViewById(R.id.role);
-                    place=view.findViewById(R.id.place);
-                    phone=view.findViewById(R.id.mobile);
+                    TextView name, role, place, phone;
+                    name = view.findViewById(R.id.name);
+                    role = view.findViewById(R.id.role);
+                    place = view.findViewById(R.id.place);
+                    phone = view.findViewById(R.id.mobile);
 
                     name.setText(helper.getFname());
                     role.setText(helper.getRole());
-                    place.setText(getActivity().getApplicationContext().getSharedPreferences("user", 0).getString("city","")+','+getActivity().getApplicationContext().getSharedPreferences("user", 0).getString("state",""));
+                    place.setText(getActivity().getApplicationContext().getSharedPreferences("user", 0).getString("city", "") + ',' + getActivity().getApplicationContext().getSharedPreferences("user", 0).getString("state", ""));
                     phone.setText(helper.getPhone());
 
                 }
@@ -92,8 +93,8 @@ public class Bottomsheetlogoutfragment extends BottomSheetDialogFragment {
             }
         });
 
-        if(mStorageRef.child(pref.getString("user",""))!=null) {
-            StorageReference sr = mStorageRef.child("proImg").child(pref.getString("user","")+".jpg");
+        if (mStorageRef.child(pref.getString("user", "")) != null) {
+            StorageReference sr = mStorageRef.child("proImg").child(pref.getString("user", "") + ".jpg");
             sr.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                 @Override
                 public void onSuccess(byte[] bytes) {

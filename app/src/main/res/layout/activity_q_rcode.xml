@@ -20,7 +20,7 @@
         android:textSize="20sp"
         android:gravity="center"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-        android:layout_above="@id/qr"/>
+        android:layout_above="@id/qr" />
 
     <ImageView
         android:id="@+id/qr"

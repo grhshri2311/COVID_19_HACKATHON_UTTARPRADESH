@@ -1,7 +1,5 @@
 package com.gprs.uttarpradesh;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,11 +9,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.squareup.picasso.Picasso;
 
 public class Detailed extends AppCompatActivity {
 
-    TextView tvTitle,tvSource,tvTime,tvDesc;
+    TextView tvTitle, tvSource, tvTime, tvDesc;
     ImageView imageView;
     WebView webView;
     ProgressBar loader;
@@ -58,7 +58,7 @@ public class Detailed extends AppCompatActivity {
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl(url);
-        if (webView.isShown()){
+        if (webView.isShown()) {
             loader.setVisibility(View.INVISIBLE);
         }
     }

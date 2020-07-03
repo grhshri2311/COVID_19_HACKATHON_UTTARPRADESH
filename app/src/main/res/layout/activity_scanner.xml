@@ -41,7 +41,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:background="@drawable/rectangle" >
+            android:background="@drawable/rectangle">
+
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
@@ -49,15 +50,14 @@
                 android:textColor="@color/RED"
                 android:textSize="20sp"
                 android:fontFamily="@font/roboto_bold"
-                android:text="@string/invalid_qr_code"
-                />
+                android:text="@string/invalid_qr_code" />
+
             <TextView
                 android:id="@+id/desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
-                android:text="@string/it_has_not_been_generated_by_covid_19_relief"
-                />
+                android:text="@string/it_has_not_been_generated_by_covid_19_relief" />
         </RelativeLayout>
 
         <RelativeLayout

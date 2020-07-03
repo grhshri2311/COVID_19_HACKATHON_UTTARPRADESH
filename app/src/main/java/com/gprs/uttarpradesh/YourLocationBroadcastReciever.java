@@ -8,7 +8,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.provider.Settings;
@@ -40,37 +44,33 @@ public class YourLocationBroadcastReciever extends BroadcastReceiver {
     Context context;
     Intent resultIntent;
     private RequestQueue queue;
-    String newactive = null,newrecover=null,newdeath=null;
+    String newactive = null, newrecover = null, newdeath = null;
 
     @Override
     public void onReceive(final Context context, Intent intent) {
 
-        this.context=context;
+        this.context = context;
         pref = context.getSharedPreferences("MyPref", 0); // 0 - for private mode
         editor = pref.edit();
-        resultIntent = new Intent(context , Splash.class);
+        resultIntent = new Intent(context, Splash.class);
         resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         queue = Volley.newRequestQueue(context);
 
-        Log.println(Log.INFO,"your location","entered");
-        new CountDownTimer(120000, 120000)
-        {
-            public void onTick(long l) {}
-            public void onFinish()
-            {
+        Log.println(Log.INFO, "your location", "entered");
+        new CountDownTimer(120000, 120000) {
+            public void onTick(long l) {
+            }
+
+            public void onFinish() {
 
                 pref = context.getSharedPreferences("user", 0);
-                if(!pref.getString("user","").equals("")) {
+                if (!pref.getString("user", "").equals("")) {
                     new YourLocationBroadcastReciever.RetrieveFeedTask1().execute();
                 }
 
-               start();
+                start();
             }
         }.start();
-
-
-
-
 
 
     }
@@ -111,24 +111,22 @@ public class YourLocationBroadcastReciever extends BroadcastReceiver {
 
         protected void onPostExecute(String response) {
 
-            try{
+            try {
 
 
                 JSONArray jsonArray = (JSONArray) new JSONTokener(response).nextValue();
 
-                for(int a=0;a<jsonArray.length();a++){
-                    JSONObject object=jsonArray.getJSONObject(a);
-                    if(object.optString("state").toLowerCase().equals("Uttar Pradesh".toLowerCase())){
-                        newactive=object.optString("cChanges");
-                        newrecover=object.optString("rChanges");
-                        newdeath=object.optString("dChanges");
+                for (int a = 0; a < jsonArray.length(); a++) {
+                    JSONObject object = jsonArray.getJSONObject(a);
+                    if (object.optString("state").toLowerCase().equals("Uttar Pradesh".toLowerCase())) {
+                        newactive = object.optString("cChanges");
+                        newrecover = object.optString("rChanges");
+                        newdeath = object.optString("dChanges");
                         break;
                     }
 
                     new YourLocationBroadcastReciever.RetrieveFeedTask2().execute();
                 }
-
-
 
 
             } catch (Exception e) {
@@ -176,15 +174,15 @@ public class YourLocationBroadcastReciever extends BroadcastReceiver {
 
         protected void onPostExecute(String response) {
 
-            try{
+            try {
 
                 JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
-                JSONArray jsonArray=object.getJSONArray("statewise");
-                JSONObject jsonObject=jsonArray.getJSONObject(0);
+                JSONArray jsonArray = object.getJSONArray("statewise");
+                JSONObject jsonObject = jsonArray.getJSONObject(0);
 
 
-                message="India\n Total cases : "+jsonObject.optString("confirmed")+"\n Total recovered : "+jsonObject.optString("recovered")+"\n Total death : "+jsonObject.optString("deaths");
-                message=message+"\nUttar Pradesh \n Today new cases : "+newactive+"\n Today Recovered "+newrecover+"\n Today Death : "+newdeath;
+                message = "India\n Total cases : " + jsonObject.optString("confirmed") + "\n Total recovered : " + jsonObject.optString("recovered") + "\n Total death : " + jsonObject.optString("deaths");
+                message = message + "\nUttar Pradesh \n Today new cases : " + newactive + "\n Today Recovered " + newrecover + "\n Today Death : " + newdeath;
                 PendingIntent resultPendingIntent = PendingIntent.getActivity(context,
                         0 /* Request code */, resultIntent,
                         PendingIntent.FLAG_UPDATE_CURRENT);
@@ -194,6 +192,7 @@ public class YourLocationBroadcastReciever extends BroadcastReceiver {
                 mBuilder.setContentTitle("In your location")
                         .setContentText("Updates for Today")
                         .setAutoCancel(true)
+                        .setLargeIcon(drawableToBitmap(context.getDrawable(R.drawable.corona)))
                         .setOnlyAlertOnce(true)
                         .setStyle(new NotificationCompat.BigTextStyle().setBigContentTitle("Latest Updates ").bigText(message))
                         .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
@@ -201,8 +200,7 @@ public class YourLocationBroadcastReciever extends BroadcastReceiver {
 
                 mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
-                {
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                     int importance = NotificationManager.IMPORTANCE_HIGH;
                     NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "NOTIFICATION_CHANNEL_NAME", importance);
                     notificationChannel.enableLights(true);
@@ -222,4 +220,27 @@ public class YourLocationBroadcastReciever extends BroadcastReceiver {
 
         }
     }
+
+    public static Bitmap drawableToBitmap(Drawable drawable) {
+        Bitmap bitmap = null;
+
+        if (drawable instanceof BitmapDrawable) {
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+            if (bitmapDrawable.getBitmap() != null) {
+                return bitmapDrawable.getBitmap();
+            }
+        }
+
+        if (drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
+            bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
+        } else {
+            bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        }
+
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+        return bitmap;
+    }
+
 }

@@ -37,7 +37,7 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.itemshome,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.itemshome, parent, false);
         return new ViewHolder(view);
     }
 
@@ -54,18 +54,18 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.ViewHolder> {
 
         holder.tvTitle.setText(a.getTitle());
         holder.tvSource.setText(a.getSource().getName());
-        holder.tvDate.setText("\u2022"+dateTime(a.getPublishedAt()));
+        holder.tvDate.setText("\u2022" + dateTime(a.getPublishedAt()));
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,Detailed.class);
-                intent.putExtra("title",a.getTitle());
-                intent.putExtra("source",a.getSource().getName());
-                intent.putExtra("time",dateTime(a.getPublishedAt()));
-                intent.putExtra("desc",a.getDescription());
-                intent.putExtra("imageUrl",a.getUrlToImage());
-                intent.putExtra("url",a.getUrl());
+                Intent intent = new Intent(context, Detailed.class);
+                intent.putExtra("title", a.getTitle());
+                intent.putExtra("source", a.getSource().getName());
+                intent.putExtra("time", dateTime(a.getPublishedAt()));
+                intent.putExtra("desc", a.getDescription());
+                intent.putExtra("imageUrl", a.getUrlToImage());
+                intent.putExtra("url", a.getUrl());
                 context.startActivity(intent);
             }
         });
@@ -78,7 +78,7 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTitle,tvSource,tvDate;
+        TextView tvTitle, tvSource, tvDate;
         ImageView imageView;
         CardView cardView;
 
@@ -95,21 +95,21 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.ViewHolder> {
     }
 
 
-    public String dateTime(String t){
+    public String dateTime(String t) {
         PrettyTime prettyTime = new PrettyTime(new Locale(getCountry()));
         String time = null;
         try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:",Locale.ENGLISH);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:", Locale.ENGLISH);
             Date date = simpleDateFormat.parse(t);
             time = prettyTime.format(date);
-        }catch (ParseException e) {
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         return time;
 
     }
 
-    public String getCountry(){
+    public String getCountry() {
         Locale locale = Locale.getDefault();
         String country = locale.getCountry();
         return country.toLowerCase();

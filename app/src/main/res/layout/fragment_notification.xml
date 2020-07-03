@@ -11,25 +11,64 @@
         android:layout_height="match_parent"
         android:layout_margin="10dp"
         android:layout_weight="2"
-        android:divider="#fff"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:scrollbars="none" />
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="160dp"
+        android:src="@drawable/notification"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/notice1"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/notice"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/roboto_medium"
+        android:gravity="center"
+        android:text="@string/you_will_be_notified_with_alerts_and_latest_updates_over_here"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notice" />
 
     <TextView
         android:id="@+id/notice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/icon"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:fontFamily="@font/roboto_bold"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/roboto_medium"
         android:gravity="center"
-        android:text="@string/you_have_no_notification"
-        android:textColor="#00BCD4"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/no_new_notifications"
+        android:textColor="#000"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/icon" />
+
+    <Button
+        android:id="@+id/clear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#E9C6EF"
+        android:visibility="invisible"
+        android:text="@string/clear_notifications"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

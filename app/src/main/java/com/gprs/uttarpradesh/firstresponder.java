@@ -1,11 +1,5 @@
 package com.gprs.uttarpradesh;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.viewpager.widget.ViewPager;
-
 import android.Manifest;
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -17,9 +11,16 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,21 +44,24 @@ public class firstresponder extends AppCompatActivity {
     SharedPreferences.Editor editor;
     UserLocationHelper mylocation;
     TextView scan;
-    int num=0;
-    boolean search=true;
+    int num = 0;
+    boolean search = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_firstresponder);
-        pref =getSharedPreferences("user", 0); //
+        pref = getSharedPreferences("user", 0); //
 
 
-        FirebaseDatabase.getInstance().getReference().child("Users").child(pref.getString("user","")).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("Users").child(pref.getString("user", "")).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot!=null){
-                    mylocation=dataSnapshot.getValue(UserLocationHelper.class);
-                    if(mylocation!=null)
+                if (dataSnapshot != null) {
+                    mylocation = dataSnapshot.getValue(UserLocationHelper.class);
+                    if (mylocation != null)
                         get();
                 }
 
@@ -69,12 +73,12 @@ public class firstresponder extends AppCompatActivity {
             }
         });
 
-        arrayList=new ArrayList<>();
+        arrayList = new ArrayList<>();
         models = new ArrayList<>();
-        models.add(new Modelviewer("https://ohsonline.com/Issues/2016/04/-/media/OHS/OHS/Images/2016/03/shutterstock_217127524.jpg", "Step 1", ""));
-        models.add(new Modelviewer("https://img.lovepik.com/element/40162/9102.png_300.png", "Step 2", ""));
-        models.add(new Modelviewer("https://lh3.googleusercontent.com/proxy/TMP_gvA43b55TUAUgJfuSy9ADD7opGCpzs7HeoLp6QrdolfMmy3BfN1g4_2Vy5h4j-7tvx5Viw80tawRZUlTwclaF2uPTZI", "Step 3", ""));
-        models.add(new Modelviewer("https://previews.123rf.com/images/vostal/vostal1701/vostal170100066/70729733-hand-drawing-of-a-red-and-white-ambulance.jpg", "Step 4", ""));
+        models.add(new Modelviewer("https://ruppels.net/wp-content/uploads/2020/03/first-responders_who-are-first-responders-1024x522.png", "Step 1", ""));
+        models.add(new Modelviewer("https://m.hindustantimes.com/rf/image_size_444x250/HT/p2/2018/01/27/Pictures/_d580858c-0378-11e8-8651-33050e64100a.jpg", "Step 2", ""));
+        models.add(new Modelviewer("https://www.wearable-technologies.com/wp-content/uploads/2019/01/First-responder-wearables-1.png", "Step 3", ""));
+        models.add(new Modelviewer("https://www.ifrc.org/Global/Photos/Secretariat/201409/20140902-first-aid-Main-1.jpg", "Step 4", ""));
 
         adapter = new Adapterviewer(models, this);
 
@@ -83,12 +87,10 @@ public class firstresponder extends AppCompatActivity {
         viewPager.setPadding(10, 0, 50, 0);
 
 
-        final SwipeRefreshLayout swipeRefreshLayout= findViewById(R.id.swipe);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
-        {
+        final SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipe);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onRefresh()
-            {
+            public void onRefresh() {
                 finish();
                 overridePendingTransition(0, 0);
                 startActivity(getIntent());
@@ -96,12 +98,12 @@ public class firstresponder extends AppCompatActivity {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-        new CountDownTimer(5000, 5000)
-        {
-            public void onTick(long l) {}
-            public void onFinish()
-            {
-                viewPager.setCurrentItem((viewPager.getCurrentItem()+1)%models.size());
+        new CountDownTimer(5000, 5000) {
+            public void onTick(long l) {
+            }
+
+            public void onFinish() {
+                viewPager.setCurrentItem((viewPager.getCurrentItem() + 1) % models.size());
                 start();
             }
         }.start();
@@ -157,34 +159,34 @@ public class firstresponder extends AppCompatActivity {
     }
 
     public void hospital(View view) {
-        Intent intent=new Intent(this,Medicalshops.class);
-        intent.putExtra("text","Hospitals");
+        Intent intent = new Intent(this, Medicalshops.class);
+        intent.putExtra("text", "Hospitals");
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(firstresponder.this).toBundle());
     }
 
     public void pharmachy(View view) {
-        Intent intent=new Intent(this,Medicalshops.class);
-        intent.putExtra("text","Pharmacies");
-        startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(firstresponder.this).toBundle());
+        Intent intent = new Intent(this, Medicalshops.class);
+        intent.putExtra("text", "Pharmacies");
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(firstresponder.this).toBundle());
     }
 
     public void firstaid(View view) {
-        startActivity(new Intent(this,firstaidgiudance.class),ActivityOptions.makeSceneTransitionAnimation(firstresponder.this).toBundle());
+        startActivity(new Intent(this, firstaidgiudance.class), ActivityOptions.makeSceneTransitionAnimation(firstresponder.this).toBundle());
     }
 
 
     public void helpline(View view) {
-       startActivity(new Intent(this,helpline.class),ActivityOptions.makeSceneTransitionAnimation(firstresponder.this).toBundle());
+        startActivity(new Intent(this, helpline.class), ActivityOptions.makeSceneTransitionAnimation(firstresponder.this).toBundle());
     }
 
 
     public void alert(View view) {
-        if(mylocation!=null)
+        if (mylocation != null)
             show();
     }
 
     private void show() {
-        num=0;
+        num = 0;
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
         builder.setMessage("Searching for Users");
@@ -193,28 +195,26 @@ public class firstresponder extends AppCompatActivity {
         View view = inflater.inflate(R.layout.finduser, null, true);
 
 
+        Button stop = view.findViewById(R.id.stop);
+        scan = view.findViewById(R.id.scan);
 
-        Button stop=view.findViewById(R.id.stop);
-        scan =view.findViewById(R.id.scan);
 
+        new CountDownTimer(5000, 5000) {
+            public void onTick(long l) {
+            }
 
-        new CountDownTimer(5000, 5000)
-        {
-            public void onTick(long l) {}
-            public void onFinish()
-            {
-                int i=5;
-                while(num<arrayList.size() && i>=0 && num>=0){
-                    i=i-1;
-                    if(num>=0) {
+            public void onFinish() {
+                int i = 5;
+                while (num < arrayList.size() && i >= 0 && num >= 0) {
+                    i = i - 1;
+                    if (num >= 0) {
                         FirebaseDatabase.getInstance().getReference().child("Respond").child("Help").child(arrayList.get(num).getPhone()).setValue(mylocation);
                         num = num + 1;
-                    }
-                    else
+                    } else
                         break;
 
                 }
-                if(num>=0) {
+                if (num >= 0) {
                     float[] res = new float[1];
                     try {
                         Location.distanceBetween(mylocation.getLat(), mylocation.getLon(),
@@ -222,8 +222,7 @@ public class firstresponder extends AppCompatActivity {
                         scan.setText("Scanning within " + res[0] / 1000 + " KM radius...");
                         if (num < arrayList.size() && search)
                             start();
-                    }
-                    catch (ArrayIndexOutOfBoundsException e){
+                    } catch (ArrayIndexOutOfBoundsException e) {
 
                     }
                 }
@@ -234,23 +233,23 @@ public class firstresponder extends AppCompatActivity {
         FirebaseDatabase.getInstance().getReference().child("Respond").child("reply").child(mylocation.getPhone()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getValue()!=null){
-                    search=false;
+                if (dataSnapshot.getValue() != null) {
+                    search = false;
                     alert.hide();
-                    num=num-1;
-                    while(num>=0){
+                    num = num - 1;
+                    while (num >= 0) {
                         FirebaseDatabase.getInstance().getReference().child("Respond").child("Help").child(arrayList.get(num).getPhone()).removeValue();
-                        num=num-1;
+                        num = num - 1;
                     }
-                    UserLocationHelper userLocationHelper=dataSnapshot.getValue(UserLocationHelper.class);
-                    Intent intent=new Intent(firstresponder.this,firstreply.class);
-                    intent.putExtra("name",userLocationHelper.getFname());
-                    intent.putExtra("role",userLocationHelper.getRole());
-                    intent.putExtra("lat",userLocationHelper.getLat());
-                    intent.putExtra("lon",userLocationHelper.getLon());
-                    intent.putExtra("phone",userLocationHelper.getPhone());
-                    intent.putExtra("email",userLocationHelper.getEmail());
-                    startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(firstresponder.this).toBundle());
+                    UserLocationHelper userLocationHelper = dataSnapshot.getValue(UserLocationHelper.class);
+                    Intent intent = new Intent(firstresponder.this, firstreply.class);
+                    intent.putExtra("name", userLocationHelper.getFname());
+                    intent.putExtra("role", userLocationHelper.getRole());
+                    intent.putExtra("lat", userLocationHelper.getLat());
+                    intent.putExtra("lon", userLocationHelper.getLon());
+                    intent.putExtra("phone", userLocationHelper.getPhone());
+                    intent.putExtra("email", userLocationHelper.getEmail());
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(firstresponder.this).toBundle());
                     finish();
 
                 }
@@ -264,10 +263,10 @@ public class firstresponder extends AppCompatActivity {
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                num=num-1;
-                while(num>=0){
+                num = num - 1;
+                while (num >= 0) {
                     FirebaseDatabase.getInstance().getReference().child("Respond").child("Help").child(arrayList.get(num).getPhone()).removeValue();
-                    num=num-1;
+                    num = num - 1;
                 }
                 alert.hide();
             }
@@ -286,12 +285,12 @@ public class firstresponder extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot != null) {
-                    for(DataSnapshot data:dataSnapshot.getChildren()) {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
                         UserLocationHelper userLocationHelper1 = data.getValue(UserLocationHelper.class);
-                        if(!mylocation.getPhone().equals(userLocationHelper1.getPhone()))
+                        if (!mylocation.getPhone().equals(userLocationHelper1.getPhone()))
                             arrayList.add(userLocationHelper1);
                     }
-                    Collections.sort(arrayList,new sortarray());
+                    Collections.sort(arrayList, new sortarray());
                 }
             }
 
@@ -308,33 +307,34 @@ public class firstresponder extends AppCompatActivity {
 
         float[] res = new float[1];
         float[] res1 = new float[1];
+
         @Override
         public int compare(UserLocationHelper o1, UserLocationHelper o2) {
             Location.distanceBetween(mylocation.getLat(), mylocation.getLon(),
                     o1.getLat(), o1.getLon(), res);
             Location.distanceBetween(mylocation.getLat(), mylocation.getLon(),
                     o2.getLat(), o2.getLon(), res1);
-            return (int)(res[0]-res1[0]);
+            return (int) (res[0] - res1[0]);
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        num=num-1;
-        while(num>=0){
+        num = num - 1;
+        while (num >= 0) {
             FirebaseDatabase.getInstance().getReference().child("Respond").child("Help").child(arrayList.get(num).getPhone()).removeValue();
-            num=num-1;
+            num = num - 1;
         }
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        num=num-1;
-        while(num>=0){
+        num = num - 1;
+        while (num >= 0) {
             FirebaseDatabase.getInstance().getReference().child("Respond").child("Help").child(arrayList.get(num).getPhone()).removeValue();
-            num=num-1;
+            num = num - 1;
         }
     }
 }

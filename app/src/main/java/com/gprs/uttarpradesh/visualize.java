@@ -1,18 +1,19 @@
 package com.gprs.uttarpradesh;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.WindowManager;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class visualize extends AppCompatActivity {
 
@@ -22,10 +23,12 @@ public class visualize extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_visualize);
-        wview= findViewById(R.id.webv1);
+        wview = findViewById(R.id.webv1);
 
-        progressDialog=new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this);
 
         progressDialog.setMessage("Loading..."); // Setting Message
         progressDialog.setTitle("Please Wait !"); // Setting Title
@@ -34,7 +37,7 @@ public class visualize extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        WebSettings wsetting=wview.getSettings();
+        WebSettings wsetting = wview.getSettings();
         wsetting.setJavaScriptEnabled(true);
         wsetting.setAllowContentAccess(false);
         wsetting.setSupportZoom(true);
@@ -57,10 +60,11 @@ public class visualize extends AppCompatActivity {
             }
 
             @Override
-            public boolean shouldOverrideKeyEvent (WebView view, KeyEvent event) {
+            public boolean shouldOverrideKeyEvent(WebView view, KeyEvent event) {
                 // Do something with the event here
                 return true;
             }
+
             @Override
             public void onPageFinished(WebView view, String url) {
 
@@ -100,18 +104,13 @@ public class visualize extends AppCompatActivity {
             }
 
 
-
-
         });
 
         wview.loadUrl("https://www.covid19india.org/");
 
 
-
-
-
-
     }
+
     @Override
     public void onBackPressed() {
         finish();

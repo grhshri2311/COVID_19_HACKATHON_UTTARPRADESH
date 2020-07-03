@@ -19,31 +19,30 @@ class CustomChatBotAdapter extends ArrayAdapter {
     private ArrayList<ArrayList<String>> option;
 
     public CustomChatBotAdapter(Activity context, ArrayList<Message> message, ArrayList<Integer> toggle, ArrayList<ArrayList<String>> option) {
-        super(context,R.layout.activity_chatbot,message);
-        this.context=context;
-        this.message=message;
-        this.toggle=toggle;
-        this.option=option;
+        super(context, R.layout.activity_chatbot, message);
+        this.context = context;
+        this.message = message;
+        this.toggle = toggle;
+        this.option = option;
     }
 
     public View getView(int position, View view, ViewGroup parent) {
 
-        LayoutInflater inflater=context.getLayoutInflater();
-        View rowView=null;
+        LayoutInflater inflater = context.getLayoutInflater();
+        View rowView = null;
 
-        if(message.get(position).getId().equals("2")) {
+        if (message.get(position).getId().equals("2")) {
             rowView = inflater.inflate(R.layout.chat_item_watson, null, true);
-            TextView textView=rowView.findViewById(R.id.message);
+            TextView textView = rowView.findViewById(R.id.message);
             textView.setText(message.get(position).getMessage());
-            RelativeLayout relativeLayout=rowView.findViewById(R.id.their);
-            Spinner spinner=rowView.findViewById(R.id.option);
+            RelativeLayout relativeLayout = rowView.findViewById(R.id.their);
+            Spinner spinner = rowView.findViewById(R.id.option);
 
             relativeLayout.removeView(spinner);
-        }
-        else {
+        } else {
             rowView = inflater.inflate(R.layout.chat_item_self, null, true);
 
-            TextView textView=rowView.findViewById(R.id.message);
+            TextView textView = rowView.findViewById(R.id.message);
             textView.setText(message.get(position).getMessage());
         }
 

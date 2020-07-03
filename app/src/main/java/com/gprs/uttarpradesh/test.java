@@ -1,16 +1,17 @@
 package com.gprs.uttarpradesh;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.WindowManager;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +33,9 @@ public class test extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if (checkPermissions()) {
-            textView.setText("All permissions are Granted.");
+            textView.setText(getString(R.string.allpermissiongranted));
             textView.setTextColor(getResources().getColor(R.color.GREEN));
-            startActivity(new Intent(test.this,logouthome.class));
+            startActivity(new Intent(test.this, logouthome.class));
             finish();
         } else {
             // show dialog informing them that we lack certain permissions
@@ -44,9 +45,11 @@ public class test extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_test);
 
-        textView=findViewById(R.id.textView17);
+        textView = findViewById(R.id.textView17);
 
     }
 
@@ -70,28 +73,28 @@ public class test extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case MULTIPLE_PERMISSIONS: {
-                boolean flag=true;
-                for(int i=0;i<grantResults.length;i++){
+                boolean flag = true;
+                for (int i = 0; i < grantResults.length; i++) {
                     if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
                         flag = false;
                         break;
                     }
                 }
                 if (flag) {
-                    textView.setText("All permissions are Granted.");
+                    textView.setText(R.string.allpermissiongranted);
                     textView.setTextColor(getResources().getColor(R.color.GREEN));
-                    startActivity(new Intent(test.this,logouthome.class), ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                    startActivity(new Intent(test.this, logouthome.class), ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                     finish();
                 } else {
-                    textView.setText("All permissions are required for the app to work normally.");
+                    textView.setText(R.string.allpermissionrequired);
                     textView.setTextColor(getResources().getColor(R.color.RED));
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-
-                            Intent i=new Intent(test.this,test.class);
-                            startActivity(i);
                             finish();
+                            overridePendingTransition(0, 0);
+                            startActivity(getIntent());
+                            overridePendingTransition(0, 0);
                         }
                     }, 3000);
 

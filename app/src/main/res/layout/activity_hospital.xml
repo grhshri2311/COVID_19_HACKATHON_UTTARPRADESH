@@ -14,8 +14,8 @@
         android:text="Select anyone"
         android:textSize="20sp"
         android:fontFamily="@font/roboto_bold"
-        android:padding="20dp"
-        />
+        android:padding="20dp" />
+
     <TextView
         android:id="@+id/hos"
         android:layout_width="match_parent"
@@ -28,8 +28,7 @@
         android:drawableLeft="@drawable/hospitalicon"
         android:drawablePadding="20dp"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
- />
+        android:layout_marginLeft="20dp" />
 
     <TextView
         android:id="@+id/test"
@@ -43,8 +42,7 @@
         android:drawableLeft="@drawable/labsmenuicon"
         android:drawablePadding="20dp"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        />
+        android:layout_marginLeft="20dp" />
 
     <TextView
         android:id="@+id/ord"
@@ -59,8 +57,7 @@
         android:drawablePadding="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginBottom="30dp"
- />
+        android:layout_marginBottom="30dp" />
 
 
 </LinearLayout>

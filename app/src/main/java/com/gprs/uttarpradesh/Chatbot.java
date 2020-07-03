@@ -19,13 +19,17 @@ import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Spinner;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,9 +46,6 @@ import com.ibm.watson.assistant.v2.model.MessageOptions;
 import com.ibm.watson.assistant.v2.model.MessageResponse;
 import com.ibm.watson.assistant.v2.model.RuntimeResponseGeneric;
 import com.ibm.watson.assistant.v2.model.SessionResponse;
-import com.ibm.watson.developer_cloud.android.library.audio.MicrophoneHelper;
-import com.ibm.watson.developer_cloud.android.library.audio.MicrophoneInputStream;
-import com.ibm.watson.developer_cloud.android.library.audio.StreamPlayer;
 import com.ibm.watson.language_translator.v3.LanguageTranslator;
 import com.ibm.watson.language_translator.v3.model.TranslateOptions;
 import com.ibm.watson.language_translator.v3.model.TranslationResult;
@@ -65,23 +66,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 
-public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitListener{
+public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitListener {
     private ListView listView;
     private CustomChatBotAdapter mAdapter;
     private ArrayList<Message> messageArrayList;
     private EditText inputMessage;
-    private ImageButton btnSend;
-    private ImageButton btnRecord,voice;
-    StreamPlayer streamPlayer = new StreamPlayer();
-    private boolean initialRequest;
-    private boolean permissionToRecordAccepted = false;
-    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
+    private ImageButton btnRecord, voice;
     private static String TAG = "MainActivity";
     private static final int RECORD_REQUEST_CODE = 101;
     private boolean listening = false;
-    private MicrophoneInputStream capture;
-    private Context mContext;
-    private MicrophoneHelper microphoneHelper;
     static Timer timer;
     private Assistant watsonAssistant;
     private Response<SessionResponse> watsonAssistantSession;
@@ -92,56 +85,52 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
     ArrayList<String> language;
     SharedPreferences pref;
     SharedPreferences.Editor editor;
-    Boolean sound=false;
-    Spinner spinner;
+    Boolean sound = false;
     private LanguageTranslator translationService;
     private String selectedTargetLanguage = Language.ENGLISH;
 
     private void createServices() {
         translationService = initLanguageTranslatorService();
 
-        if(checkInternetConnection()) {
+        if (checkInternetConnection()) {
             watsonAssistant = new Assistant("2019-02-28", new IamAuthenticator("S6C-4uOqeJyJzNaRBGP2PEp7PSJuNZ9C_OciE5JO3KoS"));
             watsonAssistant.setServiceUrl("https://api.eu-gb.assistant.watson.cloud.ibm.com/instances/fff0d44c-bc02-4bdc-965e-b83674194106");
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_chatbot);
         pref = getApplicationContext().getSharedPreferences("user", 0); // 0 - for private mode
 
-        mContext = getApplicationContext();
-
 
         inputMessage = findViewById(R.id.inputmessage);
-        btnSend = findViewById(R.id.btn_send);
         btnRecord = findViewById(R.id.btn_record);
         listView = findViewById(R.id.list_view);
-        spinner = findViewById(R.id.language);
-        voice=findViewById(R.id.voice);
-        progressDialog=new ProgressDialog(this);
-        language=new ArrayList<>();
+        voice = findViewById(R.id.voice);
+        progressDialog = new ProgressDialog(this);
+        language = new ArrayList<>();
         progressDialog.setMessage("Loading..."); // Setting Message
         progressDialog.setTitle("Please Wait !"); // Setting Title
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
 
         progressDialog.setCancelable(true);
         messageArrayList = new ArrayList<>();
-        option=new ArrayList<>();
-        toggle=new ArrayList<>();
-        mAdapter = new CustomChatBotAdapter(this,messageArrayList,toggle,option);
-        microphoneHelper = new MicrophoneHelper(this);
+        option = new ArrayList<>();
+        toggle = new ArrayList<>();
+        mAdapter = new CustomChatBotAdapter(this, messageArrayList, toggle, option);
         tts = new TextToSpeech(this, this);
         timer = new Timer();
 
         listView.setAdapter(mAdapter);
         this.inputMessage.setText("");
-        this.initialRequest = true;
+
 
         voice.setTag("not");
 
-        language.add("Select Language");
         language.add("English");
         language.add("Hindi");
         language.add("Tamil");
@@ -153,50 +142,6 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
         pref = getApplicationContext().getSharedPreferences("language", 0); // 0 - for private mode
         editor = pref.edit();
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, R.layout.simple_spinner_item, R.id.txt_bundle,language);
-        spinner.setAdapter(dataAdapter);
-        spinner.setGravity(11);
-        spinner.setSelection(0, false);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(parent.getItemAtPosition(position).equals("English")){
-                    selectedTargetLanguage=Language.ENGLISH;
-                    editor.putString("lan","E");
-                }
-                else if(parent.getItemAtPosition(position).equals("Hindi")){
-                    selectedTargetLanguage=Language.HINDI;
-                    editor.putString("lan","H");
-                }
-                else if(parent.getItemAtPosition(position).equals("Tamil")){
-                    selectedTargetLanguage=Language.TAMIL;
-                    editor.putString("lan","T");
-                }
-                else if(parent.getItemAtPosition(position).equals("Telugu")){
-                    selectedTargetLanguage=Language.TELUGU;
-                    editor.putString("lan","TE");
-                }
-                else if(parent.getItemAtPosition(position).equals("Malayalam")){
-                    selectedTargetLanguage=Language.MALAYALAM;
-                    editor.putString("lan","M");
-                }
-                else if(parent.getItemAtPosition(position).equals("Gujarati")){
-                    selectedTargetLanguage=Language.GUJARATI;
-                    editor.putString("lan","G");
-                }
-
-                editor.apply();
-                finish();
-                overridePendingTransition(0, 0);
-                startActivity(getIntent());
-                overridePendingTransition(0, 0);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
         tts.setSpeechRate(1f);
         btnRecord.setOnClickListener(new View.OnClickListener() {
@@ -211,59 +156,110 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
         voice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(voice.getTag().equals("clicked")){
+                if (voice.getTag().equals("clicked")) {
                     voice.setTag("not");
                     voice.setImageDrawable(getResources().getDrawable(R.drawable.ic_volume_off_black_24dp));
-                    sound=false;
+                    sound = false;
                     tts.stop();
-                }
-                else {
+                } else {
                     voice.setTag("clicked");
                     voice.setImageDrawable(getResources().getDrawable(R.drawable.ic_volume_up_black_24dp));
-                    sound=true;
+                    sound = true;
                 }
             }
         });
 
-        btnSend.setOnClickListener(new View.OnClickListener() {
+        final ImageView lang = findViewById(R.id.lang);
+        lang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkInternetConnection()) {
-                    if(!inputMessage.getText().toString().isEmpty())
-                        sendMessage(inputMessage.getText().toString(),false);
-                }
+                final PopupMenu rolemenu = new PopupMenu(getApplicationContext(), lang);
+                rolemenu.getMenu().add(Menu.NONE, 1, Menu.NONE, language.get(0));
+                rolemenu.getMenu().add(Menu.NONE, 1, Menu.NONE, language.get(1));
+                rolemenu.getMenu().add(Menu.NONE, 1, Menu.NONE, language.get(2));
+                rolemenu.getMenu().add(Menu.NONE, 1, Menu.NONE, language.get(3));
+                rolemenu.getMenu().add(Menu.NONE, 1, Menu.NONE, language.get(4));
+                rolemenu.getMenu().add(Menu.NONE, 1, Menu.NONE, language.get(5));
+
+                rolemenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        if (item.getTitle().toString().equals("English")) {
+                            selectedTargetLanguage = Language.ENGLISH;
+                            editor.putString("lan", "E");
+                        } else if (item.getTitle().toString().equals("Hindi")) {
+                            selectedTargetLanguage = Language.HINDI;
+                            editor.putString("lan", "H");
+                        } else if (item.getTitle().toString().equals("Tamil")) {
+                            selectedTargetLanguage = Language.TAMIL;
+                            editor.putString("lan", "T");
+                        } else if (item.getTitle().toString().equals("Telugu")) {
+                            selectedTargetLanguage = Language.TELUGU;
+                            editor.putString("lan", "TE");
+                        } else if (item.getTitle().toString().equals("Malayalam")) {
+                            selectedTargetLanguage = Language.MALAYALAM;
+                            editor.putString("lan", "M");
+                        } else if (item.getTitle().toString().equals("Gujarati")) {
+                            selectedTargetLanguage = Language.GUJARATI;
+                            editor.putString("lan", "G");
+                        }
+
+                        editor.apply();
+                        finish();
+                        overridePendingTransition(0, 0);
+                        startActivity(getIntent());
+                        overridePendingTransition(0, 0);
+
+                        return true;
+                    }
+                });
+                rolemenu.show();
             }
         });
 
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
+        inputMessage.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    // Perform action on key press
+                    if (checkInternetConnection()) {
+                        if (!inputMessage.getText().toString().isEmpty())
+                            sendMessage(inputMessage.getText().toString(), false);
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
 
 
         createServices();
-        sendMessage(inputMessage.getText().toString(),true);
+        sendMessage(inputMessage.getText().toString(), true);
 
 
+        if (pref.getString("lan", "").equals("E")) {
+            selectedTargetLanguage = Language.ENGLISH;
 
-        if(pref.getString("lan","").equals("E")){
-            selectedTargetLanguage=Language.ENGLISH;
-
-        }
-        else if(pref.getString("lan","").equals("T")){
-            selectedTargetLanguage=Language.TAMIL;
-        }
-        else if(pref.getString("lan","").equals("TE")){
-            selectedTargetLanguage=Language.TELUGU;
-        }
-        else if(pref.getString("lan","").equals("M")){
-            selectedTargetLanguage=Language.MALAYALAM;
-        }
-        else if(pref.getString("lan","").equals("G")){
-            selectedTargetLanguage=Language.GUJARATI;
-        }
-        else if(pref.getString("lan","").equals("H")){
-            selectedTargetLanguage=Language.HINDI;
-        }
-        else {
-            selectedTargetLanguage=Language.ENGLISH;
+        } else if (pref.getString("lan", "").equals("T")) {
+            selectedTargetLanguage = Language.TAMIL;
+        } else if (pref.getString("lan", "").equals("TE")) {
+            selectedTargetLanguage = Language.TELUGU;
+        } else if (pref.getString("lan", "").equals("M")) {
+            selectedTargetLanguage = Language.MALAYALAM;
+        } else if (pref.getString("lan", "").equals("G")) {
+            selectedTargetLanguage = Language.GUJARATI;
+        } else if (pref.getString("lan", "").equals("H")) {
+            selectedTargetLanguage = Language.HINDI;
+        } else {
+            selectedTargetLanguage = Language.ENGLISH;
         }
 
 
@@ -278,7 +274,6 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
     }
 
 
-
     private class receive extends AsyncTask<String, Void, String> {
 
         @Override
@@ -291,18 +286,17 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
                     progressDialog.show();
                 }
             });
-            Boolean logged=true;
+            Boolean logged = true;
 
             pref = getApplicationContext().getSharedPreferences("user", 0); // 0 - for private mode
 
-            if(pref.getString("user","").equals(""))
-                logged=false;
+            if (pref.getString("user", "").equals(""))
+                logged = false;
 
 
-            if(selectedTargetLanguage.equals(Language.ENGLISH)){
-                firstTranslation=params[0];
-            }
-            else {
+            if (selectedTargetLanguage.equals(Language.ENGLISH)) {
+                firstTranslation = params[0];
+            } else {
                 TranslateOptions translateOptions = new TranslateOptions.Builder()
                         .addText(params[0])
                         .source(Language.ENGLISH)
@@ -314,11 +308,11 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
 
             }
 
-            String r=params[0];
+            String r = params[0];
             Message outMessage;
 
 
-            if(r.equals("Openning dashboard")){
+            if (r.equals("Openning dashboard")) {
                 outMessage = new Message();
                 outMessage.setMessage(firstTranslation);
                 outMessage.setId("2");
@@ -334,22 +328,20 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
                         mAdapter.notifyDataSetChanged();
                         progressDialog.hide();
                         listView.setSelection(messageArrayList.size());
-
 
 
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 Intent returnIntent = new Intent();
-                                returnIntent.putExtra("result","home");
-                                setResult(Activity.RESULT_OK,returnIntent);
+                                returnIntent.putExtra("result", "home");
+                                setResult(Activity.RESULT_OK, returnIntent);
                                 finish();
                             }
                         }, 3000);
                     }
                 });
-            }
-            else if(r.equals("Openning Scan")){
+            } else if (r.equals("Openning Scan")) {
                 outMessage = new Message();
                 outMessage.setMessage(firstTranslation);
                 outMessage.setId("2");
@@ -368,13 +360,12 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                startActivity(new Intent(Chatbot.this,victimalert.class), ActivityOptions.makeSceneTransitionAnimation(Chatbot.this).toBundle());
+                                startActivity(new Intent(Chatbot.this, victimalert.class), ActivityOptions.makeSceneTransitionAnimation(Chatbot.this).toBundle());
                             }
                         }, 3000);
                     }
                 });
-            }
-            else if(r.equals("Openning helpline")){
+            } else if (r.equals("Openning helpline")) {
                 outMessage = new Message();
                 outMessage.setMessage(firstTranslation);
                 outMessage.setId("2");
@@ -393,13 +384,12 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                startActivity(new Intent(Chatbot.this,helpline.class), ActivityOptions.makeSceneTransitionAnimation(Chatbot.this).toBundle());
+                                startActivity(new Intent(Chatbot.this, helpline.class), ActivityOptions.makeSceneTransitionAnimation(Chatbot.this).toBundle());
                             }
                         }, 3000);
                     }
                 });
-            }
-            else if(r.equals("Opening Donate")){
+            } else if (r.equals("Opening Donate")) {
                 outMessage = new Message();
                 outMessage.setMessage(firstTranslation);
                 outMessage.setId("2");
@@ -418,13 +408,12 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                startActivity(new Intent(Chatbot.this,donate.class), ActivityOptions.makeSceneTransitionAnimation(Chatbot.this).toBundle());
+                                startActivity(new Intent(Chatbot.this, donate.class), ActivityOptions.makeSceneTransitionAnimation(Chatbot.this).toBundle());
                             }
                         }, 3000);
                     }
                 });
-            }
-            else if(r.equals("Opening Alarm")){
+            } else if (r.equals("Opening Alarm")) {
                 outMessage = new Message();
                 outMessage.setMessage(firstTranslation);
                 outMessage.setId("2");
@@ -443,13 +432,12 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                             startActivity(new Intent(Chatbot.this,Alarm.class), ActivityOptions.makeSceneTransitionAnimation(Chatbot.this).toBundle());
+                                startActivity(new Intent(Chatbot.this, Alarm.class), ActivityOptions.makeSceneTransitionAnimation(Chatbot.this).toBundle());
                             }
                         }, 3000);
                     }
                 });
-            }
-            else if(r.equals("Opening Medical Shop")){
+            } else if (r.equals("Opening Medical Shop")) {
                 outMessage = new Message();
                 outMessage.setMessage(firstTranslation);
                 outMessage.setId("2");
@@ -468,13 +456,12 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                startActivity(new Intent(Chatbot.this,Medicalshops.class), ActivityOptions.makeSceneTransitionAnimation(Chatbot.this).toBundle());
+                                startActivity(new Intent(Chatbot.this, Medicalshops.class), ActivityOptions.makeSceneTransitionAnimation(Chatbot.this).toBundle());
                             }
                         }, 3000);
                     }
                 });
-            }
-            else if(r.equals("Opening Updates")){
+            } else if (r.equals("Opening Updates")) {
                 outMessage = new Message();
                 outMessage.setMessage(firstTranslation);
                 outMessage.setId("2");
@@ -494,16 +481,15 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
                             @Override
                             public void run() {
                                 Intent returnIntent = new Intent();
-                                returnIntent.putExtra("result","updates");
-                                setResult(Activity.RESULT_OK,returnIntent);
+                                returnIntent.putExtra("result", "updates");
+                                setResult(Activity.RESULT_OK, returnIntent);
                                 finish();
                             }
                         }, 3000);
                     }
                 });
-            }
-            else if(r.equals("Openning firstrespond")){
-                if(logged) {
+            } else if (r.equals("Openning firstrespond")) {
+                if (logged) {
                     outMessage = new Message();
                     outMessage.setMessage(firstTranslation);
                     outMessage.setId("2");
@@ -527,9 +513,7 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
                             }, 3000);
                         }
                     });
-                }
-
-                else {
+                } else {
                     outMessage = new Message();
                     outMessage.setMessage("Please Log In to continue");
                     outMessage.setId("2");
@@ -548,8 +532,7 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
                         }
                     });
                 }
-            }
-            else if(r.equals("Openning COVID reports")){
+            } else if (r.equals("Openning COVID reports")) {
                 outMessage = new Message();
                 outMessage.setMessage(firstTranslation);
                 outMessage.setId("2");
@@ -569,16 +552,265 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
                             @Override
                             public void run() {
                                 Intent returnIntent = new Intent();
-                                returnIntent.putExtra("result","casesreport");
-                                setResult(Activity.RESULT_OK,returnIntent);
+                                returnIntent.putExtra("result", "casesreport");
+                                setResult(Activity.RESULT_OK, returnIntent);
                                 finish();
                             }
                         }, 3000);
                     }
                 });
-            }
+            } else if (r.equals("Opening Epass")) {
+                outMessage = new Message();
+                outMessage.setMessage(firstTranslation);
+                outMessage.setId("2");
 
-            else if(r.equals("Closing Assistant")){
+                messageArrayList.add(outMessage);
+                toggle.add(0);
+                option.add(null);
+
+                speakOut(firstTranslation);
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        mAdapter.notifyDataSetChanged();
+                        progressDialog.hide();
+                        listView.setSelection(messageArrayList.size());
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                startActivity(new Intent(Chatbot.this, epass.class), ActivityOptions.makeSceneTransitionAnimation(Chatbot.this).toBundle());
+                            }
+                        }, 3000);
+                    }
+                });
+
+            } else if (r.equals("Opening Material collection")) {
+                if (logged) {
+                    outMessage = new Message();
+                    outMessage.setMessage(firstTranslation);
+                    outMessage.setId("2");
+
+                    messageArrayList.add(outMessage);
+                    toggle.add(0);
+                    option.add(null);
+
+                    speakOut(firstTranslation);
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            mAdapter.notifyDataSetChanged();
+                            progressDialog.hide();
+                            listView.setSelection(messageArrayList.size());
+
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    startActivity(new Intent(Chatbot.this, MaterialCollection.class), ActivityOptions.makeSceneTransitionAnimation(Chatbot.this).toBundle());
+                                }
+                            }, 3000);
+                        }
+                    });
+                } else {
+                    outMessage = new Message();
+                    outMessage.setMessage("Please Log In to continue");
+                    outMessage.setId("2");
+
+                    messageArrayList.add(outMessage);
+                    toggle.add(0);
+                    option.add(null);
+
+                    speakOut(firstTranslation);
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            mAdapter.notifyDataSetChanged();
+                            progressDialog.hide();
+                            listView.setSelection(messageArrayList.size());
+
+                        }
+                    });
+                }
+            } else if (r.equals("Opening Food supply")) {
+                if (logged) {
+                    outMessage = new Message();
+                    outMessage.setMessage(firstTranslation);
+                    outMessage.setId("2");
+
+                    messageArrayList.add(outMessage);
+                    toggle.add(0);
+                    option.add(null);
+
+                    speakOut(firstTranslation);
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            mAdapter.notifyDataSetChanged();
+                            progressDialog.hide();
+                            listView.setSelection(messageArrayList.size());
+
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    startActivity(new Intent(Chatbot.this, Isolation.class), ActivityOptions.makeSceneTransitionAnimation(Chatbot.this).toBundle());
+                                }
+                            }, 3000);
+                        }
+                    });
+                } else {
+                    outMessage = new Message();
+                    outMessage.setMessage("Please Log In to continue");
+                    outMessage.setId("2");
+
+                    messageArrayList.add(outMessage);
+                    toggle.add(0);
+                    option.add(null);
+
+                    speakOut(firstTranslation);
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            mAdapter.notifyDataSetChanged();
+                            progressDialog.hide();
+                            listView.setSelection(messageArrayList.size());
+
+                        }
+                    });
+                }
+            } else if (r.equals("Opening public health care")) {
+                if (logged) {
+                    outMessage = new Message();
+                    outMessage.setMessage(firstTranslation);
+                    outMessage.setId("2");
+
+                    messageArrayList.add(outMessage);
+                    toggle.add(0);
+                    option.add(null);
+
+                    speakOut(firstTranslation);
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            mAdapter.notifyDataSetChanged();
+                            progressDialog.hide();
+                            listView.setSelection(messageArrayList.size());
+
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    startActivity(new Intent(Chatbot.this, publichealthcare.class), ActivityOptions.makeSceneTransitionAnimation(Chatbot.this).toBundle());
+                                }
+                            }, 3000);
+                        }
+                    });
+                } else {
+                    outMessage = new Message();
+                    outMessage.setMessage("Please Log In to continue");
+                    outMessage.setId("2");
+
+                    messageArrayList.add(outMessage);
+                    toggle.add(0);
+                    option.add(null);
+
+                    speakOut(firstTranslation);
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            mAdapter.notifyDataSetChanged();
+                            progressDialog.hide();
+                            listView.setSelection(messageArrayList.size());
+
+                        }
+                    });
+                }
+            } else if (r.equals("Opening counselling")) {
+                if (logged) {
+                    outMessage = new Message();
+                    outMessage.setMessage(firstTranslation);
+                    outMessage.setId("2");
+
+                    messageArrayList.add(outMessage);
+                    toggle.add(0);
+                    option.add(null);
+
+                    speakOut(firstTranslation);
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            mAdapter.notifyDataSetChanged();
+                            progressDialog.hide();
+                            listView.setSelection(messageArrayList.size());
+
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    startActivity(new Intent(Chatbot.this, Counselling.class), ActivityOptions.makeSceneTransitionAnimation(Chatbot.this).toBundle());
+                                }
+                            }, 3000);
+                        }
+                    });
+                } else {
+                    outMessage = new Message();
+                    outMessage.setMessage("Please Log In to continue");
+                    outMessage.setId("2");
+
+                    messageArrayList.add(outMessage);
+                    toggle.add(0);
+                    option.add(null);
+
+                    speakOut(firstTranslation);
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            mAdapter.notifyDataSetChanged();
+                            progressDialog.hide();
+                            listView.setSelection(messageArrayList.size());
+
+                        }
+                    });
+                }
+            } else if (r.equals("Opening MSME products")) {
+                outMessage = new Message();
+                outMessage.setMessage(firstTranslation);
+                outMessage.setId("2");
+
+                messageArrayList.add(outMessage);
+                toggle.add(0);
+                option.add(null);
+
+                speakOut(firstTranslation);
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        mAdapter.notifyDataSetChanged();
+                        progressDialog.hide();
+                        listView.setSelection(messageArrayList.size());
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                startActivity(new Intent(Chatbot.this, MSME.class), ActivityOptions.makeSceneTransitionAnimation(Chatbot.this).toBundle());
+                            }
+                        }, 3000);
+                    }
+                });
+
+            } else if (r.equals("Opening Labs")) {
+                outMessage = new Message();
+                outMessage.setMessage(firstTranslation);
+                outMessage.setId("2");
+
+                messageArrayList.add(outMessage);
+                toggle.add(0);
+                option.add(null);
+
+                speakOut(firstTranslation);
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        mAdapter.notifyDataSetChanged();
+                        progressDialog.hide();
+                        listView.setSelection(messageArrayList.size());
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                startActivity(new Intent(Chatbot.this, Labsfortestingandresults.class), ActivityOptions.makeSceneTransitionAnimation(Chatbot.this).toBundle());
+                            }
+                        }, 3000);
+                    }
+                });
+
+            } else if (r.equals("Closing Assistant")) {
                 outMessage = new Message();
                 outMessage.setMessage(firstTranslation);
                 outMessage.setId("2");
@@ -602,8 +834,7 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
                         }, 3000);
                     }
                 });
-            }
-            else if(r.equals("Openning Self Assessment")){
+            } else if (r.equals("Openning Self Assessment")) {
                 outMessage = new Message();
                 outMessage.setMessage(firstTranslation);
                 outMessage.setId("2");
@@ -622,14 +853,12 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                startActivity(new Intent(Chatbot.this,self_asses.class), ActivityOptions.makeSceneTransitionAnimation(Chatbot.this).toBundle());
+                                startActivity(new Intent(Chatbot.this, SelfAssessment.class), ActivityOptions.makeSceneTransitionAnimation(Chatbot.this).toBundle());
                             }
                         }, 3000);
                     }
                 });
-            }
-
-            else if(r.equals("Openning Hospitals near you")){
+            } else if (r.equals("Openning Hospitals near you")) {
                 outMessage = new Message();
                 outMessage.setMessage(firstTranslation);
                 outMessage.setId("2");
@@ -648,15 +877,14 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                Intent intent=new Intent(Chatbot.this,Medicalshops.class);
-                                intent.putExtra("text","Hospitals");
-                                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(Chatbot.this).toBundle());
+                                Intent intent = new Intent(Chatbot.this, Medicalshops.class);
+                                intent.putExtra("text", "Hospitals");
+                                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(Chatbot.this).toBundle());
                             }
                         }, 3000);
                     }
                 });
-            }
-            else if(params.length==2) {
+            } else if (params.length == 2) {
                 if (params[1] != null) {
                     if (params[1].equals("mycity")) {
                         outMessage = new Message();
@@ -695,9 +923,8 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
                         });
                     }
                 }
-            }
-            else {
-                Log.println(Log.INFO,"Else translate","Entered");
+            } else {
+                Log.println(Log.INFO, "Else translate", "Entered");
                 outMessage = new Message();
                 outMessage.setMessage(firstTranslation);
                 outMessage.setId("2");
@@ -717,16 +944,13 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
             }
 
 
-
-
-
             return "Did translate";
         }
     }
 
     private class send extends AsyncTask<String, Void, String> {
 
-        private boolean initialRequest=false;
+        private boolean initialRequest = false;
         private EditText inputMessage;
 
 
@@ -737,17 +961,16 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    inputMessage=findViewById(R.id.inputmessage);
+                    inputMessage = findViewById(R.id.inputmessage);
                     inputMessage.setText("");
                 }
             });
-            if(params[1].equals("initial"))
-                initialRequest=true;
-            if(selectedTargetLanguage.equals(Language.ENGLISH)){
-                firstTranslation=params[0];
-            }
-            else if(initialRequest)
-                firstTranslation=params[0];
+            if (params[1].equals("initial"))
+                initialRequest = true;
+            if (selectedTargetLanguage.equals(Language.ENGLISH)) {
+                firstTranslation = params[0];
+            } else if (initialRequest)
+                firstTranslation = params[0];
             else {
                 TranslateOptions translateOptions = new TranslateOptions.Builder()
                         .addText(params[0])
@@ -760,7 +983,7 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
 
             }
 
-            final String inputmessage=firstTranslation;
+            final String inputmessage = firstTranslation;
             if (!this.initialRequest) {
                 Message inputMessage = new Message();
                 inputMessage.setMessage(params[0]);
@@ -814,86 +1037,96 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
                                 switch (r.responseType()) {
                                     case "text":
 
-                                        if(r.text().equals("home")){
+                                        if (r.text().equals("home")) {
                                             new Chatbot.receive().execute("Openning dashboard");
-                                        }
-                                        else if(r.text().equals("scan")){
+                                        } else if (r.text().equals("scan")) {
                                             new Chatbot.receive().execute("Openning Scan");
 
-                                        }
-                                        else if(r.text().equals("helpline")){
+                                        } else if (r.text().equals("helpline")) {
                                             new Chatbot.receive().execute("Openning helpline");
 
-                                        }
-                                        else if(r.text().equals("firstrespond")){
+                                        } else if (r.text().equals("firstrespond")) {
                                             new Chatbot.receive().execute("Openning firstrespond");
 
-                                        }
-                                        else if(r.text().equals("casesnear")){
+                                        } else if (r.text().equals("casesnear")) {
                                             new Chatbot.receive().execute("Openning COVID reports");
 
-                                        }
-                                        else if(r.text().equals("selfassess")){
+                                        } else if (r.text().equals("selfassess")) {
                                             new Chatbot.receive().execute("Openning Self Assessment");
 
-                                        }
-                                        else if(r.text().equals("hospital")){
+                                        } else if (r.text().equals("hospital")) {
                                             new Chatbot.receive().execute("Openning Hospitals near you");
 
-                                        }
-                                        else if(r.text().equals("mystatus")){
+                                        } else if (r.text().equals("mystatus")) {
                                             new Chatbot.receive().execute("I didn't understand.You can try rephrasing");
 
-                                        }
-
-                                        else if(r.text().equals("close")){
+                                        } else if (r.text().equals("close")) {
                                             new Chatbot.receive().execute("Closing Assistant");
-                                        }
-
-                                        else if(r.text().equals("mystate")){
+                                        } else if (r.text().equals("mystate")) {
 
                                             new Chatbot.getStateDetail().execute();
 
-                                        }
-                                        else if(r.text().equals("mycity")){
+                                        } else if (r.text().equals("mycity")) {
 
                                             new Chatbot.getCityDetail().execute();
 
-                                        }
-
-                                        else if(r.text().equals("donate")){
+                                        } else if (r.text().equals("donate")) {
 
                                             new Chatbot.receive().execute("Opening Donate");
 
-                                        }
-                                        else if(r.text().equals("news")){
+                                        } else if (r.text().equals("news")) {
 
                                             new Chatbot.receive().execute("Opening Updates");
 
-                                        }
-                                        else if(r.text().equals("medicalshop")){
+                                        } else if (r.text().equals("medicalshop")) {
 
                                             new Chatbot.receive().execute("Opening Medical Shop");
 
-                                        }
-                                        else if(r.text().equals("alarm")){
+                                        } else if (r.text().equals("alarm")) {
 
                                             new Chatbot.receive().execute("Opening Alarm");
 
-                                        }
-                                        else {
+                                        } else if (r.text().equals("labs")) {
+
+                                            new Chatbot.receive().execute("Opening Labs");
+
+                                        } else if (r.text().equals("msme")) {
+
+                                            new Chatbot.receive().execute("Opening MSME products");
+
+                                        } else if (r.text().equals("counselling")) {
+
+                                            new Chatbot.receive().execute("Opening counselling");
+
+                                        } else if (r.text().equals("publiccare")) {
+
+                                            new Chatbot.receive().execute("Opening public health care");
+
+                                        } else if (r.text().equals("food")) {
+
+                                            new Chatbot.receive().execute("Opening Food supply");
+
+                                        } else if (r.text().equals("material")) {
+
+                                            new Chatbot.receive().execute("Opening Material collection");
+
+                                        } else if (r.text().equals("epass")) {
+
+                                            new Chatbot.receive().execute("Opening Epass");
+
+                                        } else {
                                             new Chatbot.receive().execute(r.text());
 
                                         }
                                         break;
 
                                     case "option":
-                                        outMessage =new Message();
+                                        outMessage = new Message();
                                         String title = r.title();
                                         String OptionsOutput = "";
                                         for (int i = 0; i < r.options().size(); i++) {
                                             DialogNodeOutputOptionsElement option = r.options().get(i);
-                                            OptionsOutput = OptionsOutput + option.getLabel() +"\n";
+                                            OptionsOutput = OptionsOutput + option.getLabel() + "\n";
 
                                         }
                                         outMessage.setMessage(title + "\n" + OptionsOutput);
@@ -934,7 +1167,6 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
             thread.start();
 
 
-
             return "Did translate";
         }
     }
@@ -949,19 +1181,17 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
     }
 
 
-
     // Sending a message to Watson Assistant Service
-    private void sendMessage(String mes,boolean init) {
+    private void sendMessage(String mes, boolean init) {
 
         progressDialog.show();
-        if(init)
-            new Chatbot.send().execute(mes.trim(),"initial");
+        if (init)
+            new Chatbot.send().execute(mes.trim(), "initial");
         else {
-            new Chatbot.send().execute(mes.trim(),"notinitial");
+            new Chatbot.send().execute(mes.trim(), "notinitial");
         }
 
     }
-
 
 
     /**
@@ -1014,14 +1244,15 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
 
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    if(!result.get(0).isEmpty())
-                        sendMessage(result.get(0),false);
+                    if (!result.get(0).isEmpty())
+                        sendMessage(result.get(0), false);
                 }
 
                 break;
 
             }
-            default:start();
+            default:
+                start();
         }
     }
 
@@ -1072,7 +1303,7 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
         params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "");
 
         String text = speech;
-        if(sound) {
+        if (sound) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 tts.speak(text, TextToSpeech.QUEUE_FLUSH, params, "Dummy String");
             }
@@ -1088,7 +1319,7 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
         super.onDestroy();
     }
 
-    String getState(double lat,double lon){
+    String getState(double lat, double lon) {
 
 
         Geocoder geocoder;
@@ -1099,28 +1330,23 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
             addresses = geocoder.getFromLocation(lat, lon, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
 
 
+            String state = addresses.get(0).getAdminArea();
 
-            String state=addresses.get(0).getAdminArea();
-
-            return  state;
+            return state;
 
 
-        }
-        catch(IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException e) {
 
-        }
-
-        catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return  null;
+        return null;
     }
 
-    String getCity(double lat,double lon){
+    String getCity(double lat, double lon) {
 
 
         Geocoder geocoder;
@@ -1129,27 +1355,23 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
 
         try {
             addresses = geocoder.getFromLocation(lat, lon, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-
 
 
             String city = addresses.get(0).getLocality();
 
 
-            return  city;
+            return city;
 
 
-        }
-        catch(IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException e) {
 
-        }
-        catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return  null;
+        return null;
     }
 
 
@@ -1179,7 +1401,7 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
                     bufferedReader.close();
                     return stringBuilder.toString();
                 } finally {
-                    if (urlConnection!=null)
+                    if (urlConnection != null)
                         urlConnection.disconnect();
                 }
             } catch (Exception e) {
@@ -1192,7 +1414,6 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
         protected void onPostExecute(String response) {
 
 
-
             try {
                 progressDialog.show();
                 final JSONArray jsonArray = (JSONArray) new JSONTokener(response).nextValue();
@@ -1200,7 +1421,7 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
 
                 pref = getApplicationContext().getSharedPreferences("user", 0); // 0 - for private mode
                 editor = pref.edit();
-                String state = pref.getString("state",null);
+                String state = pref.getString("state", null);
                 String message = "";
                 if (state == null) {
                     new Chatbot.receive().execute("Some error occured,Try again later.");
@@ -1224,7 +1445,6 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
                         e.printStackTrace();
                     }
                 }
-
 
 
             } catch (Exception e) {
@@ -1263,7 +1483,7 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
                     bufferedReader.close();
                     return stringBuilder.toString();
                 } finally {
-                    if (urlConnection!=null)
+                    if (urlConnection != null)
                         urlConnection.disconnect();
                 }
             } catch (Exception e) {
@@ -1276,14 +1496,13 @@ public class Chatbot extends AppCompatActivity implements TextToSpeech.OnInitLis
         protected void onPostExecute(final String response) {
 
 
-
             try {
 
                 progressDialog.show();
                 pref = getApplicationContext().getSharedPreferences("user", 0); // 0 - for private mode
                 editor = pref.edit();
-                String state = pref.getString("state",null);
-                String city = pref.getString("city",null);
+                String state = pref.getString("state", null);
+                String city = pref.getString("city", null);
                 String message = "";
                 if (state == null || city == null) {
                     new Chatbot.receive().execute("Some error occured,Try again later.");

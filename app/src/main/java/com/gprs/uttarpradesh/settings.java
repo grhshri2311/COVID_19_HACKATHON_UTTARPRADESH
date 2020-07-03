@@ -2,16 +2,11 @@ package com.gprs.uttarpradesh;
 
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
+import android.widget.Toast;
 
-import androidx.fragment.app.Fragment;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import static android.content.Context.FINGERPRINT_SERVICE;
 
@@ -21,13 +16,13 @@ public class settings extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
-        final SwitchPreferenceCompat biometric=findPreference("finger");
+        final SwitchPreferenceCompat biometric = findPreference("finger");
         biometric.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
 
 
-                if((Boolean) newValue){
+                if ((Boolean) newValue) {
                     FingerprintManager fingerprintManager = (FingerprintManager) getActivity().getSystemService(FINGERPRINT_SERVICE);
 
                     //Check whether the device has a fingerprint sensor//
