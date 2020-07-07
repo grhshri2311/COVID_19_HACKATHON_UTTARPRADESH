@@ -35,10 +35,6 @@ class CustomChatBotAdapter extends ArrayAdapter {
             rowView = inflater.inflate(R.layout.chat_item_watson, null, true);
             TextView textView = rowView.findViewById(R.id.message);
             textView.setText(message.get(position).getMessage());
-            RelativeLayout relativeLayout = rowView.findViewById(R.id.their);
-            Spinner spinner = rowView.findViewById(R.id.option);
-
-            relativeLayout.removeView(spinner);
         } else {
             rowView = inflater.inflate(R.layout.chat_item_self, null, true);
 

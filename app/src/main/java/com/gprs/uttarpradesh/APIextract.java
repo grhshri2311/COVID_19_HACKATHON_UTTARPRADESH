@@ -95,8 +95,8 @@ public class APIextract {
                 JSONArray jsonArray = object.getJSONArray("statewise");
                 JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-                confirm.setText(context.getString(R.string.confirmed) + jsonObject.optString("confirmed"));
-                death.setText(context.getString(R.string.death)  + jsonObject.optString("deaths"));
+                confirm.setText(context.getString(R.string.confirmed) +"  "+ jsonObject.optString("confirmed"));
+                death.setText(context.getString(R.string.death)  +"  "+ jsonObject.optString("deaths"));
 
 
             } catch (Exception e) {

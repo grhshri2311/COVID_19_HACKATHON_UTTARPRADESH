@@ -140,6 +140,12 @@ public class Medicalshops extends AppCompatActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        progressDialog.dismiss();
+    }
+
+    @Override
     public void onBackPressed() {
         finish();
     }

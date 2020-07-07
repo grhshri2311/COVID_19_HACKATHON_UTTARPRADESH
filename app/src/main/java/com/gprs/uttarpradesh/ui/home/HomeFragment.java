@@ -319,8 +319,9 @@ public class HomeFragment extends Fragment {
                 if (!pref.getString("status", "").equals("victim"))
                     startActivity(new Intent(root.getContext(), victimalert.class), ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
                 else {
-                    Toast.makeText(root.getContext(), "You are found victim \nYou can't use this festure!", Toast.LENGTH_LONG).show();
-                }
+                    Snackbar snackbar = Snackbar
+                            .make(constraintLayout, "You are found victim \nYou can't use this festure!You are found victim \nYou can't use this festure!", Snackbar.LENGTH_LONG);
+                    snackbar.show();                }
             }
         });
 

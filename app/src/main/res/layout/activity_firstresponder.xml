@@ -19,9 +19,9 @@
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="24dp"
                 android:text="@string/first_responder"
                 android:textColor="#B475CE"
@@ -33,9 +33,9 @@
 
             <TextView
                 android:id="@+id/confirm"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="64dp"
+                android:layout_marginStart="10dp"
                 android:text="@string/be_ready_to_contribute"
                 android:textColor="#4F0D5E"
                 android:transitionName="active"
@@ -44,9 +44,9 @@
 
             <TextView
                 android:id="@+id/death"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="64dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/be_the_first_responder"
                 android:textColor="#4F0D5E"

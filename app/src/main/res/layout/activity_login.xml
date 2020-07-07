@@ -67,6 +67,8 @@
             android:layout_marginStart="32dp"
             android:transitionName="phone"
             android:layout_marginEnd="32dp"
+            android:focusableInTouchMode="true"
+            android:focusedByDefault="false"
             android:ems="10"
             android:hint="@string/phone"
             app:layout_constraintEnd_toEndOf="parent"
@@ -77,6 +79,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="phone"
+                android:focusableInTouchMode="true"
+                android:focusedByDefault="false"
                 android:drawableLeft="@drawable/ic_local_phone_black_24dp"
                 android:drawablePadding="16dp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -89,6 +93,8 @@
             android:layout_marginEnd="32dp"
             android:layout_marginTop="20dp"
             android:ems="10"
+            android:focusableInTouchMode="true"
+            android:focusedByDefault="false"
             android:hint="@string/password"
             android:transitionName="password"
             app:layout_constraintEnd_toEndOf="parent"
@@ -101,6 +107,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                android:focusedByDefault="false"
                 android:inputType="textPassword"
                 android:drawableStart="@drawable/ic_lock"
                 android:drawablePadding="16dp" />

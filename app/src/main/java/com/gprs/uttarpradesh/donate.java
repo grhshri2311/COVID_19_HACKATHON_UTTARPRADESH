@@ -48,8 +48,13 @@ public class donate extends AppCompatActivity {
         PM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                urlgo = "https://www.pmcares.gov.in/en?should_open_safari=true";
-                load();
+                try {
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse("https://www.pmcares.gov.in/en?should_open_safari=true"));
+                    startActivity(i);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(donate.this, "You don't have browser installed", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -230,4 +235,11 @@ public class donate extends AppCompatActivity {
             Log.e("Error in UPI onActivityResult->", "" + e.getMessage());
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        progressDialog.dismiss();
+    }
+
 }

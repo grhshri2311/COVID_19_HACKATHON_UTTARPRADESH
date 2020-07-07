@@ -132,6 +132,9 @@ public class bio extends AppCompatActivity {
                 } catch (FingerprintException e) {
                     e.printStackTrace();
                 }
+                catch (Exception e){
+
+                }
 
                 if (initCipher()) {
                     //If the cipher is initialized successfully, then create a CryptoObject instance//
@@ -181,6 +184,9 @@ public class bio extends AppCompatActivity {
             exc.printStackTrace();
             throw new FingerprintException(exc);
         }
+        catch (Exception e){
+
+        }
     }
 
     //Create a new method that we’ll use to initialize our cipher//
@@ -194,6 +200,9 @@ public class bio extends AppCompatActivity {
         } catch (NoSuchAlgorithmException |
                 NoSuchPaddingException e) {
             throw new RuntimeException("Failed to get Cipher", e);
+        }
+        catch (Exception e){
+
         }
 
         try {
@@ -212,6 +221,9 @@ public class bio extends AppCompatActivity {
             throw new RuntimeException("Failed to init Cipher", e);
         } catch (java.security.cert.CertificateException e) {
             e.printStackTrace();
+        }
+        catch (Exception e){
+
         }
         return true;
     }

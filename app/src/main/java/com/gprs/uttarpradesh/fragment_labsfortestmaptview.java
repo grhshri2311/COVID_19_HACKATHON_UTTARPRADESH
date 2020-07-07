@@ -211,7 +211,7 @@ public class fragment_labsfortestmaptview extends Fragment implements OnMapReady
                     if (addresses.size() > 0) {
                         getState(addresses.get(0).getAdminArea());
                     } else {
-                        // do your stuff
+                        getState("");
                     }
 
                 }
@@ -999,7 +999,7 @@ public class fragment_labsfortestmaptview extends Fragment implements OnMapReady
             }
 
             if (atleast) {
-                for (int i = 0; i < jsonArray.length(); i = i + 3) {
+                for (int i = 0; i < jsonArray.length(); i = i + 10) {
 
                     JSONObject object = jsonArray.getJSONObject(i);
                     atleast = false;

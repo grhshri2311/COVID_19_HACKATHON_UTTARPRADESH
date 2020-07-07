@@ -113,4 +113,10 @@ public class firstaidgiudance extends AppCompatActivity {
     public void onBackPressed() {
         finish();
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        progressDialog.dismiss();
+    }
+
 }

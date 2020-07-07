@@ -115,4 +115,11 @@ public class visualize extends AppCompatActivity {
     public void onBackPressed() {
         finish();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        progressDialog.dismiss();
+    }
+
 }

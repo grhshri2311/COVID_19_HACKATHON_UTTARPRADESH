@@ -73,7 +73,7 @@ public class BottomsheetMaterialCollectionformfragment extends BottomSheetDialog
     TextInputLayout name, email, rolelayout, address;
     RadioGroup radioGroup;
     EditText dob;
-    Boolean photouploaded = true, profileuploaded = true;
+    Boolean  profileuploaded = true;
     private GoogleMap mMap;
     Double lat, lon;
     View view;

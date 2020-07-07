@@ -21,6 +21,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
@@ -43,6 +44,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -51,9 +53,14 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.BuildConfig;
@@ -291,6 +298,12 @@ public class Home extends AppCompatActivity {
                         break;
 
                     case R.id.scan:
+                        if (!pref.getString("status", "").equals("victim"))
+                            startActivity(new Intent(Home.this, victimalert.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
+                        else {
+                            Snackbar snackbar = Snackbar
+                                    .make(constraintLayout, "You are found victim \nYou can't use this festure!You are found victim \nYou can't use this festure!", Snackbar.LENGTH_LONG);
+                            snackbar.show();                        }
                         startActivity(new Intent(Home.this, victimalert.class), ActivityOptions.makeSceneTransitionAnimation(Home.this).toBundle());
                         break;
 
@@ -698,7 +711,9 @@ public class Home extends AppCompatActivity {
 
 
             this.doubleBackToExitPressedOnce = true;
-            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar
+                    .make(constraintLayout, "Please click BACK again to exit", Snackbar.LENGTH_LONG);
+            snackbar.show();
 
             new Handler().postDelayed(new Runnable() {
 

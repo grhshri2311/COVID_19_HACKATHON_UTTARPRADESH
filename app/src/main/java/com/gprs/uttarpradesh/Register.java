@@ -154,11 +154,11 @@ public class Register extends AppCompatActivity {
     }
 
 
-    public static boolean validate(TextInputLayout name1, TextInputLayout email1, final TextInputLayout phone1, TextInputLayout password1) {
+    public boolean validate(TextInputLayout name1, TextInputLayout email1, final TextInputLayout phone1, TextInputLayout password1) {
         String emailPatter = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         String passwordPatter = "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,40})";
 
-        if (role.getText().toString().equals(new Register().getString(R.string.select_your_role))) {
+        if (role.getText().toString().equals(getString(R.string.select_your_role))) {
             RoleL.setError("\nRole cannot be empty\n");
             return false;
         } else {
@@ -274,7 +274,7 @@ public class Register extends AppCompatActivity {
                         }
                     } else {
                         progressDialog.hide();
-                        Toast.makeText(Register.this, "Please turn on GPS", Toast.LENGTH_LONG).show();
+                        Toast.makeText(Register.this, "No location data found on this device", Toast.LENGTH_LONG).show();
                     }
                 }
             });

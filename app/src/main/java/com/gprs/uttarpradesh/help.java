@@ -321,6 +321,7 @@ public class help extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        progressDialog.dismiss();
         if (phone != null)
             FirebaseDatabase.getInstance().getReference().child("Respond").child("reply").child(phone).removeValue();
     }
@@ -381,4 +382,5 @@ public class help extends AppCompatActivity {
         alert.show();
 
     }
+
 }

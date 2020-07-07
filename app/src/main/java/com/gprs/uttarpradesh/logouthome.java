@@ -31,6 +31,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -475,8 +477,10 @@ public class logouthome extends AppCompatActivity {
         }
 
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
-
+        ScrollView constraintLayout=findViewById(R.id.swipe);
+        Snackbar snackbar = Snackbar
+                .make(constraintLayout, "Please click BACK again to exit", Snackbar.LENGTH_LONG);
+        snackbar.show();
         new Handler().postDelayed(new Runnable() {
 
             @Override

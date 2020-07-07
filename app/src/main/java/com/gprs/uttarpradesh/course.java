@@ -164,4 +164,10 @@ public class course extends AppCompatActivity {
         queue.add(getRequest);
 
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        progressDialog.dismiss();
+    }
+
 }

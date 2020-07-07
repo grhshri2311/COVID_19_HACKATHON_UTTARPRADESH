@@ -99,10 +99,19 @@
 
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
-    </com.google.android.material.appbar.AppBarLayout>
 
+
+    </com.google.android.material.appbar.AppBarLayout>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:indeterminate="true"
+        android:indeterminateTint="#1D77BF"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appbar"/>
     <RelativeLayout
-        android:layout_below="@+id/appbar"
+        android:layout_below="@+id/progressBar"
         android:layout_width="match_parent"
         android:background="@drawable/background"
         android:layout_height="match_parent">
